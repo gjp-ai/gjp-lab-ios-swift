@@ -1,17 +1,17 @@
-//
-//  GJPLabApp.swift
-//  GJPLab
-//
-//  Created by Gan Jianping on 16/8/26.
-//
-
 import SwiftUI
 
 @main
 struct GJPLabApp: App {
+    @UIApplicationDelegateAdaptor(GJPLabAppDelegate.self) private var appDelegate
+    @State private var showingSplash = true
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group { showingSplash ? AnyView(SplashScreen()) : AnyView(ContentView()) }
+                .task {
+                    try? await Task.sleep(for: .seconds(3))
+                    showingSplash = false
+                }
         }
     }
 }

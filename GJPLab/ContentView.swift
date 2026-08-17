@@ -1,24 +1,19 @@
-//
-//  ContentView.swift
-//  GJPLab
-//
-//  Created by Gan Jianping on 16/8/26.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @State private var path: [FeatureRoute] = []
 
-#Preview {
-    ContentView()
+    var body: some View {
+        NavigationStack(path: $path) {
+            MainScreen(onFeatureSelected: { path.append($0) })
+                .navigationDestination(for: FeatureRoute.self) { route in
+                    switch route {
+                    case .deviceInfo: DeviceInfoScreen()
+                    case .http: HttpURLConnectionScreen()
+                    case .firebase: FirebaseFeatureScreen()
+                    case .response(let response): HttpResponseScreen(response: response)
+                    }
+                }
+        }
+    }
 }
