@@ -34,7 +34,7 @@ Activate the smallest set of skills that fully covers the request:
 - Route Firebase calls through `FirebaseIntegration`; define stable events, Remote Config keys, trace names, and topics in `FirebaseConstants`.
 - Keep notification/APNs wiring in `GJPLabAppDelegate` and `integration/firebase/`. Do not log complete FCM tokens or add client-side secrets.
 - Preserve the Slate semantic palette in `common/theme/`. Use `LabTheme` roles and `LabMark` instead of raw brand colors or copied vector paths in feature views.
-- The deterministic launcher-icon source is `doc/assets/app-icon*.svg`; regenerate PNG variants with `scripts/render_app_icons.swift` rather than editing rendered PNGs by hand.
+- Editable launcher-icon SVGs live in `resources/design/app-icons/`; regenerate PNG variants with `scripts/render_app_icons.swift` rather than editing rendered PNGs by hand.
 
 ## Verification
 

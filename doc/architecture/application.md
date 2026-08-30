@@ -19,6 +19,8 @@ flowchart LR
     Catalog --> HTTP[URLSessionScreen]
     Catalog --> Firebase[FirebaseFeatureScreen]
     HTTP --> Response[HttpResponseScreen]
+    Catalog --> Calls[BlockAppDuringCallsScreen]
+    Calls --> Overlay[CallBlockingOverlay]
 ```
 
 [`GJPLabApp`](../../GJPLab/GJPLabApp.swift) is the SwiftUI entry point. It attaches [`GJPLabAppDelegate`](../../GJPLab/GJPLabAppDelegate.swift) for SDK lifecycle callbacks, coordinates splash timing and maintenance mode, then chooses the dashboard or maintenance screen. [`ContentView`](../../GJPLab/ContentView.swift) owns the dashboard route path.
@@ -28,10 +30,10 @@ flowchart LR
 | Path | Responsibility |
 | --- | --- |
 | `GJPLab/common/config/` | Stable application behavior constants |
-| `GJPLab/common/model/` | Routes, dashboard catalogue models, and HTTP response types |
 | `GJPLab/common/theme/` | Slate semantic colors, reusable surface treatment, and brand mark |
-| `GJPLab/features/<feature>/` | Feature views and feature-specific data code |
-| `GJPLab/features/catalog/` | Category catalogue presentation |
+| `GJPLab/navigation/` | App-wide route values and catalogue presentation/models |
+| `GJPLab/features/<category>/<feature>/` | Feature views, feature-specific models, and data code |
+| `GJPLab/features/security/` | Security feature routes and catalogue content |
 | `GJPLab/integration/` | SDK bootstrap and integration adapters |
 | `GJPLab/integration/firebase/` | Firebase constants, startup, messaging, and service boundary |
 | Root `GJPLab/*.swift` | App lifecycle, startup, dashboard, splash, and maintenance |
@@ -53,7 +55,7 @@ flowchart TD
 
 - `GJPLabAppDelegate` owns process-level SDK callbacks and forwards them through `AppSDKBootstrapper`.
 - `ContentView` owns navigation state using `[FeatureRoute]`.
-- Views own private presentation state with `@State`; `FirebaseFeatureScreen` owns its observable Firebase service with `@StateObject`.
+- Views own private presentation state with `@State`; `FirebaseFeatureScreen` owns its observable Firebase service with `@StateObject`; `GJPLabApp` owns the shared call-blocking controller with `@StateObject`.
 - `URLSessionRepository` performs request mechanics; views present state and invoke explicit actions.
 
 ## State and lifecycle model
@@ -94,4 +96,4 @@ Run the matching test command when a simulator runtime is available. Use a physi
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
 | Minimal automated tests | Fast experimentation; lower regression confidence | Behavior becomes important to preserve |
 
-See [Slate design system](design-system.md), [splash technical design](../features/splash-screen.md), and [Firebase integration](../integrations/firebase.md) for feature-specific detail.
+See [Slate design system](design-system.md), [splash detailed design](../detail-design/splash-screen.md), [call-blocking detailed design](../detail-design/security/block_app_during_calls.md), and [Firebase integration](../integrations/firebase.md) for feature-specific detail.

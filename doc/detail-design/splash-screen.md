@@ -1,4 +1,4 @@
-# Splash screen technical design
+# Splash Screen detailed design
 
 Status: Partial implementation
 

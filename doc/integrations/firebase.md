@@ -58,7 +58,7 @@ Startup logs `app_started`; the Firebase screen logs `feature_firebase_opened`. 
 
 ### Remote Config
 
-Startup sets a zero debug fetch interval, one-hour release interval, and `gjp_lab_maintenance_enabled = false` local default. `fetchMaintenanceMode()` calls `fetchAndActivate()` and returns the current Boolean. It does not distinguish a fresh value, cached value, or failed fetch with an active/default value; [the splash design](../features/splash-screen.md) documents the resulting fallback behavior.
+Startup sets a zero debug fetch interval, one-hour release interval, and `gjp_lab_maintenance_enabled = false` local default. `fetchMaintenanceMode()` calls `fetchAndActivate()` and returns the current Boolean. It does not distinguish a fresh value, cached value, or failed fetch with an active/default value; [the splash detailed design](../detail-design/splash-screen.md) documents the resulting fallback behavior.
 
 ### Crashlytics
 

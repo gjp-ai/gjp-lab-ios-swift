@@ -1,12 +1,12 @@
-# Splash screen requirements
+# Feature: Splash Screen
 
 Status: Baseline behavior; iOS implementation is partial
 
-## Objective
+## Goal
 
 Show a recognizable startup experience while resolving whether the user enters the normal application or sees maintenance. Startup remains bounded when Remote Config is unavailable.
 
-## Applicability
+## Platform considerations
 
 These observable rules apply to Android and iOS. Each platform uses native lifecycle, connectivity, accessibility, and navigation conventions while preserving equivalent timing, fallback, race, and destination decisions.
 
@@ -18,7 +18,7 @@ In scope: cold-launch splash, brand and progress presentation, minimum duration,
 
 Out of scope: system launch artwork, authentication, onboarding, consent, update checks, content preloading, destination visual design, and showing the splash during warm resume or ordinary navigation.
 
-## Product decisions
+## Rules & constraints
 
 | Decision | Value |
 | --- | --- |
@@ -61,7 +61,7 @@ Out of scope: system launch artwork, authentication, onboarding, consent, update
 | SPL-AC-07 | Warm resume/back navigation | Feature splash does not reappear. |
 | SPL-AC-08 | Light/dark and enlarged text | Approved content remains readable and unclipped. |
 
-## Non-functional requirements
+## Technical implementation constraints
 
 - Startup completion and transition must be idempotent under timeout/result races.
 - Essential progress semantics must be exposed to accessibility services.
@@ -70,4 +70,7 @@ Out of scope: system launch artwork, authentication, onboarding, consent, update
 - Timing, network, remote lookup, presentation, and navigation should remain independently testable where practical.
 - Automated tests must use controllable network and Remote Config outcomes rather than production services.
 
-See [the iOS technical design](../features/splash-screen.md) for source evidence and current gaps.
+## Related documents
+
+- [Detailed design](../detail-design/splash-screen.md)
+- [Application architecture](../architecture/application.md)
