@@ -19,7 +19,9 @@ The app target also sets the `-ObjC` linker flag required by the Crashlytics and
 
 ## Startup configuration
 
-`GJPLab/integration/firebase/GJPLabAppDelegate.swift` is attached to the SwiftUI app through `UIApplicationDelegateAdaptor`. On launch it:
+`GJPLab/GJPLabAppDelegate.swift` is attached to the SwiftUI app through `UIApplicationDelegateAdaptor`. It delegates SDK startup to `GJPLab/integration/AppSDKBootstrapper.swift`, which registers `FirebaseStartupIntegration` and can accept additional SDK integrations without expanding the app delegate.
+
+On launch, the Firebase startup integration:
 
 1. calls `FirebaseApp.configure()` using `GoogleService-Info.plist`;
 2. logs the `app_started` Analytics event;

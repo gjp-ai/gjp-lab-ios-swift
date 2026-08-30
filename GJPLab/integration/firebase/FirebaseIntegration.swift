@@ -36,13 +36,21 @@ final class FirebaseIntegration: ObservableObject {
         crashlyticsStatus = "Non-fatal demo exception recorded"
     }
 
-    func fetchMaintenanceMode() async {
+    @discardableResult
+    func fetchMaintenanceMode() async -> Bool {
         remoteConfigStatus = "Fetching maintenance flag..."
         let remoteConfig = RemoteConfig.remoteConfig()
         do {
             _ = try await remoteConfig.fetchAndActivate()
-            remoteConfigStatus = "\(FirebaseConstants.maintenanceEnabled) = \(remoteConfig[FirebaseConstants.maintenanceEnabled].boolValue)"
-        } catch { remoteConfigStatus = "Fetch failed: \(error.localizedDescription)" }
+            let enabled = remoteConfig[FirebaseConstants.maintenanceEnabled].boolValue
+            remoteConfigStatus = "\(FirebaseConstants.maintenanceEnabled) = \(enabled)"
+            return enabled
+        } catch {
+            remoteConfigStatus = "Fetch failed: \(error.localizedDescription)"
+            // The Firebase startup integration supplies a false default. A fetch
+            // failure should therefore fail open to the regular dashboard.
+            return false
+        }
     }
 
     func runPerformanceDemo() async {
@@ -69,4 +77,3 @@ final class FirebaseIntegration: ObservableObject {
     }
     func copyToken() { guard let messagingToken else { return }; UIPasteboard.general.string = messagingToken; tokenCopied = true }
 }
-

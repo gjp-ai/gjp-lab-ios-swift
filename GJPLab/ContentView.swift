@@ -5,15 +5,18 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            MainScreen(onFeatureSelected: { path.append($0) })
+            MainScreen(onCategorySelected: { path.append(.catalog($0)) })
                 .navigationDestination(for: FeatureRoute.self) { route in
                     switch route {
+                    case .catalog(let category): FeatureCatalogScreen(category: category)
                     case .deviceInfo: DeviceInfoScreen()
-                    case .http: HttpURLConnectionScreen()
+                    case .urlSession:
+                        URLSessionScreen(onResponse: { path.append(.response($0)) })
                     case .firebase: FirebaseFeatureScreen()
                     case .response(let response): HttpResponseScreen(response: response)
                     }
                 }
         }
+        .tint(LabTheme.primary)
     }
 }
