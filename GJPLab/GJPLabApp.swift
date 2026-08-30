@@ -6,22 +6,25 @@ struct GJPLabApp: App {
     @State private var showingSplash = true
     @State private var maintenanceEnabled = false
     @StateObject private var firebaseIntegration = FirebaseIntegration()
+    @StateObject private var callBlocker = BlockAppDuringCallsController()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
-            Group {
-                if showingSplash {
-                    SplashScreen()
-                } else if maintenanceEnabled {
-                    MaintenanceScreen {
-                        Task {
-                            maintenanceEnabled = await loadMaintenanceMode()
+            ZStack {
+                Group {
+                    if showingSplash {
+                        SplashScreen()
+                    } else if maintenanceEnabled {
+                        MaintenanceScreen {
+                            Task {
+                                maintenanceEnabled = await loadMaintenanceMode()
+                            }
                         }
+                    } else {
+                        ContentView(callBlocker: callBlocker)
                     }
-                } else {
-                    ContentView()
                 }
-            }
                 .tint(LabTheme.primary)
                 .task {
                     async let fetchedMaintenanceMode = loadMaintenanceMode()
@@ -29,6 +32,17 @@ struct GJPLabApp: App {
                     maintenanceEnabled = await fetchedMaintenanceMode
                     showingSplash = false
                 }
+                if callBlocker.isBlocking {
+                    CallBlockingOverlay()
+                        .transition(.opacity)
+                        .zIndex(1)
+                }
+            }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    callBlocker.refreshCallStatus()
+                }
+            }
         }
     }
 

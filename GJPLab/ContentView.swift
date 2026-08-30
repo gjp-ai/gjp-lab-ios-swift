@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var path: [FeatureRoute] = []
+    @ObservedObject var callBlocker: BlockAppDuringCallsController
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -13,6 +14,8 @@ struct ContentView: View {
                     case .urlSession:
                         URLSessionScreen(onResponse: { path.append(.response($0)) })
                     case .firebase: FirebaseFeatureScreen()
+                    case .security(.blockAppDuringCalls):
+                        BlockAppDuringCallsScreen(controller: callBlocker)
                     case .response(let response): HttpResponseScreen(response: response)
                     }
                 }

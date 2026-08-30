@@ -1,13 +1,5 @@
 import Foundation
 
-enum FeatureRoute: Hashable {
-    case catalog(DashboardCategory)
-    case deviceInfo
-    case urlSession
-    case firebase
-    case response(HttpResponse)
-}
-
 enum DashboardCategory: String, CaseIterable, Identifiable, Hashable {
     case swiftUI
     case httpClient
@@ -78,53 +70,11 @@ enum DashboardCategory: String, CaseIterable, Identifiable, Hashable {
                 CatalogItem("Alamofire", "A popular Swift HTTP networking library.")
             ]
         case .security:
-            [
-                CatalogItem("Screenshot detection", "Observe screenshots after the system captures them."),
-                CatalogItem("Screen capture detection", "Observe active recording, mirroring, or AirPlay capture."),
-                CatalogItem("Sensitive content", "Reduce exposure while the app is inactive or captured.")
-            ]
+            SecurityCatalog.items
         case .integration:
             [CatalogItem("Firebase", "Analytics, Config, Crashlytics, Performance, and Messaging.", route: .firebase)]
         case .others:
             [CatalogItem("OS & hardware", "Inspect iOS and the current device hardware.", route: .deviceInfo)]
         }
     }
-}
-
-struct CatalogItem: Identifiable, Hashable {
-    let title: String
-    let description: String
-    let route: FeatureRoute?
-
-    var id: String { title }
-
-    init(_ title: String, _ description: String, route: FeatureRoute? = nil) {
-        self.title = title
-        self.description = description
-        self.route = route
-    }
-}
-
-struct HttpResponse: Hashable {
-    let statusCode: Int
-    let body: String
-    let headers: [(String, String)]
-
-    static func == (lhs: HttpResponse, rhs: HttpResponse) -> Bool {
-        lhs.statusCode == rhs.statusCode && lhs.body == rhs.body && lhs.headers.elementsEqual(rhs.headers) { $0.0 == $1.0 && $0.1 == $1.1 }
-    }
-    func hash(into hasher: inout Hasher) { hasher.combine(statusCode); hasher.combine(body); headers.forEach { hasher.combine($0.0); hasher.combine($0.1) } }
-}
-
-enum HttpMethod: String, CaseIterable, Identifiable {
-    case GET, POST, PUT, DELETE
-
-    var id: String { rawValue }
-    var supportsPayload: Bool { self == .POST || self == .PUT }
-}
-
-struct InfoRow: Identifiable {
-    let id = UUID()
-    let label: String
-    let value: String
 }
