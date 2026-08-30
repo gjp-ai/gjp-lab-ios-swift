@@ -29,11 +29,11 @@ enum DashboardCategory: String, CaseIterable, Identifiable, Hashable {
 
     var dashboardDescription: String {
         switch self {
-        case .swiftUI: "Modern iOS UI."
-        case .httpClient: "Native and library networking."
-        case .security: "Screen-capture protection."
-        case .integration: "External SDKs and services."
-        case .others: "Platform and device details."
+        case .swiftUI: "Apple’s modern framework for building UI declaratively."
+        case .httpClient: "URLSession, Alamofire, Moya, Siesta"
+        case .security: "Runtime Application Self-Protection"
+        case .integration: "External SDKs and services. eg: Firebase"
+        case .others: "Platform and device details, Biometric ID, and more."
         }
     }
 
