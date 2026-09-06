@@ -80,3 +80,9 @@ struct CallBlockingOverlay: View {
         BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "SGP"))
     }
 }
+
+#Preview("Unavailable") {
+    NavigationStack {
+        BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "CHN"))
+    }
+}
