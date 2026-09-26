@@ -37,11 +37,11 @@ The app icon is an iOS 1024-point asset with a black full-bleed background, whit
 
 Editable icon SVGs live in [`resources/design/app-icons/`](../../resources/design/app-icons/). [`scripts/render_app_icons.swift`](../../scripts/render_app_icons.swift) deterministically renders default, dark, and tinted PNG variants into `Assets.xcassets/AppIcon.appiconset`; do not hand-edit those rendered PNGs.
 
-The system launch screen uses appearance-aware `LaunchBackground` and `LaunchMark` assets. The app-owned [`SplashScreen`](../../GJPLab/SplashScreen.swift) immediately continues the same semantic light/dark treatment using the reusable [`LabMark`](../../GJPLab/common/theme/LabMark.swift).
+The system launch screen uses appearance-aware `LaunchBackground` and `LaunchMark` assets. The app-owned [`SplashScreen`](../../GJPLab/app/startup/SplashScreen.swift) immediately continues the same semantic light/dark treatment using the reusable [`LabMark`](../../GJPLab/common/theme/LabMark.swift).
 
 ## Adaptive dashboard
 
-[`MainScreen`](../../GJPLab/MainScreen.swift) selects grid columns from available view width, not device model:
+[`MainScreen`](../../GJPLab/navigation/dashboard/MainScreen.swift) selects grid columns from available view width, not device model:
 
 | Available width | Layout |
 | --- | --- |

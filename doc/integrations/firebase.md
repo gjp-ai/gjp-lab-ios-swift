@@ -38,7 +38,7 @@ Do not copy package versions into this guide; inspect the resolved package when 
 
 ## Stable contracts
 
-[`FirebaseConstants`](../../GJPLab/integration/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
+[`FirebaseConstants`](../../GJPLab/sdk/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
 
 | Service | Contract |
 | --- | --- |

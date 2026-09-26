@@ -23,22 +23,26 @@ flowchart LR
     Calls --> Overlay[CallBlockingOverlay]
 ```
 
-[`GJPLabApp`](../../GJPLab/GJPLabApp.swift) is the SwiftUI entry point. It attaches [`GJPLabAppDelegate`](../../GJPLab/GJPLabAppDelegate.swift) for SDK lifecycle callbacks, coordinates splash timing and maintenance mode, then chooses the dashboard or maintenance screen. [`ContentView`](../../GJPLab/ContentView.swift) owns the dashboard route path.
+[`GJPLabApp`](../../GJPLab/app/GJPLabApp.swift) is the SwiftUI entry point. It attaches [`GJPLabAppDelegate`](../../GJPLab/app/GJPLabAppDelegate.swift) for SDK lifecycle callbacks, coordinates splash timing and maintenance mode, then chooses the dashboard or maintenance screen. [`ContentView`](../../GJPLab/app/ContentView.swift) owns the dashboard route path.
 
 ## Code organization
 
 | Path | Responsibility |
 | --- | --- |
+| `GJPLab/app/` | App entry point, app delegate, and the root `ContentView` that owns the route path |
+| `GJPLab/app/startup/` | Splash and maintenance screens |
+| `GJPLab/navigation/` | App-wide `FeatureRoute` values |
+| `GJPLab/navigation/dashboard/` | Category dashboard (`MainScreen`) |
+| `GJPLab/navigation/catalog/` | Category catalogue screen and catalogue models |
+| `GJPLab/features/<category>/` | Category-level route and catalogue content, when a category needs them (e.g. `SecurityRoute`, `SecurityCatalog`) |
+| `GJPLab/features/<category>/<feature>/` | Feature views and controllers, with `data/` and `model/` subfolders as needed |
+| `GJPLab/sdk/` | SDK bootstrap and integration adapters |
+| `GJPLab/sdk/firebase/` | Firebase constants, startup, messaging, and service boundary |
 | `GJPLab/common/config/` | Stable application behavior constants |
 | `GJPLab/common/theme/` | Slate semantic colors, reusable surface treatment, and brand mark |
-| `GJPLab/navigation/` | App-wide route values and catalogue presentation/models |
-| `GJPLab/features/<category>/<feature>/` | Feature views, feature-specific models, and data code |
-| `GJPLab/features/security/` | Security feature routes and catalogue content |
-| `GJPLab/integration/` | SDK bootstrap and integration adapters |
-| `GJPLab/integration/firebase/` | Firebase constants, startup, messaging, and service boundary |
-| Root `GJPLab/*.swift` | App lifecycle, startup, dashboard, splash, and maintenance |
+| Root `GJPLab/` | Asset catalog, `GoogleService-Info.plist`, and Debug/Release entitlements only |
 
-New code should follow the closest feature pattern. Reusable app behavior belongs in `common/`; SDK-specific behavior belongs under `integration/`.
+New code should follow the closest feature pattern. Reusable app behavior belongs in `common/`; SDK-specific behavior belongs under `sdk/`.
 
 ## Dependency and event flow
 
@@ -71,7 +75,7 @@ Do not introduce a view model, coordinator, dependency container, domain layer, 
 
 ## Platform and security boundaries
 
-Push notification/APNs lifecycle callbacks reside in `GJPLabAppDelegate` and `integration/firebase/`. App capabilities are declared in `GJPLab.Debug.entitlements` and `GJPLab.Release.entitlements`; launch-screen configuration is generated from target build settings. Network behavior uses Apple transport security defaults—do not add exceptions or custom trust behavior merely to make a sample endpoint work.
+Push notification/APNs lifecycle callbacks reside in `GJPLabAppDelegate` and `sdk/firebase/`. App capabilities are declared in `GJPLab.Debug.entitlements` and `GJPLab.Release.entitlements`; launch-screen configuration is generated from target build settings. Network behavior uses Apple transport security defaults—do not add exceptions or custom trust behavior merely to make a sample endpoint work.
 
 Firebase client configuration in `GoogleService-Info.plist` is not server authority. Service accounts, APNs private keys, OAuth secrets, App Check debug tokens, and FCM server credentials must not enter the application or repository.
 

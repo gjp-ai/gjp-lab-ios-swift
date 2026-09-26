@@ -14,11 +14,11 @@ Prevent interaction with GJP Lab while iOS reports an active call, while preserv
 | --- | --- |
 | [`BlockAppDuringCallsController.swift`](../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsController.swift) | Persistent preference, storefront gate, CallKit observer, call state, and simulated-call state |
 | [`BlockAppDuringCallsScreen.swift`](../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsScreen.swift) | Settings/status/test UI and full-screen blocking overlay |
-| [`SecurityCatalog.swift`](../../../GJPLab/features/security/model/SecurityCatalog.swift) | Security catalogue entry for the feature |
-| [`SecurityRoute.swift`](../../../GJPLab/features/security/model/SecurityRoute.swift) | Security-specific navigation value |
+| [`SecurityCatalog.swift`](../../../GJPLab/features/security/SecurityCatalog.swift) | Security catalogue entry for the feature |
+| [`SecurityRoute.swift`](../../../GJPLab/features/security/SecurityRoute.swift) | Security-specific navigation value |
 | [`FeatureRoute.swift`](../../../GJPLab/navigation/FeatureRoute.swift) | App-level route wrapper for Security routes |
-| [`ContentView.swift`](../../../GJPLab/ContentView.swift) | Security-route destination in the app-owned navigation stack |
-| [`GJPLabApp.swift`](../../../GJPLab/GJPLabApp.swift) | Long-lived controller, active-scene refresh, and app-wide overlay |
+| [`ContentView.swift`](../../../GJPLab/app/ContentView.swift) | Security-route destination in the app-owned navigation stack |
+| [`GJPLabApp.swift`](../../../GJPLab/app/GJPLabApp.swift) | Long-lived controller, active-scene refresh, and app-wide overlay |
 
 ## Ownership and state
 
