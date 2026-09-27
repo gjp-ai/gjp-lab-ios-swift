@@ -31,7 +31,7 @@ Describe the user or product outcome in one or two sentences. State why the feat
 ## Rules & Constraints
 
 - Record defaults, persistence, idempotency, privacy, and security rules.
-- State supported platforms and the required public APIs.
+- State supported platforms, the minimum iOS version if it differs from the app's deployment target, and the required public APIs.
 - Explicitly prohibit private APIs, unsupported workarounds, credentials, or sensitive logging where applicable.
 
 ## Platform limitations
@@ -47,7 +47,7 @@ Describe the user or product outcome in one or two sentences. State why the feat
 
 ## Technical implementation constraints
 
-- Name the required feature folder and existing lifecycle or navigation integration points.
+- Name the feature folder (`GJPLab/features/<category>/<feature>/`) and the existing lifecycle or navigation integration points (`FeatureRoute`, `ContentView`, catalogue entry).
 - State required separation of shared, platform, data, and UI concerns.
 - Forbid unrelated refactors and new dependencies unless the requirement approves them.
 

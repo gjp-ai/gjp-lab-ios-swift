@@ -7,7 +7,7 @@
 
 ## Project Overview
 
-GJPLab is an iOS lab for practising iOS features and third-party libraries, grouped into dashboard categories (SwiftUI, HTTP Client, Security, Integration, Others). It is also the practice host for the portable Swift skill library in `.agent/skills/`.
+GJPLab is an iOS lab for practising iOS features and third-party libraries, grouped into dashboard categories (SwiftUI, HTTP Client, Security, Integration, Others).
 
 ## Tech Stack
 
@@ -74,5 +74,3 @@ Load the smallest set that covers the task, follow its mode routing, and load on
 | Build failures and warnings, crashes, simulator hangs, SPM, signing, CI, or release checks | [`ios-build-release`](.agent/skills/ios-build-release/SKILL.md) |
 | Permissions, entitlements, Info.plist, privacy manifests, Keychain, notifications, deep links, background work, or platform security | [`ios-platform-privacy`](.agent/skills/ios-platform-privacy/SKILL.md) |
 | Commit all changes and push the current branch | [`commit-push`](.agent/skills/commit-push/SKILL.md) |
-
-Changing a skill itself: see [iOS agent skills practice](doc/practices/ios-agent-skills.md).

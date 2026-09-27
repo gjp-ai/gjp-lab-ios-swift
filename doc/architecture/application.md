@@ -1,10 +1,10 @@
 # Application architecture
 
-Status: Implemented snapshot, 2026-08-30
+Status: Implemented snapshot, 2026-09-27
 
 ## Purpose
 
-GJPLab is a single-target iOS learning application. It favors small, readable feature slices over production-scale abstraction: SwiftUI renders the interface, `NavigationStack` owns the route path, feature views own small local state, repositories isolate data mechanics, and external SDK access stays in integration adapters.
+GJPLab is a single-target iOS learning application. It favors small, readable feature slices over production-scale abstraction: SwiftUI renders the interface, `NavigationStack` owns the route path, feature views own small local state, repositories isolate data mechanics, and external SDK access stays in adapters under `sdk/`.
 
 ## Runtime flow
 
@@ -67,7 +67,7 @@ flowchart TD
 
 - `GJPLabAppDelegate` owns process-level SDK callbacks and forwards them through `AppSDKBootstrapper`.
 - `ContentView` owns navigation state using `[FeatureRoute]`.
-- Views own private presentation state with `@State`; `FirebaseFeatureScreen` owns its observable Firebase service with `@StateObject`; `GJPLabApp` owns the shared call-blocking controller with `@StateObject`.
+- Views own private presentation state with `@State`. `GJPLabApp` owns, with `@StateObject`, the `FirebaseIntegration` used for the splash maintenance lookup and the shared call-blocking controller; `FirebaseFeatureScreen` owns its own `FirebaseIntegration` for the lab screen.
 - `URLSessionRepository` performs request mechanics; views present state and invoke explicit actions.
 
 ## State and lifecycle model
@@ -89,14 +89,25 @@ Firebase client configuration in `GoogleService-Info.plist` is not server author
 
 ## Build and verification
 
-The app target uses Swift 5, an iOS 26.6 deployment target (set once at project level; targets inherit it), Xcode project file-system synchronized groups, and Firebase Apple SDK products through Swift Package Manager.
+| Setting | Value |
+| --- | --- |
+| Toolchain | Xcode 27.0 (iOS 27 SDK); Swift 5 language mode |
+| Deployment target | iOS 26.6, set once at project level; no target overrides |
+| Concurrency | `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`, approachable concurrency enabled |
+| Project model | File-system synchronized groups; Firebase Apple SDK through Swift Package Manager |
+| Warning baseline | A clean build has zero warnings; keep it that way |
 
 ```bash
 xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug \
   -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+
+DEVICE=$(.agent/skills/ios-build-release/scripts/pick-simulator.sh)
+xcodebuild -project GJPLab.xcodeproj -scheme GJPLab \
+  -destination "platform=iOS Simulator,name=$DEVICE" CODE_SIGNING_ALLOWED=NO \
+  -only-testing:GJPLabTests test
 ```
 
-Run the matching test command when a simulator runtime is available. Use a physical device for APNs, authorization prompts, and system lifecycle fidelity.
+Drop `-only-testing` to include UI tests. Use a physical device for APNs, authorization prompts, CallKit, and system lifecycle fidelity.
 
 ## Known architectural constraints
 
@@ -106,6 +117,6 @@ Run the matching test command when a simulator runtime is available. Use a physi
 | View-local state | Low ceremony; limited restoration and sharing guarantees | State must outlive a view or scene |
 | In-memory navigation path | Clear small-app routing; no durable restoration | Deep links or restoration become product requirements |
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
-| Minimal automated tests | Fast experimentation; lower regression confidence | Behavior becomes important to preserve |
+| Minimal automated tests (call-blocking controller only) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
 
 See [Slate design system](design-system.md), [splash detailed design](../detail-design/splash-screen.md), [call-blocking detailed design](../detail-design/security/block_app_during_calls.md), and [Firebase integration](../integrations/firebase.md) for feature-specific detail.

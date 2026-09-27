@@ -76,7 +76,6 @@ The test control updates `isTestCallActive`, exercising the same derived `isBloc
 
 ## Verification
 
-- Unit tests cover blocking when enabled with a simulated call and the China storefront gate.
-- Build all app and test targets with the project build command.
+- Unit tests in [`GJPLabTests.swift`](../../../GJPLabTests/GJPLabTests.swift) cover blocking when enabled with a simulated call and the China storefront gate. Run them with the test command in [application architecture](../../architecture/application.md#build-and-verification) (`-only-testing:GJPLabTests`).
 - On a physical non-China storefront device, test outgoing/incoming system-exposed calls, foreground return, setting persistence, and the simulated-call path.
 - On a China storefront test account, confirm CallKit is never initialized and the settings page reports unavailable.
