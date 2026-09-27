@@ -53,5 +53,5 @@ Describe the user or product outcome in one or two sentences. State why the feat
 
 ## Related documents
 
-- Detailed design: `<relative link>`
+- Detailed design: `<feature>_detail_design.md` in the same folder
 - Architecture or integration references: `<relative links>`

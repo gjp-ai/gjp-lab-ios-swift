@@ -29,16 +29,16 @@ flowchart TD
 
 | Concern | Source of truth |
 | --- | --- |
-| Firebase client configuration | [`GoogleService-Info.plist`](../../GJPLab/GoogleService-Info.plist) |
-| Firebase package pin | [`Package.resolved`](../../GJPLab.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved) |
-| Swift packages / linker flags | [`project.pbxproj`](../../GJPLab.xcodeproj/project.pbxproj) |
-| Push entitlement | [`GJPLab.Debug.entitlements`](../../GJPLab/GJPLab.Debug.entitlements) and release counterpart |
+| Firebase client configuration | [`GoogleService-Info.plist`](../../../../GJPLab/GoogleService-Info.plist) |
+| Firebase package pin | [`Package.resolved`](../../../../GJPLab.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved) |
+| Swift packages / linker flags | [`project.pbxproj`](../../../../GJPLab.xcodeproj/project.pbxproj) |
+| Push entitlement | [`GJPLab.Debug.entitlements`](../../../../GJPLab/GJPLab.Debug.entitlements) and release counterpart |
 
 Do not copy package versions into this guide; inspect the resolved package when exact versions matter.
 
 ## Stable contracts
 
-[`FirebaseConstants`](../../GJPLab/sdk/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
+[`FirebaseConstants`](../../../../GJPLab/sdk/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
 
 | Service | Contract |
 | --- | --- |
@@ -58,7 +58,7 @@ Startup logs `app_started`; the Firebase screen logs `feature_firebase_opened`. 
 
 ### Remote Config
 
-Startup sets a zero debug fetch interval, one-hour release interval, and `gjp_lab_maintenance_enabled = false` local default. `fetchMaintenanceMode()` calls `fetchAndActivate()` and returns the current Boolean. It does not distinguish a fresh value, cached value, or failed fetch with an active/default value; [the splash detailed design](../detail-design/splash-screen.md) documents the resulting fallback behavior.
+Startup sets a zero debug fetch interval, one-hour release interval, and `gjp_lab_maintenance_enabled = false` local default. `fetchMaintenanceMode()` calls `fetchAndActivate()` and returns the current Boolean. It does not distinguish a fresh value, cached value, or failed fetch with an active/default value; [the splash detailed design](../../../app/startup/splash_detail_design.md) documents the resulting fallback behavior.
 
 ### Crashlytics
 

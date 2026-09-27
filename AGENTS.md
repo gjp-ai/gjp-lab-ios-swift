@@ -35,7 +35,7 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 | `GJPLab/sdk/` | SDK bootstrap and adapters (`sdk/firebase/`); not the `features/integration/` category |
 | `GJPLab/common/` | Shared `config/` and `theme/` |
 | `GJPLab/` root | Assets, `GoogleService-Info.plist`, entitlements; no Swift source |
-| `doc/` | Architecture, design system, integrations, requirements, detailed designs |
+| `doc/` | `architecture/`, plus requirement and detailed-design docs that mirror code paths (`doc/features/<category>/<feature>/`) |
 | `resources/design/app-icons/` | Editable app-icon SVG sources |
 
 ## Architecture

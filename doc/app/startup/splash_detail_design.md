@@ -2,11 +2,11 @@
 
 Status: Partial implementation
 
-Requirements: [Splash screen requirements](../requirements/splash-screen.md)
+Requirements: [Splash screen requirements](splash_requirement.md)
 
 ## Current design
 
-[`GJPLabApp`](../../GJPLab/app/GJPLabApp.swift) owns startup coordination. It renders the stateless [`SplashScreen`](../../GJPLab/app/startup/SplashScreen.swift), starts a Remote Config lookup and a three-second minimum timer concurrently, then displays the dashboard or maintenance screen based on whichever maintenance result wins the five-second task-group race.
+[`GJPLabApp`](../../../GJPLab/app/GJPLabApp.swift) owns startup coordination. It renders the stateless [`SplashScreen`](../../../GJPLab/app/startup/SplashScreen.swift), starts a Remote Config lookup and a three-second minimum timer concurrently, then displays the dashboard or maintenance screen based on whichever maintenance result wins the five-second task-group race.
 
 ```mermaid
 flowchart TD
@@ -27,12 +27,12 @@ flowchart TD
 
 | Source | Responsibility |
 | --- | --- |
-| [`GJPLabApp.swift`](../../GJPLab/app/GJPLabApp.swift) | App-owned splash timer, Remote Config timeout race, and destination selection |
-| [`SplashScreen.swift`](../../GJPLab/app/startup/SplashScreen.swift) | Brand presentation only |
-| [`AppConfig.swift`](../../GJPLab/common/config/AppConfig.swift) | Three-second minimum and five-second timeout |
-| [`FirebaseIntegration.swift`](../../GJPLab/sdk/firebase/FirebaseIntegration.swift) | Fetches/activates Remote Config and returns maintenance Boolean |
-| [`MaintenanceScreen.swift`](../../GJPLab/app/startup/MaintenanceScreen.swift) | Maintenance retry presentation |
-| [`LabTheme.swift`](../../GJPLab/common/theme/LabTheme.swift) | Semantic light/dark roles |
+| [`GJPLabApp.swift`](../../../GJPLab/app/GJPLabApp.swift) | App-owned splash timer, Remote Config timeout race, and destination selection |
+| [`SplashScreen.swift`](../../../GJPLab/app/startup/SplashScreen.swift) | Brand presentation only |
+| [`AppConfig.swift`](../../../GJPLab/common/config/AppConfig.swift) | Three-second minimum and five-second timeout |
+| [`FirebaseIntegration.swift`](../../../GJPLab/sdk/firebase/FirebaseIntegration.swift) | Fetches/activates Remote Config and returns maintenance Boolean |
+| [`MaintenanceScreen.swift`](../../../GJPLab/app/startup/MaintenanceScreen.swift) | Maintenance retry presentation |
+| [`LabTheme.swift`](../../../GJPLab/common/theme/LabTheme.swift) | Semantic light/dark roles |
 
 ## Coordination model
 
