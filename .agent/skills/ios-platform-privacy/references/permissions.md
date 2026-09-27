@@ -2,17 +2,22 @@
 
 ## Minimize the request
 
-- Confirm a system picker, limited access, delegated controller, or less-sensitive API cannot meet the need first.
-- Add the exact `Info.plist` usage description and entitlement only when the feature requires them. Keep authorization checks next to the protected operation.
+- First confirm a system picker (`PhotosPicker`, document picker, contact picker), limited access, or a less sensitive API cannot meet the need.
+- Add the exact usage description and entitlement only when the feature needs them. Keep authorization checks next to the protected operation.
 
 ## Design the user flow
 
-- Ask in context after the user initiates a feature, with an explanation of its benefit before the system sheet.
+- Ask in context after the user starts a feature, explaining the benefit before the system prompt.
 - Handle not-determined, denied, restricted, limited, provisional, revoked, unavailable, and missing-entitlement states as applicable.
-- Keep the feature useful when possible without access. Do not loop prompts or pressure users toward Settings.
-- Use the capability's current authorization status immediately before the protected action; prior grants can change.
+- Keep the feature useful without access where possible. Do not loop prompts or pressure users toward Settings.
+- Read the current status right before the protected action; earlier grants can change.
+
+## Privacy manifest
+
+- Declare required-reason API usage and collected data types in the app's `PrivacyInfo.xcprivacy`, and keep it consistent with the App Store privacy labels.
+- When adding an SDK, confirm it ships its own manifest (and signature, if Apple requires one for that SDK).
 
 ## Verify
 
-- Test first request, grant, denial, settings change, interrupted prompt, and relevant OS versions on a device when framework fidelity matters.
-- Inspect generated Info.plist and signed entitlements so privacy strings and capabilities match the actual target.
+- Test first request, grant, denial, a change in Settings, an interrupted prompt, and relevant OS versions; use a device when framework fidelity matters. `xcrun simctl privacy` resets simulator permissions between runs.
+- Inspect the generated Info.plist and signed entitlements so privacy strings and capabilities match the target.

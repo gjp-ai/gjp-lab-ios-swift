@@ -1,65 +1,78 @@
-# gjp-lab-ios-swift agent guide
+# AGENTS.md
 
-This repository is a small iOS learning lab and the practice host for a portable Swift skill library. User instructions define the task; this file defines local project constraints; each skill supplies a reusable workflow for one engineering concern.
+## Your Role
+- You are an experienced engineer specialized in Swift and familiar with the platform-specific details of iOS.
+- You implement features and fix bugs.
+- Your documentation and explanations are written for less experienced developer to ease understanding.
 
-## Skill routing
+## Project Overview
 
-Activate the smallest set of skills that fully covers the request:
+GJPLab is an iOS lab for practising iOS features and third-party libraries, grouped into dashboard categories (SwiftUI, HTTP Client, Security, Integration, Others). It is also the practice host for the portable Swift skill library in `.agent/skills/`.
 
-| Concern | Skill |
-| --- | --- |
-| SwiftUI screens, theme, accessibility, adaptive layout, previews, or UI tests | [`ios-swiftui-design`](.agent/skills/ios-swiftui-design/SKILL.md) |
-| Feature boundaries, state ownership, navigation, lifecycle, dependency wiring, or restructuring | [`ios-feature-architecture`](.agent/skills/ios-feature-architecture/SKILL.md) |
-| Repositories, URLSession, persistence, Swift concurrency, caching, or synchronization | [`ios-data-concurrency`](.agent/skills/ios-data-concurrency/SKILL.md) |
-| Permissions, entitlements, Info.plist, notifications, deep links, background work, privacy, or platform security | [`ios-platform-privacy`](.agent/skills/ios-platform-privacy/SKILL.md) |
-| Diagnosis, XCTest/Swift Testing, Xcode builds, Swift Package Manager, CI, performance, or release verification | [`ios-quality-build`](.agent/skills/ios-quality-build/SKILL.md) |
+## Tech Stack
 
-- Follow the selected skill's mode routing and load only references relevant to the task.
-- This file takes precedence when it differs from a portable skill.
-- For cross-cutting work, coordinate selected skills around one user outcome; do not duplicate layers, tests, or verification.
-- Improve a portable skill only when observed evidence reveals a lesson that applies beyond this repository.
+- Swift 5 and SwiftUI; iOS 26.6 deployment target, set once at project level (do not override it per target); bundle id `com.ganjianping.lab.is`.
+- Concurrency: default `MainActor` isolation with approachable concurrency enabled; mark off-main work `nonisolated` or `@concurrent`.
+- `GJPLab.xcodeproj` uses file-system synchronized groups: Swift files under `GJPLab/` join the app target automatically. Only `CODE_SIGN_ENTITLEMENTS` hardcodes source paths.
+- Firebase (Analytics, Crashlytics, Messaging, Performance, Remote Config) via Swift Package Manager.
+- Tests: Swift Testing in `GJPLabTests`; XCUITest in `GJPLabUITests`.
 
-## Project profile
+## Commands
 
-- Bundle identifier `com.ganjianping.lab.is`; iOS deployment target 26.4; Swift 5; Xcode project `GJPLab.xcodeproj`.
-- SwiftUI UI with `NavigationStack`: `GJPLabApp` → splash/maintenance/dashboard → category catalogue → feature screen.
-- Folder names are lowercase and do not repeat their parent (`httpclient/urlsession`, not `httpclient/httpurlsession`). Layout:
+- Build: `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build`
+- Test: `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -destination 'platform=iOS Simulator,name=<device>' CODE_SIGNING_ALLOWED=NO test`. Get `<device>` from `.agent/skills/ios-build-release/scripts/pick-simulator.sh` (it times out instead of hanging); add `-only-testing:GJPLabTests` for unit tests only.
+- App icons: `swift scripts/render_app_icons.swift` from the repository root.
+
+## Directory Structure
+
+Folder names are lowercase and do not repeat their parent (`httpclient/urlsession`).
 
 | Path | Contents |
 | --- | --- |
-| `GJPLab/app/` | `GJPLabApp`, `GJPLabAppDelegate`, and root `ContentView`; `startup/` holds splash and maintenance |
-| `GJPLab/navigation/` | `FeatureRoute`; `dashboard/` (`MainScreen`) and `catalog/` (catalogue screen and models) |
-| `GJPLab/features/<category>/` | Category-level `<Category>Route` / `<Category>Catalog` when a category needs them |
-| `GJPLab/features/<category>/<feature>/` | Screens and controllers, with `data/` and `model/` subfolders as needed |
-| `GJPLab/sdk/` | SDK bootstrap and adapters (e.g. `sdk/firebase/`); distinct from the `features/integration/` dashboard category |
-| `GJPLab/common/` | Reusable app code: `config/`, `theme/` |
-| `GJPLab/` root | Asset catalog, `GoogleService-Info.plist`, and entitlements only; no Swift source |
+| `GJPLab/app/` | `GJPLabApp`, `GJPLabAppDelegate`, root `ContentView`; `startup/` holds splash and maintenance |
+| `GJPLab/navigation/` | `FeatureRoute`; `dashboard/` (`MainScreen`); `catalog/` (catalogue screen and models) |
+| `GJPLab/features/<category>/<feature>/` | Screens and controllers, with `data/` and `model/` as needed; `<Category>Route` / `<Category>Catalog` sit in `<category>/` |
+| `GJPLab/sdk/` | SDK bootstrap and adapters (`sdk/firebase/`); not the `features/integration/` category |
+| `GJPLab/common/` | Shared `config/` and `theme/` |
+| `GJPLab/` root | Assets, `GoogleService-Info.plist`, entitlements; no Swift source |
+| `doc/` | Architecture, design system, integrations, requirements, detailed designs |
+| `resources/design/app-icons/` | Editable app-icon SVG sources |
 
-- The Xcode project uses file-system synchronized groups, so Swift source added under `GJPLab/` is automatically included in the app target. Do not add manual build-file entries unless that project model changes. The only hardcoded source paths are the `CODE_SIGN_ENTITLEMENTS` build settings; update them if entitlements move.
-- Architecture, design-system, integration, and per-feature requirement/design notes live in `doc/`. Update the matching doc when a change moves files or alters documented behavior.
+## Architecture
 
-## Adding a feature
+- Flow: `GJPLabApp` → splash/maintenance → dashboard → category catalogue → feature screen.
+- `ContentView` owns the `NavigationStack` path. Route all feature navigation through `FeatureRoute` and keep existing cases stable.
+- `@State` for screen state; `@StateObject` for a screen-owned observable integration. Do not add view models, coordinators, or dependency containers as incidental refactoring.
+- Views do not call network, platform, or SDK APIs directly. Use the feature repository (`URLSessionRepository.execute` owns 15-second timeouts, JSON formatting, response headers, and cancellation) or `FirebaseIntegration`. APNs and notification wiring stays in `GJPLabAppDelegate` and `sdk/firebase/`.
+- To add a feature, follow [Adding a feature](doc/architecture/application.md#adding-a-feature). Details: [application architecture](doc/architecture/application.md).
 
-1. Add the screen under `features/<category>/<feature>/`.
-2. Add a `FeatureRoute` case (or a case on the category's nested route, such as `SecurityRoute`) and its destination in `ContentView`.
-3. Add or enable the catalogue entry (`DashboardCategory.items` or the category's `<Category>Catalog`).
-4. Add previews, and a UI test when the feature is reachable from the dashboard.
+## Coding Standards
 
-## GJPLab adapter
+- Follow the closest existing feature and match the surrounding code.
+- Use the Slate palette through `LabTheme` roles and `LabMark`; no raw brand colors or copied vector paths in feature views.
+- Define Firebase events, Remote Config keys, trace names, and topics in `FirebaseConstants`.
+- Info.plist is generated: add keys as `INFOPLIST_KEY_*` build settings in both Debug and Release.
 
-- Keep screen-local state in `@State`; use `@StateObject` for a screen-owned observable integration. Do not introduce a view model, coordinator, or dependency container as incidental refactoring.
-- `ContentView` owns the `NavigationStack` route path. Keep `FeatureRoute` values stable and route feature navigation through it.
-- Keep platform, Firebase, and network operations outside leaf views. `URLSessionRepository.execute` owns 15-second request timeouts, JSON formatting, response headers, and cancellation propagation.
-- Route Firebase calls through `FirebaseIntegration`; define stable events, Remote Config keys, trace names, and topics in `FirebaseConstants`.
-- Keep notification/APNs wiring in `GJPLabAppDelegate` and `sdk/firebase/`. Do not log complete FCM tokens or add client-side secrets.
-- `GoogleService-Info.plist` is Firebase client configuration, not a secret; do not edit or regenerate it unless asked.
-- The Info.plist is generated (`GENERATE_INFOPLIST_FILE = YES`). Add usage descriptions and plist keys as `INFOPLIST_KEY_*` build settings in both Debug and Release; do not add an `Info.plist` file. Keep `GJPLab.Debug.entitlements` and `GJPLab.Release.entitlements` in sync unless a difference is intentional.
-- Preserve the Slate semantic palette in `common/theme/`. Use `LabTheme` roles and `LabMark` instead of raw brand colors or copied vector paths in feature views.
-- Editable launcher-icon SVGs live in `resources/design/app-icons/`; regenerate PNG variants with `scripts/render_app_icons.swift` rather than editing rendered PNGs by hand.
+## Boundaries
 
-## Verification
+- **Always:** build before reporting done; keep tests deterministic (no live HTTP endpoint or Firebase project); update the matching `doc/` page when files move or documented behavior changes; report commands run and what was not verified (permissions, APNs, lifecycle, and system UI need a device).
+- **Ask first:** new dependencies; entitlement, capability, or signing changes (keep `GJPLab.Debug.entitlements` and `GJPLab.Release.entitlements` in sync); manual project-file entries.
+- **Never:** log complete FCM tokens or add client-side secrets; edit or regenerate `GoogleService-Info.plist` unless asked (it is client config, not a secret); add an `Info.plist` file; hand-edit rendered app-icon PNGs.
 
-- Build with `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build`.
-- Run tests when an iOS Simulator runtime is available: `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -destination 'platform=iOS Simulator,name=<device>' CODE_SIGNING_ALLOWED=NO test`, choosing `<device>` from `xcrun simctl list devices available`. Add `-only-testing:GJPLabTests` for a fast unit-only run. Use device checks for permissions, APNs, lifecycle, and system UI behavior.
-- Keep automated checks deterministic; do not depend on a live HTTP endpoint or Firebase project.
-- Report commands run and environment prerequisites that prevented relevant verification.
+## Skills
+
+Load the smallest set that covers the task, follow its mode routing, and load only the references you need. For cross-cutting work, coordinate skills around one outcome without duplicating layers, tests, or verification.
+
+| Concern | Skill |
+| --- | --- |
+| Deployment target, `#available`, deprecated APIs, or Xcode/SDK upgrades | [`ios-api-availability`](.agent/skills/ios-api-availability/SKILL.md) |
+| Feature boundaries, state ownership, navigation, lifecycle, dependency wiring, restructuring, or modularization | [`ios-architecture`](.agent/skills/ios-architecture/SKILL.md) |
+| SwiftUI screens, theme, accessibility, localization, adaptive layout, UIKit interop, or previews | [`ios-swiftui-patterns`](.agent/skills/ios-swiftui-patterns/SKILL.md) |
+| async/await, actors, MainActor isolation, Sendable, data races, or Swift 6 migration | [`swift-concurrency`](.agent/skills/swift-concurrency/SKILL.md) |
+| Repositories, URLSession, JSON, persistence, caching, or synchronization | [`ios-data-layer`](.agent/skills/ios-data-layer/SKILL.md) |
+| Swift Testing, XCTest, XCUITest, test doubles, or failing and flaky tests | [`ios-testing`](.agent/skills/ios-testing/SKILL.md) |
+| Build failures and warnings, crashes, simulator hangs, SPM, signing, CI, or release checks | [`ios-build-release`](.agent/skills/ios-build-release/SKILL.md) |
+| Permissions, entitlements, Info.plist, privacy manifests, Keychain, notifications, deep links, background work, or platform security | [`ios-platform-privacy`](.agent/skills/ios-platform-privacy/SKILL.md) |
+| Commit all changes and push the current branch | [`commit-push`](.agent/skills/commit-push/SKILL.md) |
+
+Changing a skill itself: see [iOS agent skills practice](doc/practices/ios-agent-skills.md).

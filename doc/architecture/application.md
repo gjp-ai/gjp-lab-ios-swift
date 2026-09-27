@@ -42,7 +42,15 @@ flowchart LR
 | `GJPLab/common/theme/` | Slate semantic colors, reusable surface treatment, and brand mark |
 | Root `GJPLab/` | Asset catalog, `GoogleService-Info.plist`, and Debug/Release entitlements only |
 
-New code should follow the closest feature pattern. Reusable app behavior belongs in `common/`; SDK-specific behavior belongs under `sdk/`.
+New code should follow the closest feature pattern. Reusable app behavior belongs in `common/`; SDK-specific behavior belongs under `sdk/`. Folder names are lowercase and do not repeat their parent (`httpclient/urlsession`, not `httpclient/httpurlsession`).
+
+### Adding a feature
+
+1. Start from the [feature requirement template](../requirements/FEATURE_REQUIREMENT_TEMPLATE.md); add a detailed design when the feature has lifecycle, persistence, integration, platform, or security behavior.
+2. Add the screen under `features/<category>/<feature>/`, with `data/` and `model/` subfolders as needed.
+3. Add a `FeatureRoute` case (or a case on the category's nested route, such as `SecurityRoute`) and its destination in `ContentView`.
+4. Add or enable the catalogue entry in `DashboardCategory.items` or the category's `<Category>Catalog`.
+5. Add previews (light, dark, and iPad where layout adapts), and a UI test when the feature is reachable from the dashboard.
 
 ## Dependency and event flow
 
@@ -81,7 +89,7 @@ Firebase client configuration in `GoogleService-Info.plist` is not server author
 
 ## Build and verification
 
-The app target uses Swift 5, an iOS 26.4 deployment target, Xcode project file-system synchronized groups, and Firebase Apple SDK products through Swift Package Manager.
+The app target uses Swift 5, an iOS 26.6 deployment target (set once at project level; targets inherit it), Xcode project file-system synchronized groups, and Firebase Apple SDK products through Swift Package Manager.
 
 ```bash
 xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug \

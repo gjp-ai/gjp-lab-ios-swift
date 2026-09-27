@@ -37,7 +37,7 @@ final class BlockAppDuringCallsController: NSObject, ObservableObject {
         } else {
             Task { [weak self] in
                 let storefront = await Storefront.current
-                await self?.configure(for: storefront?.countryCode)
+                self?.configure(for: storefront?.countryCode)
             }
         }
     }

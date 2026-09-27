@@ -16,3 +16,4 @@
 
 - Inspect capabilities, entitlements, generated Info.plist, URL handlers, background modes, extensions, and dependency-added configuration.
 - Exercise notification interactions, termination/relaunch, deep links, task expiration, duplicate delivery, and availability differences when relevant.
+- On the simulator, drive deep links with `xcrun simctl openurl booted <url>` and notifications with `xcrun simctl push booted <bundle-id> <payload.apns>`; confirm real APNs delivery and background scheduling on a device.
