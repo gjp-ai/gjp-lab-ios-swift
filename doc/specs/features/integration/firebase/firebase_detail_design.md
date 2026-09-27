@@ -2,6 +2,8 @@
 
 Status: Implemented lab integration
 
+Requirements: [Firebase lab](firebase_requirement.md)
+
 ## Scope
 
 GJPLab connects application ID `com.ganjianping.lab.is` to Firebase Analytics, Remote Config, Crashlytics, Performance Monitoring, and Cloud Messaging. It is intentionally small and demonstrative, not a production observability or security blueprint.
@@ -29,16 +31,16 @@ flowchart TD
 
 | Concern | Source of truth |
 | --- | --- |
-| Firebase client configuration | [`GoogleService-Info.plist`](../../../../GJPLab/GoogleService-Info.plist) |
-| Firebase package pin | [`Package.resolved`](../../../../GJPLab.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved) |
-| Swift packages / linker flags | [`project.pbxproj`](../../../../GJPLab.xcodeproj/project.pbxproj) |
-| Push entitlement | [`GJPLab.Debug.entitlements`](../../../../GJPLab/GJPLab.Debug.entitlements) and release counterpart |
+| Firebase client configuration | [`GoogleService-Info.plist`](../../../../../GJPLab/GoogleService-Info.plist) |
+| Firebase package pin | [`Package.resolved`](../../../../../GJPLab.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved) |
+| Swift packages / linker flags | [`project.pbxproj`](../../../../../GJPLab.xcodeproj/project.pbxproj) |
+| Push entitlement | [`GJPLab.Debug.entitlements`](../../../../../GJPLab/GJPLab.Debug.entitlements) and release counterpart |
 
 Do not copy package versions into this guide; inspect the resolved package when exact versions matter.
 
 ## Stable contracts
 
-[`FirebaseConstants`](../../../../GJPLab/sdk/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
+[`FirebaseConstants`](../../../../../GJPLab/sdk/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
 
 | Service | Contract |
 | --- | --- |

@@ -41,13 +41,7 @@ The system launch screen uses appearance-aware `LaunchBackground` and `LaunchMar
 
 ## Adaptive dashboard
 
-[`MainScreen`](../../GJPLab/navigation/dashboard/MainScreen.swift) selects grid columns from available view width, not device model:
-
-| Available width | Layout |
-| --- | --- |
-| Under 600 points | Two columns with compact card content |
-| 600–1099 points | Three columns |
-| 1100 points and above | Five columns in one row |
+[`MainScreen`](../../GJPLab/navigation/dashboard/MainScreen.swift) selects 2, 3, or 5 grid columns from available view width, not device model; the breakpoints and metrics are owned by the [dashboard detailed design](../specs/navigation/dashboard/dashboard_detail_design.md#layout).
 
 Each category card has a six-point primary rail, one icon-title row, and concise supporting copy. The catalogue uses the same canvas, surface, 24-point corners, and rail but a denser table-like row structure. Implemented rows show a chevron; planned topics show a clock and do not imply availability.
 

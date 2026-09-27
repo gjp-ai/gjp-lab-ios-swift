@@ -71,4 +71,4 @@ Let a developer build and send an HTTP request with Apple's native `URLSession` 
 ## Related documents
 
 - [Detailed design](urlsession_detail_design.md)
-- [Application architecture](../../../architecture/application.md)
+- [Application architecture](../../../../architecture/application.md)

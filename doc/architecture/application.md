@@ -46,7 +46,7 @@ New code should follow the closest feature pattern. Reusable app behavior belong
 
 ### Adding a feature
 
-1. Write `doc/features/<category>/<feature>/<feature>_requirement.md` from the [feature requirement template](../features/feature_requirement_template.md); add `<feature>_detail_design.md` beside it when the feature has lifecycle, persistence, integration, platform, or security behavior.
+1. Write `doc/specs/features/<category>/<feature>/<feature>_requirement.md` from the [feature requirement template](../specs/features/feature_requirement_template.md); add `<feature>_detail_design.md` beside it when the feature has lifecycle, persistence, integration, platform, or security behavior.
 2. Add the screen under `features/<category>/<feature>/`, with `data/` and `model/` subfolders as needed.
 3. Add a `FeatureRoute` case (or a case on the category's nested route, such as `SecurityRoute`) and its destination in `ContentView`.
 4. Add or enable the catalogue entry in `DashboardCategory.items` or the category's `<Category>Catalog`.
@@ -119,4 +119,4 @@ Drop `-only-testing` to include UI tests. Use a physical device for APNs, author
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
 | Minimal automated tests (call-blocking controller only) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
 
-See [Slate design system](design-system.md), [URLSession detailed design](../features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../app/startup/splash_detail_design.md), [call-blocking detailed design](../features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../features/integration/firebase/firebase_detail_design.md) for feature-specific detail.
+See [Slate design system](design-system.md), [dashboard detailed design](../specs/navigation/dashboard/dashboard_detail_design.md), [catalogue detailed design](../specs/navigation/catalog/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.

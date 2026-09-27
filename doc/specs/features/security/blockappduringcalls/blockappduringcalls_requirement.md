@@ -76,4 +76,4 @@ Prevent users from using the app while they are on an active phone or supported 
 ## Related documents
 
 - [Detailed design](blockappduringcalls_detail_design.md)
-- [Application architecture](../../../architecture/application.md)
+- [Application architecture](../../../../architecture/application.md)

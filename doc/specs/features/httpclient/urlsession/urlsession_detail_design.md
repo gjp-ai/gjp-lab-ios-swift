@@ -12,14 +12,14 @@ Show the smallest complete `URLSession` round trip: build a `URLRequest` from us
 
 | Source | Responsibility |
 | --- | --- |
-| [`URLSessionScreen.swift`](../../../../GJPLab/features/httpclient/urlsession/URLSessionScreen.swift) | Request form, loading and error state, send action |
-| [`HttpResponseScreen.swift`](../../../../GJPLab/features/httpclient/urlsession/HttpResponseScreen.swift) | Status, body, and header presentation |
-| [`URLSessionRepository.swift`](../../../../GJPLab/features/httpclient/urlsession/data/URLSessionRepository.swift) | URL validation, request construction, 15-second timeout, JSON formatting, header sorting, logging |
-| [`HttpMethod.swift`](../../../../GJPLab/features/httpclient/urlsession/model/HttpMethod.swift) | Supported methods and which ones carry a payload |
-| [`HttpResponse.swift`](../../../../GJPLab/features/httpclient/urlsession/model/HttpResponse.swift) | Hashable response value carried in the navigation route |
-| [`FeatureRoute.swift`](../../../../GJPLab/navigation/FeatureRoute.swift) | `.urlSession` and `.response(HttpResponse)` routes |
-| [`ContentView.swift`](../../../../GJPLab/app/ContentView.swift) | Destinations; appends `.response` when a request completes |
-| [`DashboardCategory.swift`](../../../../GJPLab/navigation/catalog/model/DashboardCategory.swift) | HTTP Client catalogue entry |
+| [`URLSessionScreen.swift`](../../../../../GJPLab/features/httpclient/urlsession/URLSessionScreen.swift) | Request form, loading and error state, send action |
+| [`HttpResponseScreen.swift`](../../../../../GJPLab/features/httpclient/urlsession/HttpResponseScreen.swift) | Status, body, and header presentation |
+| [`URLSessionRepository.swift`](../../../../../GJPLab/features/httpclient/urlsession/data/URLSessionRepository.swift) | URL validation, request construction, 15-second timeout, JSON formatting, header sorting, logging |
+| [`HttpMethod.swift`](../../../../../GJPLab/features/httpclient/urlsession/model/HttpMethod.swift) | Supported methods and which ones carry a payload |
+| [`HttpResponse.swift`](../../../../../GJPLab/features/httpclient/urlsession/model/HttpResponse.swift) | Hashable response value carried in the navigation route |
+| [`FeatureRoute.swift`](../../../../../GJPLab/navigation/FeatureRoute.swift) | `.urlSession` and `.response(HttpResponse)` routes |
+| [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Destinations; appends `.response` when a request completes |
+| [`DashboardCategory.swift`](../../../../../GJPLab/navigation/catalog/model/DashboardCategory.swift) | HTTP Client catalogue entry |
 
 ## Ownership and state
 
@@ -71,6 +71,6 @@ flowchart TD
 
 ## Verification
 
-- Build with the project build command in [application architecture](../../../architecture/application.md#build-and-verification).
+- Build with the project build command in [application architecture](../../../../architecture/application.md#build-and-verification).
 - Manual: run acceptance criteria URL-AC-01 to URL-AC-07 on a simulator, including airplane mode for URL-AC-06.
 - Check light and dark appearance, a large Dynamic Type size, and iPad width on both screens.

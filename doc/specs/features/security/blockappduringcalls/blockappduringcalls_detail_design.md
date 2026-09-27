@@ -12,13 +12,13 @@ Prevent interaction with GJP Lab while iOS reports an active call, while preserv
 
 | Source | Responsibility |
 | --- | --- |
-| [`BlockAppDuringCallsController.swift`](../../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsController.swift) | Persistent preference, storefront gate, CallKit observer, call state, and simulated-call state |
-| [`BlockAppDuringCallsScreen.swift`](../../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsScreen.swift) | Settings/status/test UI and full-screen blocking overlay |
-| [`SecurityCatalog.swift`](../../../../GJPLab/features/security/SecurityCatalog.swift) | Security catalogue entry for the feature |
-| [`SecurityRoute.swift`](../../../../GJPLab/features/security/SecurityRoute.swift) | Security-specific navigation value |
-| [`FeatureRoute.swift`](../../../../GJPLab/navigation/FeatureRoute.swift) | App-level route wrapper for Security routes |
-| [`ContentView.swift`](../../../../GJPLab/app/ContentView.swift) | Security-route destination in the app-owned navigation stack |
-| [`GJPLabApp.swift`](../../../../GJPLab/app/GJPLabApp.swift) | Long-lived controller, active-scene refresh, and app-wide overlay |
+| [`BlockAppDuringCallsController.swift`](../../../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsController.swift) | Persistent preference, storefront gate, CallKit observer, call state, and simulated-call state |
+| [`BlockAppDuringCallsScreen.swift`](../../../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsScreen.swift) | Settings/status/test UI and full-screen blocking overlay |
+| [`SecurityCatalog.swift`](../../../../../GJPLab/features/security/SecurityCatalog.swift) | Security catalogue entry for the feature |
+| [`SecurityRoute.swift`](../../../../../GJPLab/features/security/SecurityRoute.swift) | Security-specific navigation value |
+| [`FeatureRoute.swift`](../../../../../GJPLab/navigation/FeatureRoute.swift) | App-level route wrapper for Security routes |
+| [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Security-route destination in the app-owned navigation stack |
+| [`GJPLabApp.swift`](../../../../../GJPLab/app/GJPLabApp.swift) | Long-lived controller, active-scene refresh, and app-wide overlay |
 
 ## Ownership and state
 
@@ -76,6 +76,6 @@ The test control updates `isTestCallActive`, exercising the same derived `isBloc
 
 ## Verification
 
-- Unit tests in [`GJPLabTests.swift`](../../../../GJPLabTests/GJPLabTests.swift) cover blocking when enabled with a simulated call and the China storefront gate. Run them with the test command in [application architecture](../../../architecture/application.md#build-and-verification) (`-only-testing:GJPLabTests`).
+- Unit tests in [`GJPLabTests.swift`](../../../../../GJPLabTests/GJPLabTests.swift) cover blocking when enabled with a simulated call and the China storefront gate. Run them with the test command in [application architecture](../../../../architecture/application.md#build-and-verification) (`-only-testing:GJPLabTests`).
 - On a physical non-China storefront device, test outgoing/incoming system-exposed calls, foreground return, setting persistence, and the simulated-call path.
 - On a China storefront test account, confirm CallKit is never initialized and the settings page reports unavailable.

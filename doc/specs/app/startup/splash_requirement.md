@@ -73,4 +73,4 @@ Out of scope: system launch artwork, authentication, onboarding, consent, update
 ## Related documents
 
 - [Detailed design](splash_detail_design.md)
-- [Application architecture](../../architecture/application.md)
+- [Application architecture](../../../architecture/application.md)
