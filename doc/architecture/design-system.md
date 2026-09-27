@@ -39,11 +39,11 @@ Editable icon SVGs live in [`resources/design/app-icons/`](../../resources/desig
 
 The system launch screen uses appearance-aware `LaunchBackground` and `LaunchMark` assets. The app-owned [`SplashScreen`](../../GJPLab/app/startup/SplashScreen.swift) immediately continues the same semantic light/dark treatment using the reusable [`LabMark`](../../GJPLab/common/theme/LabMark.swift).
 
-## Adaptive dashboard
+## Adaptive navigation
 
-[`MainScreen`](../../GJPLab/navigation/dashboard/MainScreen.swift) selects 2, 3, or 5 grid columns from available view width, not device model; the breakpoints and metrics are owned by the [dashboard detailed design](../specs/navigation/dashboard/dashboard_detail_design.md#layout).
+The category sidebar and catalogue use system lists inside a `NavigationSplitView`: three columns on regular widths, one stack on compact widths. They keep the system list and sidebar appearance (including Liquid Glass on iOS 26 and later) rather than the Slate canvas, and use hierarchical text styles so rows stay readable on the selection highlight. Feature screens in the detail column use the Slate canvas and cards. See the [sidebar detailed design](../specs/navigation/sidebar/sidebar_detail_design.md).
 
-Each category card has a six-point primary rail, one icon-title row, and concise supporting copy. The catalogue uses the same canvas, surface, 24-point corners, and rail but a denser table-like row structure. Implemented rows show a chevron; planned topics show a clock and do not imply availability.
+In the catalogue, implemented topics show a chevron; planned topics show a clock and cannot be selected.
 
 ## Accessibility and review checklist
 

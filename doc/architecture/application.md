@@ -4,7 +4,7 @@ Status: Implemented snapshot, 2026-09-27
 
 ## Purpose
 
-GJPLab is a single-target iOS learning application. It favors small, readable feature slices over production-scale abstraction: SwiftUI renders the interface, `NavigationStack` owns the route path, feature views own small local state, repositories isolate data mechanics, and external SDK access stays in adapters under `sdk/`.
+GJPLab is a single-target iOS learning application. It favors small, readable feature slices over production-scale abstraction: SwiftUI renders the interface, a `NavigationSplitView` driven by selection state handles navigation, feature views own small local state, repositories isolate data mechanics, and external SDK access stays in adapters under `sdk/`.
 
 ## Runtime flow
 
@@ -12,9 +12,9 @@ GJPLab is a single-target iOS learning application. It favors small, readable fe
 flowchart LR
     Launch[iOS launch screen] --> App[GJPLabApp]
     App --> Splash[SplashScreen]
-    Splash -->|3-second minimum + config result| Dashboard[ContentView / MainScreen]
+    Splash -->|3-second minimum + config result| Sidebar[ContentView / CategorySidebar]
     Splash -->|maintenance enabled| Maintenance[MaintenanceScreen]
-    Dashboard --> Catalog[FeatureCatalogScreen]
+    Sidebar --> Catalog[FeatureCatalogScreen]
     Catalog --> Device[DeviceInfoScreen]
     Catalog --> HTTP[URLSessionScreen]
     Catalog --> Firebase[FirebaseFeatureScreen]
@@ -23,7 +23,7 @@ flowchart LR
     Calls --> Overlay[CallBlockingOverlay]
 ```
 
-[`GJPLabApp`](../../GJPLab/app/GJPLabApp.swift) is the SwiftUI entry point. It attaches [`GJPLabAppDelegate`](../../GJPLab/app/GJPLabAppDelegate.swift) for SDK lifecycle callbacks, coordinates splash timing and maintenance mode, then chooses the dashboard or maintenance screen. [`ContentView`](../../GJPLab/app/ContentView.swift) owns the dashboard route path.
+[`GJPLabApp`](../../GJPLab/app/GJPLabApp.swift) is the SwiftUI entry point. It attaches [`GJPLabAppDelegate`](../../GJPLab/app/GJPLabAppDelegate.swift) for SDK lifecycle callbacks, coordinates splash timing and maintenance mode, then chooses the main navigation or the maintenance screen. [`ContentView`](../../GJPLab/app/ContentView.swift) owns the `NavigationSplitView` and its selection state.
 
 ## Code organization
 
@@ -31,8 +31,8 @@ flowchart LR
 | --- | --- |
 | `GJPLab/app/` | App entry point, app delegate, and the root `ContentView` that owns the route path |
 | `GJPLab/app/startup/` | Splash and maintenance screens |
-| `GJPLab/navigation/` | App-wide `FeatureRoute` values |
-| `GJPLab/navigation/dashboard/` | Category dashboard (`MainScreen`) |
+| `GJPLab/navigation/` | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
+| `GJPLab/navigation/sidebar/` | Category sidebar (`CategorySidebar`) |
 | `GJPLab/navigation/catalog/` | Category catalogue screen and catalogue models |
 | `GJPLab/features/<category>/` | Category-level route and catalogue content, when a category needs them (e.g. `SecurityRoute`, `SecurityCatalog`) |
 | `GJPLab/features/<category>/<feature>/` | Feature views and controllers, with `data/` and `model/` subfolders as needed |
@@ -48,9 +48,9 @@ New code should follow the closest feature pattern. Reusable app behavior belong
 
 1. Write `doc/specs/features/<category>/<feature>/<feature>_requirement.md` from the [feature requirement template](../specs/features/feature_requirement_template.md); add `<feature>_detail_design.md` beside it when the feature has lifecycle, persistence, integration, platform, or security behavior.
 2. Add the screen under `features/<category>/<feature>/`, with `data/` and `model/` subfolders as needed.
-3. Add a `FeatureRoute` case (or a case on the category's nested route, such as `SecurityRoute`) and its destination in `ContentView`.
+3. Add a `FeatureRoute` case (or a case on the category's nested route, such as `SecurityRoute`) and its view in `ContentView.feature(for:)`; screens that push further add a `DetailRoute` case.
 4. Add or enable the catalogue entry in `DashboardCategory.items` or the category's `<Category>Catalog`.
-5. Add previews (light, dark, and iPad where layout adapts), and a UI test when the feature is reachable from the dashboard.
+5. Add previews (light, dark, and iPad where layout adapts), and a UI test when the feature is reachable from the catalogue.
 
 ## Dependency and event flow
 
@@ -59,14 +59,15 @@ flowchart TD
     App[GJPLabApp] --> Delegate[GJPLabAppDelegate]
     Delegate --> Bootstrapper[AppSDKBootstrapper]
     Bootstrapper --> FirebaseStartup[FirebaseStartupIntegration]
-    Content[ContentView] --> Path[NavigationStack path]
-    Main[MainScreen] --> Catalog[FeatureCatalogScreen]
+    Content[ContentView] --> Selection[Selected category and topic]
+    Content --> Path[Feature column path]
+    Sidebar[CategorySidebar] --> Catalog[FeatureCatalogScreen]
     Feature[Feature view] --> Repository[Repository or FirebaseIntegration]
     Repository --> Feature
 ```
 
 - `GJPLabAppDelegate` owns process-level SDK callbacks and forwards them through `AppSDKBootstrapper`.
-- `ContentView` owns navigation state using `[FeatureRoute]`.
+- `ContentView` owns navigation state: the selected `DashboardCategory`, the selected `FeatureRoute`, and a `[DetailRoute]` path for the feature column.
 - Views own private presentation state with `@State`. `GJPLabApp` owns, with `@StateObject`, the `FirebaseIntegration` used for the splash maintenance lookup and the shared call-blocking controller; `FirebaseFeatureScreen` owns its own `FirebaseIntegration` for the lab screen.
 - `URLSessionRepository` performs request mechanics; views present state and invoke explicit actions.
 
@@ -76,7 +77,7 @@ The project intentionally uses SwiftUI-local state instead of a dedicated view-m
 
 - `@State` is view-lifetime state, not durable persistence or cross-screen shared state.
 - App startup state lives in `GJPLabApp`; recreating the scene can repeat startup work.
-- `NavigationStack` path is memory-backed and is not currently restored after termination.
+- Navigation selection and the feature-column path are memory-backed and are not restored after termination.
 - Feature state is intentionally isolated unless a requirement proves it must be shared.
 
 Do not introduce a view model, coordinator, dependency container, domain layer, or module split as incidental refactoring. Add one only for a demonstrated requirement and include migration coverage.
@@ -115,8 +116,8 @@ Drop `-only-testing` to include UI tests. Use a physical device for APNs, author
 | --- | --- | --- |
 | One app target | Fast discovery; weak compile-time feature boundaries | Build time or ownership becomes a problem |
 | View-local state | Low ceremony; limited restoration and sharing guarantees | State must outlive a view or scene |
-| In-memory navigation path | Clear small-app routing; no durable restoration | Deep links or restoration become product requirements |
+| In-memory navigation selection | Clear small-app routing; no durable restoration | Deep links or restoration become product requirements |
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
 | Minimal automated tests (call-blocking controller only) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
 
-See [Slate design system](design-system.md), [dashboard detailed design](../specs/navigation/dashboard/dashboard_detail_design.md), [catalogue detailed design](../specs/navigation/catalog/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.
+See [Slate design system](design-system.md), [sidebar detailed design](../specs/navigation/sidebar/sidebar_detail_design.md), [catalogue detailed design](../specs/navigation/catalog/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.

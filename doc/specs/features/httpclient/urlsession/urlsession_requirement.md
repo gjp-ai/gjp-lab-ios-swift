@@ -64,7 +64,7 @@ Let a developer build and send an HTTP request with Apple's native `URLSession` 
 ## Technical implementation constraints
 
 - Feature folder: `GJPLab/features/httpclient/urlsession/`, with request mechanics in `data/` and value types in `model/`.
-- Navigation goes through `FeatureRoute.urlSession` and `FeatureRoute.response`, with destinations in `ContentView`.
+- Navigation goes through `FeatureRoute.urlSession` (topic) and `DetailRoute.response` (push), with destinations in `ContentView`.
 - Views do not call `URLSession` directly; `URLSessionRepository` owns request construction, timeouts, formatting, and headers.
 - No new dependencies.
 

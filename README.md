@@ -4,7 +4,7 @@ GJPLab is a small SwiftUI app for learning current iOS fundamentals by reading, 
 
 ## Features
 
-The dashboard groups features into categories; each category's catalogue marks topics as available (chevron) or planned (clock).
+A sidebar lists the categories; each category's catalogue marks topics as available (chevron) or planned (clock). On iPad the sidebar, catalogue, and feature sit side by side; on iPhone they collapse into one navigation stack.
 
 | Category | Available | Planned |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ The dashboard groups features into categories; each category's catalogue marks t
 | Integration | **Firebase**: Analytics, Crashlytics, Remote Config, Performance Monitoring, and Cloud Messaging demos | — |
 | Others | **OS & hardware**: iOS version, screen, model, CPU, and memory | — |
 
-App-wide behavior: a branded splash screen, a Remote Config maintenance mode, and a Slate light/dark design system that adapts from iPhone to iPad.
+App-wide behavior: a branded splash screen, a Remote Config maintenance mode, and a Slate light/dark design system.
 
 ## Requirements
 
@@ -47,7 +47,7 @@ App-wide behavior: a branded splash screen, a Remote Config maintenance mode, an
 ```
 GJPLab/
 ├── app/          entry point, app delegate, root navigation; startup/ (splash, maintenance)
-├── navigation/   FeatureRoute, dashboard/, catalog/
+├── navigation/   FeatureRoute, sidebar/, catalog/
 ├── features/     <category>/<feature>/ with data/ and model/ as needed
 ├── sdk/          SDK bootstrap and Firebase adapters
 └── common/       config/ and theme/ (LabTheme, LabMark)

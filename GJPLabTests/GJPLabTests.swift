@@ -29,6 +29,12 @@ struct GJPLabTests {
         controller.isEnabled = true
     }
 
+    @MainActor @Test func catalogueRoutesAreUnique() {
+        let routes = DashboardCategory.allCases.flatMap(\.items).compactMap(\.route)
+        #expect(!routes.isEmpty)
+        #expect(Set(routes).count == routes.count)
+    }
+
     @MainActor @Test func ChinaStorefrontDoesNotEnableCallMonitoring() {
         let controller = BlockAppDuringCallsController(storefrontCountryCode: "CHN")
         #expect(controller.availability == .unavailableInChina)

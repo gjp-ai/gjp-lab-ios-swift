@@ -17,8 +17,8 @@ Show the smallest complete `URLSession` round trip: build a `URLRequest` from us
 | [`URLSessionRepository.swift`](../../../../../GJPLab/features/httpclient/urlsession/data/URLSessionRepository.swift) | URL validation, request construction, 15-second timeout, JSON formatting, header sorting, logging |
 | [`HttpMethod.swift`](../../../../../GJPLab/features/httpclient/urlsession/model/HttpMethod.swift) | Supported methods and which ones carry a payload |
 | [`HttpResponse.swift`](../../../../../GJPLab/features/httpclient/urlsession/model/HttpResponse.swift) | Hashable response value carried in the navigation route |
-| [`FeatureRoute.swift`](../../../../../GJPLab/navigation/FeatureRoute.swift) | `.urlSession` and `.response(HttpResponse)` routes |
-| [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Destinations; appends `.response` when a request completes |
+| [`FeatureRoute.swift`](../../../../../GJPLab/navigation/FeatureRoute.swift) | `FeatureRoute.urlSession` topic and `DetailRoute.response(HttpResponse)` push |
+| [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Shows `URLSessionScreen` in the detail column; appends `.response` to the feature-column path when a request completes |
 | [`DashboardCategory.swift`](../../../../../GJPLab/navigation/catalog/model/DashboardCategory.swift) | HTTP Client catalogue entry |
 
 ## Ownership and state
@@ -30,7 +30,7 @@ Show the smallest complete `URLSession` round trip: build a `URLRequest` from us
 | `errorMessage` | `URLSessionScreen` (`@State`) | Screen | Last failure, cleared on send, dismiss, or method change |
 | `HttpResponse` | Navigation path | Route | Completed response shown by `HttpResponseScreen` |
 
-The screen does not own navigation. It reports a completed response through its `onResponse` closure, and `ContentView` appends `.response(response)` to the path it owns.
+The screen does not own navigation. It reports a completed response through its `onResponse` closure, and `ContentView` appends `.response(response)` to the feature column's path. It ignores the response if the user has already selected another topic.
 
 ## Request flow
 
@@ -62,7 +62,7 @@ flowchart TD
 
 | Gap | Effect | Suggested fix |
 | --- | --- | --- |
-| The send `Task` is not owned by the view | Leaving the screen does not cancel the request; a late response still pushes the response screen | Store the task and cancel it on disappear, or drive sending from `.task(id:)` |
+| The send `Task` is not owned by the view | Leaving the screen does not cancel the request (a late response is dropped only if another topic is selected) | Store the task and cancel it on disappear, or drive sending from `.task(id:)` |
 | Formatting runs on the main actor | Default main-actor isolation makes `URLSessionRepository` main-actor bound, so large bodies are decoded and pretty-printed on the main thread | Mark the repository or its formatting `nonisolated`/`@concurrent` |
 | Non-UTF-8 bodies become an empty string | The response screen shows "(empty response)" for binary or other encodings | Show the byte count and content type instead |
 | Payload is not validated as JSON | Invalid JSON is sent as-is | Validate before sending, or label the field as raw text |

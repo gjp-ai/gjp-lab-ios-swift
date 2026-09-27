@@ -30,7 +30,7 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 | Path | Contents |
 | --- | --- |
 | `GJPLab/app/` | `GJPLabApp`, `GJPLabAppDelegate`, root `ContentView`; `startup/` holds splash and maintenance |
-| `GJPLab/navigation/` | `FeatureRoute`; `dashboard/` (`MainScreen`); `catalog/` (catalogue screen and models) |
+| `GJPLab/navigation/` | `FeatureRoute` and `DetailRoute`; `sidebar/` (`CategorySidebar`); `catalog/` (catalogue screen and models) |
 | `GJPLab/features/<category>/<feature>/` | Screens and controllers, with `data/` and `model/` as needed; `<Category>Route` / `<Category>Catalog` sit in `<category>/` |
 | `GJPLab/sdk/` | SDK bootstrap and adapters (`sdk/firebase/`); not the `features/integration/` category |
 | `GJPLab/common/` | Shared `config/` and `theme/` |
@@ -41,7 +41,7 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 ## Architecture
 
 - Flow: `GJPLabApp` → splash/maintenance → dashboard → category catalogue → feature screen.
-- `ContentView` owns the `NavigationStack` path. Route all feature navigation through `FeatureRoute` and keep existing cases stable.
+- `ContentView` owns a `NavigationSplitView` driven by selection: sidebar category, catalogue topic (`FeatureRoute`), and a `[DetailRoute]` path for pushes inside a feature. Do not add separate `NavigationStack`s or per-device navigation.
 - `@State` for screen state; `@StateObject` for a screen-owned observable integration. Do not add view models, coordinators, or dependency containers as incidental refactoring.
 - Views do not call network, platform, or SDK APIs directly. Use the feature repository (`URLSessionRepository.execute` owns 15-second timeouts, JSON formatting, response headers, and cancellation) or `FirebaseIntegration`. APNs and notification wiring stays in `GJPLabAppDelegate` and `sdk/firebase/`.
 - To add a feature, follow [Adding a feature](doc/architecture/application.md#adding-a-feature). Details: [application architecture](doc/architecture/application.md).

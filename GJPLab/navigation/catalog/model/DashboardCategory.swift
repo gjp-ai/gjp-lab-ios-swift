@@ -49,6 +49,10 @@ enum DashboardCategory: String, CaseIterable, Identifiable, Hashable {
         }
     }
 
+    var availableTopicCount: Int {
+        items.filter { $0.route != nil }.count
+    }
+
     var items: [CatalogItem] {
         switch self {
         case .swiftUI:
