@@ -4,7 +4,7 @@ Status: Implemented snapshot, 2026-09-27
 
 ## Purpose
 
-GJPLab is a single-target iOS learning application. It favors small, readable feature slices over production-scale abstraction: SwiftUI renders the interface, a `NavigationSplitView` driven by selection state handles navigation, feature views own small local state, repositories isolate data mechanics, and external SDK access stays in adapters under `sdk/`.
+GJPLab is a single-target iOS learning application. It favors small, readable feature slices over production-scale abstraction: SwiftUI renders the interface, a `NavigationSplitView` driven by selection state handles navigation, feature views own small local state, repositories isolate data mechanics, and each external SDK keeps all its code in one `features/integration/<sdk>/` folder.
 
 ## Runtime flow
 
@@ -29,20 +29,19 @@ flowchart LR
 
 | Path | Responsibility |
 | --- | --- |
-| `GJPLab/app/` | App entry point, app delegate, and the root `ContentView` that owns the route path |
+| `GJPLab/app/` | App entry point, app delegate, `AppSDKBootstrapper` (SDKs started at launch), and the root `ContentView` that owns the route path |
 | `GJPLab/app/startup/` | Splash and maintenance screens |
-| `GJPLab/navigation/` | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
-| `GJPLab/navigation/sidebar/` | Category sidebar (`CategorySidebar`) |
-| `GJPLab/navigation/catalog/` | Category catalogue screen and catalogue models |
+| `GJPLab/app/navigation/` | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
+| `GJPLab/app/navigation/sidebar/` | Category sidebar (`CategorySidebar`) |
+| `GJPLab/app/navigation/catalog/` | Category catalogue screen and catalogue models |
 | `GJPLab/features/<category>/` | Category-level route and catalogue content, when a category needs them (e.g. `SecurityRoute`, `SecurityCatalog`) |
 | `GJPLab/features/<category>/<feature>/` | Feature views and controllers |
-| `GJPLab/sdk/` | SDK bootstrap and integration adapters |
-| `GJPLab/sdk/firebase/` | Firebase constants, startup, messaging, and service boundary |
+| `GJPLab/features/integration/firebase/` | Firebase lab screen, constants, startup, messaging, and service boundary. Startup and the app delegate depend on it, so unlike other features it cannot be removed on its own |
 | `GJPLab/common/config/` | Stable application behavior constants |
 | `GJPLab/common/theme/` | Slate semantic colors, reusable surface treatment, and brand mark |
 | Root `GJPLab/` | Asset catalog, `GoogleService-Info.plist`, and Debug/Release entitlements only |
 
-New code should follow the closest feature pattern. Reusable app behavior belongs in `common/`; SDK-specific behavior belongs under `sdk/`. Folder names are lowercase and do not repeat their parent (`httpclient/urlsession`, not `httpclient/httpurlsession`).
+New code should follow the closest feature pattern. Reusable app behavior belongs in `common/`; SDK-specific behavior belongs in that SDK's `features/integration/<sdk>/` folder, registered in `AppSDKBootstrapper`. Folder names are lowercase and do not repeat their parent (`httpclient/urlsession`, not `httpclient/httpurlsession`).
 
 ### Adding a feature
 
@@ -84,7 +83,7 @@ Do not introduce a view model, coordinator, dependency container, domain layer, 
 
 ## Platform and security boundaries
 
-Push notification/APNs lifecycle callbacks reside in `GJPLabAppDelegate` and `sdk/firebase/`. App capabilities are declared in `GJPLab.Debug.entitlements` and `GJPLab.Release.entitlements`; launch-screen configuration is generated from target build settings. Network behavior uses Apple transport security defaults—do not add exceptions or custom trust behavior merely to make a sample endpoint work.
+Push notification/APNs lifecycle callbacks reside in `GJPLabAppDelegate` and `features/integration/firebase/`. App capabilities are declared in `GJPLab.Debug.entitlements` and `GJPLab.Release.entitlements`; launch-screen configuration is generated from target build settings. Network behavior uses Apple transport security defaults—do not add exceptions or custom trust behavior merely to make a sample endpoint work.
 
 Firebase client configuration in `GoogleService-Info.plist` is not server authority. Service accounts, APNs private keys, OAuth secrets, App Check debug tokens, and FCM server credentials must not enter the application or repository.
 
@@ -122,4 +121,4 @@ Drop `-only-testing` to include UI tests. Use a physical device for APNs, author
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
 | Minimal automated tests (call-blocking controller only) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
 
-See [Slate design system](design-system.md), [sidebar detailed design](../specs/navigation/sidebar/sidebar_detail_design.md), [catalogue detailed design](../specs/navigation/catalog/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.
+See [Slate design system](design-system.md), [sidebar detailed design](../specs/app/navigation/sidebar/sidebar_detail_design.md), [catalogue detailed design](../specs/app/navigation/catalog/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.

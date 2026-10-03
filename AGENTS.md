@@ -30,10 +30,10 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 
 | Path | Contents |
 | --- | --- |
-| `GJPLab/app/` | `GJPLabApp`, `GJPLabAppDelegate`, root `ContentView`; `startup/` holds splash and maintenance |
-| `GJPLab/navigation/` | `FeatureRoute` and `DetailRoute`; `sidebar/` (`CategorySidebar`); `catalog/` (catalogue screen and models) |
+| `GJPLab/app/` | `GJPLabApp`, `GJPLabAppDelegate`, `AppSDKBootstrapper` (list of SDKs started at launch), root `ContentView`; `startup/` holds splash and maintenance |
+| `GJPLab/app/navigation/` | `FeatureRoute` and `DetailRoute`; `sidebar/` (`CategorySidebar`); `catalog/` (catalogue screen and models) |
+| `GJPLab/features/integration/<sdk>/` | All code for one SDK: lab screen, startup integration, service boundary, constants (`features/integration/firebase/`). The app shell uses it, so it is not removable like other features |
 | `GJPLab/features/<category>/<feature>/` | Screens, controllers, repositories, and models in one flat folder (no `data/` or `model/` subfolders); `<Category>Route` / `<Category>Catalog` sit in `<category>/` |
-| `GJPLab/sdk/` | SDK bootstrap and adapters (`sdk/firebase/`); not the `features/integration/` category |
 | `GJPLab/common/` | Shared `config/` and `theme/` |
 | `GJPLab/` root | Assets, `GoogleService-Info.plist`, entitlements; no Swift source |
 | `doc/` | `architecture/` for project-wide docs; `specs/` mirrors `GJPLab/` (docs for `GJPLab/<path>/` live in `doc/specs/<path>/`) |
@@ -44,7 +44,7 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 - Flow: `GJPLabApp` → splash/maintenance → dashboard → category catalogue → feature screen.
 - `ContentView` owns a `NavigationSplitView` driven by selection: sidebar category, catalogue topic (`FeatureRoute`), and a `[DetailRoute]` path for pushes inside a feature. Do not add separate `NavigationStack`s or per-device navigation.
 - `@State` for screen state; `@StateObject` for a screen-owned observable integration. Do not add view models, coordinators, or dependency containers as incidental refactoring.
-- Views do not call network, platform, or SDK APIs directly. Use the feature repository (`URLSessionRepository.execute` owns 15-second timeouts, JSON formatting, response headers, and cancellation) or `FirebaseIntegration`. APNs and notification wiring stays in `GJPLabAppDelegate` and `sdk/firebase/`.
+- Views do not call network, platform, or SDK APIs directly. Use the feature repository (`URLSessionRepository.execute` owns 15-second timeouts, JSON formatting, response headers, and cancellation) or `FirebaseIntegration`. APNs and notification wiring stays in `GJPLabAppDelegate` and `features/integration/firebase/`.
 - To add a feature, follow [Adding a feature](doc/architecture/application.md#adding-a-feature). Details: [application architecture](doc/architecture/application.md).
 
 ## Coding Standards

@@ -41,7 +41,7 @@ The system launch screen uses appearance-aware `LaunchBackground` and `LaunchMar
 
 ## Adaptive navigation
 
-The category sidebar and catalogue use system lists inside a `NavigationSplitView`: three columns on regular widths, one stack on compact widths. They keep the system list and sidebar appearance (including Liquid Glass on iOS 26 and later) rather than the Slate canvas, and use hierarchical text styles so rows stay readable on the selection highlight. Feature screens in the detail column use the Slate canvas and cards. See the [sidebar detailed design](../specs/navigation/sidebar/sidebar_detail_design.md).
+The category sidebar and catalogue use system lists inside a `NavigationSplitView`: three columns on regular widths, one stack on compact widths. They keep the system list and sidebar appearance (including Liquid Glass on iOS 26 and later) rather than the Slate canvas, and use hierarchical text styles so rows stay readable on the selection highlight. Feature screens in the detail column use the Slate canvas and cards. See the [sidebar detailed design](../specs/app/navigation/sidebar/sidebar_detail_design.md).
 
 In the catalogue, implemented topics show a chevron; planned topics show a clock and cannot be selected.
 

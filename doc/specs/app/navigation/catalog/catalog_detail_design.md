@@ -12,12 +12,12 @@ Render a category's topics as a selectable list in the split view's content colu
 
 | Source | Responsibility |
 | --- | --- |
-| [`FeatureCatalogScreen.swift`](../../../../GJPLab/navigation/catalog/FeatureCatalogScreen.swift) | Topic list bound to the selected topic, and `CatalogRow` |
-| [`CatalogItem.swift`](../../../../GJPLab/navigation/catalog/CatalogItem.swift) | Topic title, description, and optional `FeatureRoute`; `id` is the title |
-| [`DashboardCategory.swift`](../../../../GJPLab/navigation/catalog/DashboardCategory.swift) | Per-category title, descriptions, icon, `items`, and `availableTopicCount` |
-| [`SecurityCatalog.swift`](../../../../GJPLab/features/security/SecurityCatalog.swift) | Security topics, supplied from the feature folder |
-| [`FeatureRoute.swift`](../../../../GJPLab/navigation/FeatureRoute.swift) | Topic routes used as selection values |
-| [`ContentView.swift`](../../../../GJPLab/app/ContentView.swift) | Owns `selectedTopic` and renders the feature for it |
+| [`FeatureCatalogScreen.swift`](../../../../../GJPLab/app/navigation/catalog/FeatureCatalogScreen.swift) | Topic list bound to the selected topic, and `CatalogRow` |
+| [`CatalogItem.swift`](../../../../../GJPLab/app/navigation/catalog/CatalogItem.swift) | Topic title, description, and optional `FeatureRoute`; `id` is the title |
+| [`DashboardCategory.swift`](../../../../../GJPLab/app/navigation/catalog/DashboardCategory.swift) | Per-category title, descriptions, icon, `items`, and `availableTopicCount` |
+| [`SecurityCatalog.swift`](../../../../../GJPLab/features/security/SecurityCatalog.swift) | Security topics, supplied from the feature folder |
+| [`FeatureRoute.swift`](../../../../../GJPLab/app/navigation/FeatureRoute.swift) | Topic routes used as selection values |
+| [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Owns `selectedTopic` and renders the feature for it |
 
 ## Ownership and selection
 

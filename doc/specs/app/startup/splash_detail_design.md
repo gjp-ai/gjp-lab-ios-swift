@@ -30,7 +30,7 @@ flowchart TD
 | [`GJPLabApp.swift`](../../../../GJPLab/app/GJPLabApp.swift) | App-owned splash timer, Remote Config timeout race, and destination selection |
 | [`SplashScreen.swift`](../../../../GJPLab/app/startup/SplashScreen.swift) | Brand presentation only |
 | [`AppConfig.swift`](../../../../GJPLab/common/config/AppConfig.swift) | Three-second minimum and five-second timeout |
-| [`FirebaseIntegration.swift`](../../../../GJPLab/sdk/firebase/FirebaseIntegration.swift) | Fetches/activates Remote Config and returns maintenance Boolean |
+| [`FirebaseIntegration.swift`](../../../../GJPLab/features/integration/firebase/FirebaseIntegration.swift) | Fetches/activates Remote Config and returns maintenance Boolean |
 | [`MaintenanceScreen.swift`](../../../../GJPLab/app/startup/MaintenanceScreen.swift) | Maintenance retry presentation (see [maintenance detailed design](maintenance_detail_design.md)) |
 | [`LabTheme.swift`](../../../../GJPLab/common/theme/LabTheme.swift) | Semantic light/dark roles |
 

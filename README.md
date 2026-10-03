@@ -48,10 +48,9 @@ App-wide behavior: a branded splash screen, a Remote Config maintenance mode, an
 
 ```
 GJPLab/
-├── app/          entry point, app delegate, root navigation; startup/ (splash, maintenance)
-├── navigation/   FeatureRoute, sidebar/, catalog/
-├── features/     <category>/<feature>/, one flat folder per feature
-├── sdk/          SDK bootstrap and Firebase adapters
+├── app/          entry point, app delegate, SDK bootstrapper, root view;
+│                 startup/ (splash, maintenance), navigation/ (FeatureRoute, sidebar/, catalog/)
+├── features/     <category>/<feature>/, one flat folder per feature (Firebase in integration/firebase/)
 └── common/       config/ and theme/ (LabTheme, LabMark)
 GJPLabTests/      Swift Testing unit tests
 GJPLabUITests/    XCUITest UI tests

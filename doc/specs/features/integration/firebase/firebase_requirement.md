@@ -62,7 +62,7 @@ Let a developer trigger each Firebase service used by GJP Lab on demand and see 
 
 ## Technical implementation constraints
 
-- Screen source lives in `GJPLab/features/integration/firebase/`; Firebase calls go through `FirebaseIntegration` in `GJPLab/sdk/firebase/`.
+- All Firebase source lives in `GJPLab/features/integration/firebase/`; the screen calls Firebase only through `FirebaseIntegration`.
 - The screen owns its own `FirebaseIntegration` instance.
 - No new dependencies.
 

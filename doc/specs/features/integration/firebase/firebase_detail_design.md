@@ -25,7 +25,7 @@ flowchart TD
     MessagingHandler[FirebaseMessagingHandler] --> Messaging
 ```
 
-`GJPLabAppDelegate` delegates process-level setup to `AppSDKBootstrapper`. `FirebaseStartupIntegration` configures Firebase once, while `FirebaseIntegration` is the screen-facing service boundary. `FirebaseMessagingHandler` owns Messaging and foreground-notification delegate callbacks.
+`GJPLabAppDelegate` delegates process-level setup to `AppSDKBootstrapper` in `app/`, which starts each registered SDK. `FirebaseStartupIntegration` configures Firebase once, while `FirebaseIntegration` is the screen-facing service boundary. `FirebaseMessagingHandler` owns Messaging and foreground-notification delegate callbacks.
 
 ## Build configuration
 
@@ -40,7 +40,7 @@ Do not copy package versions into this guide; inspect the resolved package when 
 
 ## Stable contracts
 
-[`FirebaseConstants`](../../../../../GJPLab/sdk/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
+[`FirebaseConstants`](../../../../../GJPLab/features/integration/firebase/FirebaseConstants.swift) owns names that must remain stable across app code and Firebase configuration:
 
 | Service | Contract |
 | --- | --- |

@@ -14,8 +14,8 @@ Show a blocking maintenance message when the remote flag is enabled, and let the
 | --- | --- |
 | [`MaintenanceScreen.swift`](../../../../GJPLab/app/startup/MaintenanceScreen.swift) | Stateless presentation; reports taps through `onRetry` |
 | [`GJPLabApp.swift`](../../../../GJPLab/app/GJPLabApp.swift) | Owns `maintenanceEnabled`, chooses the screen, and runs `loadMaintenanceMode()` on retry |
-| [`FirebaseIntegration.swift`](../../../../GJPLab/sdk/firebase/FirebaseIntegration.swift) | `fetchMaintenanceMode()`: fetch-and-activate, return the flag, or `false` on failure |
-| [`FirebaseStartupIntegration.swift`](../../../../GJPLab/sdk/firebase/FirebaseStartupIntegration.swift) | Remote Config default (`false`) and fetch interval (0 in Debug, 3600 s in Release) |
+| [`FirebaseIntegration.swift`](../../../../GJPLab/features/integration/firebase/FirebaseIntegration.swift) | `fetchMaintenanceMode()`: fetch-and-activate, return the flag, or `false` on failure |
+| [`FirebaseStartupIntegration.swift`](../../../../GJPLab/features/integration/firebase/FirebaseStartupIntegration.swift) | Remote Config default (`false`) and fetch interval (0 in Debug, 3600 s in Release) |
 | [`AppConfig.swift`](../../../../GJPLab/common/config/AppConfig.swift) | 5-second `remoteConfigTimeout` |
 
 ## Ownership and flow

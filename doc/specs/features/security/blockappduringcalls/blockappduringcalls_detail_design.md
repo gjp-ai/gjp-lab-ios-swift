@@ -16,7 +16,7 @@ Prevent interaction with GJP Lab while iOS reports an active call, while preserv
 | [`BlockAppDuringCallsScreen.swift`](../../../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsScreen.swift) | Settings/status/test UI and full-screen blocking overlay |
 | [`SecurityCatalog.swift`](../../../../../GJPLab/features/security/SecurityCatalog.swift) | Security catalogue entry for the feature |
 | [`SecurityRoute.swift`](../../../../../GJPLab/features/security/SecurityRoute.swift) | Security-specific navigation value |
-| [`FeatureRoute.swift`](../../../../../GJPLab/navigation/FeatureRoute.swift) | `FeatureRoute.security` wraps Security topic routes |
+| [`FeatureRoute.swift`](../../../../../GJPLab/app/navigation/FeatureRoute.swift) | `FeatureRoute.security` wraps Security topic routes |
 | [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Security-route destination in the app-owned navigation stack |
 | [`GJPLabApp.swift`](../../../../../GJPLab/app/GJPLabApp.swift) | Long-lived controller, active-scene refresh, and app-wide overlay |
 

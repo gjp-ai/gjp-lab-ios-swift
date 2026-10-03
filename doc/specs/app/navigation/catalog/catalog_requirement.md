@@ -57,7 +57,7 @@ None.
 
 ## Technical implementation constraints
 
-- Source lives in `GJPLab/navigation/catalog/`.
+- Source lives in `GJPLab/app/navigation/catalog/`.
 - The list binds to `ContentView`'s selected topic (`FeatureRoute?`); only available rows are tagged.
 - A category may supply its topics from its feature folder (for example `SecurityCatalog`).
 
@@ -65,4 +65,4 @@ None.
 
 - [Detailed design](catalog_detail_design.md)
 - [Sidebar requirement](../sidebar/sidebar_requirement.md)
-- [Slate design system](../../../architecture/design-system.md)
+- [Slate design system](../../../../architecture/design-system.md)

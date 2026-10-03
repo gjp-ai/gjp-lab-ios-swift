@@ -58,7 +58,7 @@ Give users one starting point that lists every lab category, shows how much each
 
 ## Technical implementation constraints
 
-- Source lives in `GJPLab/navigation/sidebar/`.
+- Source lives in `GJPLab/app/navigation/sidebar/`.
 - `ContentView` owns the `NavigationSplitView`, the selected category and topic, and the feature column's navigation path.
 - Adding a category means adding a `DashboardCategory` case; the sidebar updates automatically.
 
@@ -66,4 +66,4 @@ Give users one starting point that lists every lab category, shows how much each
 
 - [Detailed design](sidebar_detail_design.md)
 - [Catalogue requirement](../catalog/catalog_requirement.md)
-- [Application architecture](../../../architecture/application.md)
+- [Application architecture](../../../../architecture/application.md)

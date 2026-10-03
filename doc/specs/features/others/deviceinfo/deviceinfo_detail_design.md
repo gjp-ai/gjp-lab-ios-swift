@@ -15,8 +15,8 @@ Read platform values once through a small repository and present them as two lab
 | [`DeviceInfoScreen.swift`](../../../../../GJPLab/features/others/deviceinfo/DeviceInfoScreen.swift) | Screen layout and `InfoSection` cards |
 | [`DeviceInfoRepository.swift`](../../../../../GJPLab/features/others/deviceinfo/DeviceInfoRepository.swift) | Reads all values; returns `(iOS rows, hardware rows)` |
 | [`InfoRow.swift`](../../../../../GJPLab/features/others/deviceinfo/InfoRow.swift) | Label and value pair |
-| [`FeatureRoute.swift`](../../../../../GJPLab/navigation/FeatureRoute.swift) | `.deviceInfo` route |
-| [`DashboardCategory.swift`](../../../../../GJPLab/navigation/catalog/DashboardCategory.swift) | Others catalogue entry |
+| [`FeatureRoute.swift`](../../../../../GJPLab/app/navigation/FeatureRoute.swift) | `.deviceInfo` route |
+| [`DashboardCategory.swift`](../../../../../GJPLab/app/navigation/catalog/DashboardCategory.swift) | Others catalogue entry |
 
 ## Data sources
 
