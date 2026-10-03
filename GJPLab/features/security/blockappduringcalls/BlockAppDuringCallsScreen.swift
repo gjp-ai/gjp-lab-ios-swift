@@ -86,3 +86,12 @@ struct CallBlockingOverlay: View {
         BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "CHN"))
     }
 }
+
+#Preview("Call overlay – light") {
+    CallBlockingOverlay()
+}
+
+#Preview("Call overlay – dark") {
+    CallBlockingOverlay()
+        .preferredColorScheme(.dark)
+}

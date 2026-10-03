@@ -57,3 +57,20 @@ private struct ResponseBlock: View {
         .labCard(cornerRadius: 18)
     }
 }
+
+#Preview("Success – light") {
+    NavigationStack {
+        HttpResponseScreen(response: HttpResponse(
+            statusCode: 200,
+            body: "{\n  \"message\" : \"Hello\"\n}",
+            headers: [("Content-Type", "application/json"), ("Server", "nginx")]
+        ))
+    }
+}
+
+#Preview("Error – dark") {
+    NavigationStack {
+        HttpResponseScreen(response: HttpResponse(statusCode: 404, body: "", headers: []))
+    }
+    .preferredColorScheme(.dark)
+}

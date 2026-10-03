@@ -47,3 +47,12 @@ private struct InfoSection: View {
         .labCard(cornerRadius: 18)
     }
 }
+
+#Preview("OS & hardware – light") {
+    NavigationStack { DeviceInfoScreen() }
+}
+
+#Preview("OS & hardware – dark") {
+    NavigationStack { DeviceInfoScreen() }
+        .preferredColorScheme(.dark)
+}

@@ -8,11 +8,13 @@ This directory documents the iOS lab as it exists today and the behavior it is i
 - `specs/` mirrors `GJPLab/` exactly: the docs for `GJPLab/<path>/` live in `doc/specs/<path>/`.
 - `templates/` holds the starting point for new requirement and detail design documents.
 - `decisions/` records project choices the code alone does not explain, and why they were made.
+- `guides/` holds learning material: Swift and SwiftUI tutorials built from this project's code.
 
 ```
 doc/
 ├── architecture/application.md           project-wide
 ├── decisions/                            0001-….md, one per decision
+├── guides/                               swift_tutorial.md, swiftui_tutorial.md
 ├── templates/                            requirement.md, detail_design.md
 └── specs/                                mirrors GJPLab/
     ├── app/startup/                      ↔ GJPLab/app/startup/
@@ -41,6 +43,7 @@ The `GJPLab/app/` root files are documented in [application architecture](archit
 | Application structure | — | [Application architecture](architecture/application.md) |
 | Visual system | — | [Slate design system](specs/common/theme/theme_detail_design.md) |
 | Decisions | [Decision records](decisions/README.md): why the project is shaped the way it is | — |
+| Learning | [Swift tutorial](guides/swift_tutorial.md) and [SwiftUI tutorial](guides/swiftui_tutorial.md): the language and UI features this project uses, with exercises | — |
 | Splash (startup) | [Splash requirement](specs/app/startup/splash_requirement.md) | [Splash detailed design](specs/app/startup/splash_detail_design.md) |
 | Maintenance (startup) | [Maintenance requirement](specs/app/startup/maintenance_requirement.md) | [Maintenance detailed design](specs/app/startup/maintenance_detail_design.md) |
 | Category sidebar | [Sidebar requirement](specs/app/navigation/sidebar_requirement.md) | [Sidebar detailed design](specs/app/navigation/sidebar_detail_design.md) |

@@ -60,3 +60,13 @@ private struct FirebaseActionCard: View {
         .labCard(cornerRadius: 18)
     }
 }
+
+// Firebase is not configured in previews, so show the layout only; do not tap the actions here.
+#Preview("Firebase – light") {
+    NavigationStack { FirebaseFeatureScreen() }
+}
+
+#Preview("Firebase – dark") {
+    NavigationStack { FirebaseFeatureScreen() }
+        .preferredColorScheme(.dark)
+}
