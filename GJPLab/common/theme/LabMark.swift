@@ -61,14 +61,17 @@ struct LabMark: View {
     }
 }
 
-#Preview("Lab mark") {
-    HStack(spacing: 24) {
-        LabMark(color: .white)
-            .frame(width: 108, height: 108)
-            .background(.black)
-        LabMark(color: .black)
-            .frame(width: 108, height: 108)
-            .background(.white)
-    }
-    .padding()
+#Preview("Lab mark – light") {
+    LabMark(color: LabTheme.onPrimary)
+        .frame(width: 108, height: 108)
+        .background(LabTheme.primary, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .padding()
+}
+
+#Preview("Lab mark – dark") {
+    LabMark(color: LabTheme.onPrimary)
+        .frame(width: 108, height: 108)
+        .background(LabTheme.primary, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .padding()
+        .preferredColorScheme(.dark)
 }

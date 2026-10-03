@@ -243,7 +243,7 @@ List(selection: $selection) {
 | `Toggle` | `Toggle("Block App During Calls", isOn: $controller.isEnabled)` |
 | `Picker` with `.pickerStyle(.segmented)` | HTTP method |
 | `TextField(…, axis: .vertical)` | URL and JSON payload that grow as you type; `.lineLimit(6...12)` |
-| `Button` with `.buttonStyle(.borderedProminent)` | Send request, Try again, Firebase actions |
+| `Button` with `.buttonStyle(.labPrimary)` | Send request, Try again, Firebase actions (a custom `ButtonStyle` in [`LabButtonStyle.swift`](../../GJPLab/common/theme/LabButtonStyle.swift); `.borderedProminent` with the black/white tint made the text unreadable in dark mode) |
 | `LabeledContent` | "Status: On" rows |
 | `ProgressView` | Spinner while a request runs |
 | `.disabled(_:)` | Disable **Send** while loading or when the URL is empty |
@@ -348,13 +348,20 @@ Text styles such as `.headline` and `.caption` grow with the user's text size (D
 
 ### 13. Previews
 
-`#Preview` shows a view in Xcode's canvas without running the app. Previews in the project cover light and dark, and different states:
+`#Preview` shows a view in Xcode's canvas without running the app. In this project **every preview comes as a pair**, named `"<name> – light"` and `"<name> – dark"`, and screens with several states preview each state:
 
 ```swift
-#Preview("Available") {
+#Preview("Available – light") {
     NavigationStack {
         BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "SGP"))
     }
+}
+
+#Preview("Available – dark") {
+    NavigationStack {
+        BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "SGP"))
+    }
+    .preferredColorScheme(.dark)   // the only difference from the light preview
 }
 
 #Preview("SwiftUI catalogue – dark") {

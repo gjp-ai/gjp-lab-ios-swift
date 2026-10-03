@@ -68,6 +68,23 @@ private struct ResponseBlock: View {
     }
 }
 
+#Preview("Success – dark") {
+    NavigationStack {
+        HttpResponseScreen(response: HttpResponse(
+            statusCode: 200,
+            body: "{\n  \"message\" : \"Hello\"\n}",
+            headers: [("Content-Type", "application/json"), ("Server", "nginx")]
+        ))
+    }
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Error – light") {
+    NavigationStack {
+        HttpResponseScreen(response: HttpResponse(statusCode: 404, body: "", headers: []))
+    }
+}
+
 #Preview("Error – dark") {
     NavigationStack {
         HttpResponseScreen(response: HttpResponse(statusCode: 404, body: "", headers: []))

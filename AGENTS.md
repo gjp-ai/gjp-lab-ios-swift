@@ -52,6 +52,9 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 
 - Follow the closest existing feature and match the surrounding code.
 - Use the Slate palette through `LabTheme` roles and `LabMark`; no raw brand colors or copied vector paths in feature views.
+- Every screen uses the same background in each appearance: apply `.labScreenBackground()`; a `List` or `Form` also needs `.scrollContentBackground(.hidden)`. Do not leave system grouped or plain list backgrounds visible.
+- Main action buttons use `.buttonStyle(.labPrimary)`, never `.borderedProminent` (white text on a white fill in dark mode).
+- Every public view has previews, and every preview comes as a pair: `#Preview("<name> – light")` and `#Preview("<name> – dark")` (the dark one adds `.preferredColorScheme(.dark)`). Preview each distinct state (for example available and unavailable).
 - Define Firebase events, Remote Config keys, trace names, and topics in `FirebaseConstants`.
 - Info.plist is generated: add keys as `INFOPLIST_KEY_*` build settings in both Debug and Release.
 

@@ -27,6 +27,26 @@ extension View {
         background(LabTheme.surface, in: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .shadow(color: .black.opacity(0.08), radius: 7, y: 2)
     }
+
+    /// Draws a `List` row as its own rounded card with a hairline border, spaced from its neighbours.
+    /// A selected row gets a thicker `primary` border, which replaces the system highlight hidden by the card.
+    /// Use inside a `.listStyle(.plain)` list with `.scrollContentBackground(.hidden)`.
+    func labListCard(isSelected: Bool = false) -> some View {
+        let shape = RoundedRectangle(cornerRadius: 18, style: .continuous)
+        return padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(LabTheme.surface, in: shape)
+            .overlay {
+                shape.strokeBorder(
+                    isSelected ? LabTheme.primary : LabTheme.outlineVariant,
+                    lineWidth: isSelected ? 1 : 0.5
+                )
+            }
+            .contentShape(shape)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+    }
 }
 
 private extension Color {

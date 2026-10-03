@@ -17,7 +17,7 @@ Use one `NavigationSplitView` for every device: three columns on regular widths,
 | [`FeatureCatalogScreen.swift`](../../../../GJPLab/app/navigation/FeatureCatalogScreen.swift) | Content column: topic list with selection |
 | [`FeatureRoute.swift`](../../../../GJPLab/app/navigation/FeatureRoute.swift) | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
 | [`navigation.json`](../../../../GJPLab/app/navigation/navigation.json) | Category order, text, icons, and topics |
-| [`NavigationMenu.swift`](../../../../GJPLab/app/navigation/NavigationMenu.swift) | `NavigationMenu.main` decodes the JSON; `NavigationCategory.availableTopicCount` |
+| [`NavigationMenu.swift`](../../../../GJPLab/app/navigation/NavigationMenu.swift) | `NavigationMenu.main` decodes the JSON |
 
 ## Navigation model
 
@@ -40,7 +40,7 @@ Only available topics are tagged in the catalogue list, so planned topics cannot
 
 ## Rows
 
-Each sidebar row is an icon, title, two-line description, and an availability label ("<n> available" or "Planned"), combined into one accessibility element with the hint "Opens the <category> catalogue". Text uses hierarchical styles (`.primary`, `.secondary`) so it stays readable on the system's selection highlight. The list keeps the system sidebar appearance (including Liquid Glass on iOS 26 and later) instead of the Slate canvas.
+Each sidebar row is its own card (`.labListCard(isSelected:)`): the category icon in a 44-point `primaryContainer` tile, the title, and the description in `onSurfaceVariant`. The row is one accessibility element with the hint "Opens the <category> catalogue". The list is `.plain` with `.scrollContentBackground(.hidden)` and `.labScreenBackground()`, so the cards sit on the same Slate canvas as every other screen. The card hides the system selection highlight, so the selected category (visible on iPad) gets a 1-point `primary` border instead of the 0.5-point `outlineVariant` one.
 
 ## Replaced design
 
@@ -57,5 +57,5 @@ This replaces the earlier card-grid dashboard (`MainScreen`) that pushed `.catal
 
 ## Verification
 
-- Previews: `CategorySidebar` and `ContentView` (iPhone and iPad).
-- Manual: SDB-AC-01 to SDB-AC-06 on an iPhone simulator and an iPad simulator in both orientations; VoiceOver and a large Dynamic Type size.
+- Previews: `CategorySidebar` and `ContentView`, each in light and dark. Check iPad by switching the canvas device; there is no separate iPad preview.
+- Manual: SDB-AC-01 to SDB-AC-05 on an iPhone simulator and an iPad simulator in both orientations; VoiceOver and a large Dynamic Type size.

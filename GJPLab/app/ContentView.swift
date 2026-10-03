@@ -15,6 +15,7 @@ struct ContentView: View {
                 FeatureCatalogScreen(category: selectedCategory, selection: $selectedTopic)
             } else {
                 ContentUnavailableView("Choose a category", systemImage: "sidebar.left")
+                    .labScreenBackground()
             }
         } detail: {
             NavigationStack(path: $detailPath) {
@@ -23,6 +24,7 @@ struct ContentView: View {
                         feature(for: selectedTopic)
                     } else {
                         ContentUnavailableView("Choose a topic", systemImage: "list.bullet")
+                            .labScreenBackground()
                     }
                 }
                 .navigationDestination(for: DetailRoute.self) { route in
@@ -54,6 +56,11 @@ struct ContentView: View {
     }
 }
 
-#Preview("iPhone") {
+#Preview("iPhone – light") {
     ContentView(callBlocker: BlockAppDuringCallsController(storefrontCountryCode: "SGP"))
+}
+
+#Preview("iPhone – dark") {
+    ContentView(callBlocker: BlockAppDuringCallsController(storefrontCountryCode: "SGP"))
+        .preferredColorScheme(.dark)
 }

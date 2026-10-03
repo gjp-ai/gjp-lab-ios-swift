@@ -10,7 +10,7 @@ Give users one starting point that lists every lab category, shows how much each
 
 ### In scope
 
-- The first column of the app's three-column navigation: category list, availability, and selection.
+- The first column of the app's three-column navigation: category list and selection.
 - How the three columns (categories, catalogue, feature) behave on iPhone and iPad.
 
 ### Out of scope
@@ -30,15 +30,15 @@ Give users one starting point that lists every lab category, shows how much each
 ## UI & Navigation
 
 - Navigation title "GJP Lab".
-- Each row shows the category icon, title, a short description, and its availability: "<n> available" when at least one topic can be opened, otherwise "Planned".
+- Each row shows the category icon, title, and a short description. Availability is shown per topic in the catalogue, not in the sidebar.
 - The selected category is highlighted on iPad.
 - Each row is one accessible element with a hint naming the catalogue it opens.
 - Supports light and dark appearance and Dynamic Type; rows grow with text size.
 
 ## Rules & Constraints
 
-- Category titles, descriptions, icons, and availability come from one source (`navigation.json`); the sidebar does not hard-code them.
-- Availability is derived: a topic is available when it has a route.
+- Category titles, descriptions, and icons come from one source (`navigation.json`); the sidebar does not hard-code them.
+- Topic availability is derived: a topic is available when it has a route (shown in the catalogue).
 - Use the system split-view behavior for collapsing and back navigation; do not switch between separate navigation implementations by device.
 
 ## Platform limitations
@@ -49,12 +49,11 @@ Give users one starting point that lists every lab category, shows how much each
 
 | ID | Scenario | Expected result |
 | --- | --- | --- |
-| SDB-AC-01 | Startup completes with maintenance off | The sidebar lists all five categories in order with their availability. |
+| SDB-AC-01 | Startup completes with maintenance off | The sidebar lists all five categories in order with their icon, title, and description. |
 | SDB-AC-02 | iPhone: tap a category, then an available topic | The catalogue, then the feature, are pushed; back returns step by step. |
 | SDB-AC-03 | iPad landscape: select a category and a topic | Categories, catalogue, and feature are visible side by side. |
 | SDB-AC-04 | iPad: select a different category while a feature is shown | The catalogue changes and the feature column returns to its prompt. |
-| SDB-AC-05 | A category has no available topics | Its row reads "Planned". |
-| SDB-AC-06 | VoiceOver | Each row reads its title, description, and availability as one element with a hint. |
+| SDB-AC-05 | VoiceOver | Each row reads its title and description as one element with a hint. |
 
 ## Technical implementation constraints
 

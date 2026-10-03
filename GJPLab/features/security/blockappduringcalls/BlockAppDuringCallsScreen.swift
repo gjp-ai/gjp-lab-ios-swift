@@ -9,19 +9,24 @@ struct BlockAppDuringCallsScreen: View {
                 Toggle("Block App During Calls", isOn: $controller.isEnabled)
                     .disabled(controller.availability != .available)
             } footer: {
-                if controller.availability == .unavailableInChina {
-                    Text("Call monitoring is unavailable for the China App Store storefront, so this feature is disabled and CallKit is not initialized.")
-                } else {
-                    Text("When enabled, the app blocks access while iOS reports a supported active call.")
+                Group {
+                    if controller.availability == .unavailableInChina {
+                        Text("Call monitoring is unavailable for the China App Store storefront, so this feature is disabled and CallKit is not initialized.")
+                    } else {
+                        Text("When enabled, the app blocks access while iOS reports a supported active call.")
+                    }
                 }
+                .foregroundStyle(LabTheme.onSurfaceVariant)
             }
 
-            Section("Current feature status") {
-                LabeledContent("Status", value: statusText)
-                LabeledContent("Call state", value: callStateText)
+            Section {
+                StatusRow(label: "Status", value: statusText)
+                StatusRow(label: "Call state", value: callStateText)
+            } header: {
+                SectionHeader("Current feature status")
             }
 
-            Section("Test") {
+            Section {
                 Button(controller.isTestCallActive ? "End simulated call" : "Simulate active call") {
                     controller.toggleTestCall()
                 }
@@ -30,12 +35,19 @@ struct BlockAppDuringCallsScreen: View {
                 Text("Use this to verify the full-screen block without placing a real call.")
                     .font(.footnote)
                     .foregroundStyle(LabTheme.onSurfaceVariant)
+            } header: {
+                SectionHeader("Test")
             }
 
-            Section("Call detection limitation") {
+            Section {
                 Text("iOS only reports calls that it exposes through CallKit. Regular phone calls and compatible CallKit calls, including FaceTime and supported VoIP/video apps, can be detected. Apps that do not provide system call-state information cannot be detected.")
+            } header: {
+                SectionHeader("Call detection limitation")
             }
         }
+        // Hide the Form's grey grouped background so the Slate canvas shows behind the rows.
+        .scrollContentBackground(.hidden)
+        .labScreenBackground()
         .navigationTitle("Block App During Calls")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -55,6 +67,31 @@ struct BlockAppDuringCallsScreen: View {
     }
 }
 
+// `.labScreenBackground()` makes text `onSurface` by default, so headers and values that the Form
+// would draw in a secondary colour set `onSurfaceVariant` explicitly to keep the visual hierarchy.
+private struct SectionHeader: View {
+    let title: String
+
+    init(_ title: String) {
+        self.title = title
+    }
+
+    var body: some View {
+        Text(title).foregroundStyle(LabTheme.onSurfaceVariant)
+    }
+}
+
+private struct StatusRow: View {
+    let label: String
+    let value: String
+
+    var body: some View {
+        LabeledContent(label) {
+            Text(value).foregroundStyle(LabTheme.onSurfaceVariant)
+        }
+    }
+}
+
 struct CallBlockingOverlay: View {
     var body: some View {
         VStack(spacing: 18) {
@@ -69,22 +106,36 @@ struct CallBlockingOverlay: View {
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(LabTheme.background.ignoresSafeArea())
+        .labScreenBackground()
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isModal)
     }
 }
 
-#Preview("Available") {
+#Preview("Available – light") {
     NavigationStack {
         BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "SGP"))
     }
 }
 
-#Preview("Unavailable") {
+#Preview("Available – dark") {
+    NavigationStack {
+        BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "SGP"))
+    }
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Unavailable in China – light") {
     NavigationStack {
         BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "CHN"))
     }
+}
+
+#Preview("Unavailable in China – dark") {
+    NavigationStack {
+        BlockAppDuringCallsScreen(controller: BlockAppDuringCallsController(storefrontCountryCode: "CHN"))
+    }
+    .preferredColorScheme(.dark)
 }
 
 #Preview("Call overlay – light") {

@@ -26,7 +26,7 @@ struct FirebaseFeatureScreen: View {
                     .background(LabTheme.surfaceContainer, in: RoundedRectangle(cornerRadius: 14))
                 }
                 Button("Subscribe to demo topic") { integration.subscribeToDemoTopic() }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.labPrimary)
                     .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: 720)
@@ -51,7 +51,7 @@ private struct FirebaseActionCard: View {
             Text(description).foregroundStyle(LabTheme.onSurfaceVariant)
             Text(status).font(.caption).foregroundStyle(LabTheme.primary)
             Button(action, action: onAction)
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.labPrimary)
                 .frame(maxWidth: .infinity)
                 .padding(.top, 6)
         }

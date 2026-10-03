@@ -42,6 +42,8 @@ struct URLSessionScreen: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                         Text(errorMessage).frame(maxWidth: .infinity, alignment: .leading)
                         Button("Dismiss") { self.errorMessage = nil }
+                            .fontWeight(.semibold)
+                            .tint(LabTheme.onErrorContainer)
                     }
                     .foregroundStyle(LabTheme.onErrorContainer)
                     .padding(14)
@@ -53,14 +55,14 @@ struct URLSessionScreen: View {
                 } label: {
                     Group {
                         if isLoading {
-                            ProgressView().tint(LabTheme.onPrimary)
+                            ProgressView().tint(LabTheme.onSurfaceVariant)
                         } else {
                             Text("Send request")
                         }
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.labPrimary)
                 .disabled(isLoading || url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
             .frame(maxWidth: 720)
@@ -84,6 +86,11 @@ struct URLSessionScreen: View {
     }
 }
 
-#Preview {
+#Preview("URLSession – light") {
     NavigationStack { URLSessionScreen(onResponse: { _ in }) }
+}
+
+#Preview("URLSession – dark") {
+    NavigationStack { URLSessionScreen(onResponse: { _ in }) }
+        .preferredColorScheme(.dark)
 }

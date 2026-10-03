@@ -15,7 +15,7 @@ struct MaintenanceScreen: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(LabTheme.onSurfaceVariant)
             Button("Try again", action: onRetry)
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.labPrimary)
                 .padding(.top, 10)
         }
         .frame(maxWidth: 520)
@@ -26,4 +26,11 @@ struct MaintenanceScreen: View {
     }
 }
 
-#Preview { MaintenanceScreen(onRetry: {}) }
+#Preview("Maintenance – light") {
+    MaintenanceScreen(onRetry: {})
+}
+
+#Preview("Maintenance – dark") {
+    MaintenanceScreen(onRetry: {})
+        .preferredColorScheme(.dark)
+}

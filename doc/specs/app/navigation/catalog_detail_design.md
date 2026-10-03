@@ -36,7 +36,7 @@ A unit test checks that routes are unique across the catalogue, because a duplic
 
 ## Accessibility
 
-Each row is combined into one accessibility element; the chevron is labeled "Open" and the clock "Planned". Descriptions use `fixedSize(horizontal: false, vertical: true)` so they wrap at large text sizes.
+The category description is a plain, untagged first row, so it scrolls with the list and cannot be selected. Each topic is its own card (`.labListCard(isSelected:)`, the same card as the sidebar); the selected topic on iPad gets a 1-point `primary` border. Each row is combined into one accessibility element; the chevron is labeled "Open" and the clock "Planned". Descriptions use `fixedSize(horizontal: false, vertical: true)` so they wrap at large text sizes.
 
 ## Known gaps
 
@@ -48,6 +48,6 @@ Each row is combined into one accessibility element; the chevron is labeled "Ope
 
 ## Verification
 
-- Previews: "HTTP client catalogue" and "SwiftUI catalogue – dark" in `FeatureCatalogScreen.swift`.
+- Previews: "HTTP client catalogue" (available and planned topics) and "SwiftUI catalogue" (planned only), each in light and dark, in `FeatureCatalogScreen.swift`.
 - Unit tests: the bundled JSON decodes with unique category IDs; every `FeatureRoute` appears exactly once; an unknown route string fails to decode.
 - Manual: select every category, select each available topic, and confirm planned rows cannot be selected, on iPhone and iPad.

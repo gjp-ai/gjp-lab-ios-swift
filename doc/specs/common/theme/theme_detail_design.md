@@ -29,7 +29,13 @@ Use:
 - `LabTheme.onSurfaceVariant` for supporting copy;
 - `LabTheme.errorContainer` / `LabTheme.onErrorContainer` for recoverable failures.
 
-[`View.labScreenBackground`](../../../../GJPLab/common/theme/LabTheme.swift) establishes the canvas; [`View.labCard`](../../../../GJPLab/common/theme/LabTheme.swift) provides the white/charcoal, 24-point rounded elevated surface. Do not restore tinted category-card fills or use color alone for error, selection, disabled, or progress state.
+[`View.labScreenBackground`](../../../../GJPLab/common/theme/LabTheme.swift) establishes the canvas; [`View.labCard`](../../../../GJPLab/common/theme/LabTheme.swift) provides the white/charcoal, 24-point rounded elevated surface.
+
+Every full-screen view (sidebar, catalogue, feature screens, splash, maintenance, and the call overlay) uses `.labScreenBackground()`, which sets both the canvas and the default `onSurface` text colour. A `Form` also needs `.scrollContentBackground(.hidden)` so the canvas shows behind its rows; because the default text becomes `onSurface`, give section headers, footers, and `LabeledContent` values `onSurfaceVariant` explicitly (see `BlockAppDuringCallsScreen`).
+
+[`.buttonStyle(.labPrimary)`](../../../../GJPLab/common/theme/LabButtonStyle.swift) is the main action button: a `primary` capsule with `onPrimary` text (black with white text in light mode, white with black text in dark mode), dimmed while pressed, and a `primaryContainer` fill with `onSurfaceVariant` text when disabled. Do not use `.borderedProminent` with the Slate tint: in dark mode it draws white text on a white fill. Plain text buttons keep the default style and take the `primary` tint, or the container's `on…` colour when they sit on a coloured surface (for example **Dismiss** uses `onErrorContainer` on the error banner).
+
+Do not restore tinted category-card fills or use color alone for error, selection, disabled, or progress state.
 
 ## App icon and launch screen
 
@@ -41,7 +47,7 @@ The system launch screen uses appearance-aware `LaunchBackground` and `LaunchMar
 
 ## Adaptive navigation
 
-The category sidebar and catalogue use system lists inside a `NavigationSplitView`: three columns on regular widths, one stack on compact widths. They keep the system list and sidebar appearance (including Liquid Glass on iOS 26 and later) rather than the Slate canvas, and use hierarchical text styles so rows stay readable on the selection highlight. Feature screens in the detail column use the Slate canvas and cards. See the [sidebar detailed design](../../app/navigation/sidebar_detail_design.md).
+The category sidebar and catalogue use system lists inside a `NavigationSplitView`: three columns on regular widths, one stack on compact widths. **Every screen uses the same background in each appearance: the Slate canvas (`#FFFCF8` light, `#0D0D0D` dark).** The sidebar and the catalogue are `.plain` lists that hide their system background and use `.labScreenBackground()`. Each row is its own card through [`View.labListCard(isSelected:)`](../../../../GJPLab/common/theme/LabTheme.swift): a `surface` rounded rectangle with a 0.5-point `outlineVariant` border, spaced 12 points apart. The card replaces the system selection highlight, so a selected row (iPad) gets a 1-point `primary` border. Sidebar rows add an icon tile (`primaryContainer`). The iPad placeholders ("Choose a category", "Choose a topic") also use the canvas. Feature screens use the canvas and cards. See the [sidebar detailed design](../../app/navigation/sidebar_detail_design.md).
 
 In the catalogue, implemented topics show a chevron; planned topics show a clock and cannot be selected.
 
