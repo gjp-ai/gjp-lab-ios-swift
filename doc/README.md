@@ -19,8 +19,8 @@ doc/
     │   ├── splash_requirement.md / splash_detail_design.md
     │   └── maintenance_requirement.md / maintenance_detail_design.md
     ├── app/navigation/                   ↔ GJPLab/app/navigation/
-    │   ├── sidebar/sidebar_requirement.md / sidebar_detail_design.md
-    │   └── catalog/catalog_requirement.md / catalog_detail_design.md
+    │   ├── sidebar_requirement.md / sidebar_detail_design.md
+    │   └── catalog_requirement.md / catalog_detail_design.md
     └── features/                         ↔ GJPLab/features/
         ├── feature_requirement_template.md
         └── <category>/<feature>/
@@ -41,8 +41,8 @@ Shared code is documented project-wide rather than mirrored: `GJPLab/app/` root 
 | Visual system | — | [Slate design system](architecture/design-system.md) |
 | Splash (startup) | [Splash requirement](specs/app/startup/splash_requirement.md) | [Splash detailed design](specs/app/startup/splash_detail_design.md) |
 | Maintenance (startup) | [Maintenance requirement](specs/app/startup/maintenance_requirement.md) | [Maintenance detailed design](specs/app/startup/maintenance_detail_design.md) |
-| Category sidebar | [Sidebar requirement](specs/app/navigation/sidebar/sidebar_requirement.md) | [Sidebar detailed design](specs/app/navigation/sidebar/sidebar_detail_design.md) |
-| Category catalogue | [Catalogue requirement](specs/app/navigation/catalog/catalog_requirement.md) | [Catalogue detailed design](specs/app/navigation/catalog/catalog_detail_design.md) |
+| Category sidebar | [Sidebar requirement](specs/app/navigation/sidebar_requirement.md) | [Sidebar detailed design](specs/app/navigation/sidebar_detail_design.md) |
+| Category catalogue | [Catalogue requirement](specs/app/navigation/catalog_requirement.md) | [Catalogue detailed design](specs/app/navigation/catalog_detail_design.md) |
 | HTTP Client → URLSession | [URLSession requirement](specs/features/httpclient/urlsession/urlsession_requirement.md) | [URLSession detailed design](specs/features/httpclient/urlsession/urlsession_detail_design.md) |
 | Security → Block App During Calls | [Requirement](specs/features/security/blockappduringcalls/blockappduringcalls_requirement.md) | [Detailed design](specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md) |
 | Integration → Firebase | [Firebase lab requirement](specs/features/integration/firebase/firebase_requirement.md) | [Firebase detailed design](specs/features/integration/firebase/firebase_detail_design.md) |

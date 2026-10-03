@@ -12,11 +12,12 @@ Use one `NavigationSplitView` for every device: three columns on regular widths,
 
 | Source | Responsibility |
 | --- | --- |
-| [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Owns the split view, `selectedCategory`, `selectedTopic`, and `detailPath`; renders feature destinations |
-| [`CategorySidebar.swift`](../../../../../GJPLab/app/navigation/sidebar/CategorySidebar.swift) | Sidebar list and category rows |
-| [`FeatureCatalogScreen.swift`](../../../../../GJPLab/app/navigation/catalog/FeatureCatalogScreen.swift) | Content column: topic list with selection |
-| [`FeatureRoute.swift`](../../../../../GJPLab/app/navigation/FeatureRoute.swift) | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
-| [`DashboardCategory.swift`](../../../../../GJPLab/app/navigation/catalog/DashboardCategory.swift) | Category order, text, icons, topics, and `availableTopicCount` |
+| [`ContentView.swift`](../../../../GJPLab/app/ContentView.swift) | Owns the split view, `selectedCategory`, `selectedTopic`, and `detailPath`; renders feature destinations |
+| [`CategorySidebar.swift`](../../../../GJPLab/app/navigation/CategorySidebar.swift) | Sidebar list and category rows |
+| [`FeatureCatalogScreen.swift`](../../../../GJPLab/app/navigation/FeatureCatalogScreen.swift) | Content column: topic list with selection |
+| [`FeatureRoute.swift`](../../../../GJPLab/app/navigation/FeatureRoute.swift) | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
+| [`navigation.json`](../../../../GJPLab/app/navigation/navigation.json) | Category order, text, icons, and topics |
+| [`NavigationMenu.swift`](../../../../GJPLab/app/navigation/NavigationMenu.swift) | `NavigationMenu.main` decodes the JSON; `NavigationCategory.availableTopicCount` |
 
 ## Navigation model
 
@@ -29,7 +30,7 @@ flowchart LR
 
 | State | Type | Owner | Reset when |
 | --- | --- | --- | --- |
-| `selectedCategory` | `DashboardCategory?` | `ContentView` | User goes back to the sidebar (compact) |
+| `selectedCategory` | `NavigationCategory?` | `ContentView` | User goes back to the sidebar (compact) |
 | `selectedTopic` | `FeatureRoute?` | `ContentView` | `selectedCategory` changes |
 | `detailPath` | `[DetailRoute]` | `ContentView` | `selectedTopic` changes |
 

@@ -15,7 +15,7 @@ Give users one starting point that lists every lab category, shows how much each
 
 ### Out of scope
 
-- The catalogue column's contents (see the [catalogue requirement](../catalog/catalog_requirement.md)) and the feature screens.
+- The catalogue column's contents (see the [catalogue requirement](catalog_requirement.md)) and the feature screens.
 - Search, favorites, recently used items, deep links, and restoring the last selection after relaunch.
 
 ## Behavior
@@ -37,7 +37,7 @@ Give users one starting point that lists every lab category, shows how much each
 
 ## Rules & Constraints
 
-- Category titles, descriptions, icons, and availability come from one source (`DashboardCategory`); the sidebar does not hard-code them.
+- Category titles, descriptions, icons, and availability come from one source (`navigation.json`); the sidebar does not hard-code them.
 - Availability is derived: a topic is available when it has a route.
 - Use the system split-view behavior for collapsing and back navigation; do not switch between separate navigation implementations by device.
 
@@ -58,12 +58,12 @@ Give users one starting point that lists every lab category, shows how much each
 
 ## Technical implementation constraints
 
-- Source lives in `GJPLab/app/navigation/sidebar/`.
+- Source lives in `GJPLab/app/navigation/`.
 - `ContentView` owns the `NavigationSplitView`, the selected category and topic, and the feature column's navigation path.
-- Adding a category means adding a `DashboardCategory` case; the sidebar updates automatically.
+- Adding a category means adding an entry to `navigation.json`; the sidebar updates automatically.
 
 ## Related documents
 
 - [Detailed design](sidebar_detail_design.md)
-- [Catalogue requirement](../catalog/catalog_requirement.md)
-- [Application architecture](../../../../architecture/application.md)
+- [Catalogue requirement](catalog_requirement.md)
+- [Application architecture](../../../architecture/application.md)

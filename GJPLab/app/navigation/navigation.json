@@ -1,0 +1,67 @@
+{
+  "categories": [
+    {
+      "id": "swiftUI",
+      "title": "SwiftUI",
+      "summary": "Apple’s modern framework for building UI declaratively.",
+      "description": "A practical index of the SwiftUI building blocks used in iOS interfaces.",
+      "systemImage": "swift",
+      "topics": [
+        { "title": "Views & modifiers", "description": "Composition, styling, and reusable view behavior." },
+        { "title": "Layouts", "description": "Stacks, grids, alignment, and adaptive arrangements." },
+        { "title": "Text & input", "description": "Text, text fields, focus, and user-input patterns." },
+        { "title": "Buttons & actions", "description": "Buttons, menus, context actions, and touch targets." },
+        { "title": "Selection", "description": "Pickers, toggles, and multi-selection patterns." },
+        { "title": "Lists & grids", "description": "Lazy collections and data-driven presentation." },
+        { "title": "Navigation", "description": "Stacks, split views, destinations, and deep links." },
+        { "title": "Animation", "description": "State-driven transitions and motion." },
+        { "title": "Drawing & graphics", "description": "Shapes, Canvas, images, and custom visuals." },
+        { "title": "Accessibility & testing", "description": "Semantics, Dynamic Type, and UI tests." }
+      ]
+    },
+    {
+      "id": "httpClient",
+      "title": "HTTP Client",
+      "summary": "URLSession, Alamofire, Moya, Siesta",
+      "description": "Compare Apple's native networking stack with a popular HTTP client library.",
+      "systemImage": "network",
+      "topics": [
+        { "title": "URLSession", "description": "Native async HTTP request sample.", "route": "urlSession" },
+        { "title": "Alamofire", "description": "A popular Swift HTTP networking library." }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security",
+      "summary": "Runtime Application Self-Protection",
+      "description": "Screen-capture and recording signals for protecting sensitive content.",
+      "systemImage": "lock.shield",
+      "topics": [
+        { "title": "Block App During Calls", "description": "Block access while a supported phone or CallKit call is active.", "route": "blockAppDuringCalls" },
+        { "title": "Screenshot detection", "description": "Observe screenshots after the system captures them." },
+        { "title": "Screen capture detection", "description": "Observe active recording, mirroring, or AirPlay capture." },
+        { "title": "Sensitive content", "description": "Reduce exposure while the app is inactive or captured." }
+      ]
+    },
+    {
+      "id": "integration",
+      "title": "Integration",
+      "summary": "External SDKs and services. eg: Firebase",
+      "description": "External SDKs and services connected to the iOS app.",
+      "systemImage": "puzzlepiece.extension",
+      "topics": [
+        { "title": "Firebase", "description": "Analytics, Config, Crashlytics, Performance, and Messaging.", "route": "firebase" }
+      ]
+    },
+    {
+      "id": "others",
+      "title": "Others",
+      "summary": "Platform and device details, Biometric ID, and more.",
+      "description": "iOS platform information available on the current device.",
+      "systemImage": "slider.horizontal.3",
+      "topics": [
+        { "title": "OS & hardware", "description": "Inspect iOS and the current device hardware.", "route": "deviceInfo" }
+      ]
+    }
+  ]
+}

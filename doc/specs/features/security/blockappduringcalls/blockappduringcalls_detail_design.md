@@ -14,9 +14,8 @@ Prevent interaction with GJP Lab while iOS reports an active call, while preserv
 | --- | --- |
 | [`BlockAppDuringCallsController.swift`](../../../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsController.swift) | Persistent preference, storefront gate, CallKit observer, call state, and simulated-call state |
 | [`BlockAppDuringCallsScreen.swift`](../../../../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsScreen.swift) | Settings/status/test UI and full-screen blocking overlay |
-| [`SecurityCatalog.swift`](../../../../../GJPLab/features/security/SecurityCatalog.swift) | Security catalogue entry for the feature |
-| [`SecurityRoute.swift`](../../../../../GJPLab/features/security/SecurityRoute.swift) | Security-specific navigation value |
-| [`FeatureRoute.swift`](../../../../../GJPLab/app/navigation/FeatureRoute.swift) | `FeatureRoute.security` wraps Security topic routes |
+| [`navigation.json`](../../../../../GJPLab/app/navigation/navigation.json) | Security catalogue entry (`"route": "blockAppDuringCalls"`) |
+| [`FeatureRoute.swift`](../../../../../GJPLab/app/navigation/FeatureRoute.swift) | `FeatureRoute.blockAppDuringCalls` |
 | [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Security-route destination in the app-owned navigation stack |
 | [`GJPLabApp.swift`](../../../../../GJPLab/app/GJPLabApp.swift) | Long-lived controller, active-scene refresh, and app-wide overlay |
 
@@ -49,7 +48,7 @@ flowchart TD
     Foreground[Scene becomes active] --> Refresh
 ```
 
-`ContentView` remains the only navigation owner. Selecting the Security catalogue topic sets `.security(.blockAppDuringCalls)` as the selected topic, and `ContentView` renders the settings screen in the detail column. The root overlay is intentionally outside navigation so it blocks every feature and does not add a dismissible route.
+`ContentView` remains the only navigation owner. Selecting the Security catalogue topic sets `.blockAppDuringCalls` as the selected topic, and `ContentView` renders the settings screen in the detail column. The root overlay is intentionally outside navigation so it blocks every feature and does not add a dismissible route.
 
 ## China App Store behavior
 

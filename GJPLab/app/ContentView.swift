@@ -1,14 +1,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedCategory: DashboardCategory?
+    private let menu = NavigationMenu.main
+    @State private var selectedCategory: NavigationCategory?
     @State private var selectedTopic: FeatureRoute?
     @State private var detailPath: [DetailRoute] = []
     @ObservedObject var callBlocker: BlockAppDuringCallsController
 
     var body: some View {
         NavigationSplitView {
-            CategorySidebar(selection: $selectedCategory)
+            CategorySidebar(categories: menu.categories, selection: $selectedCategory)
         } content: {
             if let selectedCategory {
                 FeatureCatalogScreen(category: selectedCategory, selection: $selectedTopic)
@@ -47,7 +48,7 @@ struct ContentView: View {
                 detailPath.append(.response(response))
             })
         case .firebase: FirebaseFeatureScreen()
-        case .security(.blockAppDuringCalls):
+        case .blockAppDuringCalls:
             BlockAppDuringCallsScreen(controller: callBlocker)
         }
     }

@@ -19,7 +19,7 @@ Show the smallest complete `URLSession` round trip: build a `URLRequest` from us
 | [`HttpResponse.swift`](../../../../../GJPLab/features/httpclient/urlsession/HttpResponse.swift) | Hashable response value carried in the navigation route |
 | [`FeatureRoute.swift`](../../../../../GJPLab/app/navigation/FeatureRoute.swift) | `FeatureRoute.urlSession` topic and `DetailRoute.response(HttpResponse)` push |
 | [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Shows `URLSessionScreen` in the detail column; appends `.response` to the feature-column path when a request completes |
-| [`DashboardCategory.swift`](../../../../../GJPLab/app/navigation/catalog/DashboardCategory.swift) | HTTP Client catalogue entry |
+| [`navigation.json`](../../../../../GJPLab/app/navigation/navigation.json) | HTTP Client catalogue entry |
 
 ## Ownership and state
 

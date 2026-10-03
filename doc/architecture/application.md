@@ -31,10 +31,7 @@ flowchart LR
 | --- | --- |
 | `GJPLab/app/` | App entry point, app delegate, `AppSDKBootstrapper` (SDKs started at launch), and the root `ContentView` that owns the route path |
 | `GJPLab/app/startup/` | Splash and maintenance screens |
-| `GJPLab/app/navigation/` | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
-| `GJPLab/app/navigation/sidebar/` | Category sidebar (`CategorySidebar`) |
-| `GJPLab/app/navigation/catalog/` | Category catalogue screen and catalogue models |
-| `GJPLab/features/<category>/` | Category-level route and catalogue content, when a category needs them (e.g. `SecurityRoute`, `SecurityCatalog`) |
+| `GJPLab/app/navigation/` | `navigation.json` and its decoder `NavigationMenu`; `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column); category sidebar (`CategorySidebar`) and catalogue (`FeatureCatalogScreen`) |
 | `GJPLab/features/<category>/<feature>/` | Feature views and controllers |
 | `GJPLab/features/integration/firebase/` | Firebase lab screen, constants, startup, messaging, and service boundary. Startup and the app delegate depend on it, so unlike other features it cannot be removed on its own |
 | `GJPLab/common/config/` | Stable application behavior constants |
@@ -47,8 +44,8 @@ New code should follow the closest feature pattern. Reusable app behavior belong
 
 1. Write `doc/specs/features/<category>/<feature>/<feature>_requirement.md` from the [feature requirement template](../specs/features/feature_requirement_template.md); add `<feature>_detail_design.md` beside it when the feature has lifecycle, persistence, integration, platform, or security behavior.
 2. Add the screen under `features/<category>/<feature>/`.
-3. Add a `FeatureRoute` case (or a case on the category's nested route, such as `SecurityRoute`) and its view in `ContentView.feature(for:)`; screens that push further add a `DetailRoute` case.
-4. Add or enable the catalogue entry in `DashboardCategory.items` or the category's `<Category>Catalog`.
+3. Add a `FeatureRoute` case and its view in `ContentView.feature(for:)`; screens that push further add a `DetailRoute` case.
+4. In `app/navigation/navigation.json`, add the topic to its category, or give a planned topic a `"route"` equal to the new case's name. The unit tests fail if a route is missing from the JSON, listed twice, or misspelled.
 5. Add previews (light, dark, and iPad where layout adapts), and a UI test when the feature is reachable from the catalogue.
 
 ## Dependency and event flow
@@ -66,7 +63,7 @@ flowchart TD
 ```
 
 - `GJPLabAppDelegate` owns process-level SDK callbacks and forwards them through `AppSDKBootstrapper`.
-- `ContentView` owns navigation state: the selected `DashboardCategory`, the selected `FeatureRoute`, and a `[DetailRoute]` path for the feature column.
+- `ContentView` owns navigation state: the selected `NavigationCategory` (from `navigation.json`), the selected `FeatureRoute`, and a `[DetailRoute]` path for the feature column.
 - Views own private presentation state with `@State`. `GJPLabApp` owns, with `@StateObject`, the `FirebaseIntegration` used for the splash maintenance lookup and the shared call-blocking controller; `FirebaseFeatureScreen` owns its own `FirebaseIntegration` for the lab screen.
 - `URLSessionRepository` performs request mechanics; views present state and invoke explicit actions.
 
@@ -121,4 +118,4 @@ Drop `-only-testing` to include UI tests. Use a physical device for APNs, author
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
 | Minimal automated tests (call-blocking controller only) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
 
-See [Slate design system](design-system.md), [sidebar detailed design](../specs/app/navigation/sidebar/sidebar_detail_design.md), [catalogue detailed design](../specs/app/navigation/catalog/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.
+See [Slate design system](design-system.md), [sidebar detailed design](../specs/app/navigation/sidebar_detail_design.md), [catalogue detailed design](../specs/app/navigation/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.

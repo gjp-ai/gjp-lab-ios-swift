@@ -1,22 +1,22 @@
 import SwiftUI
 
 struct FeatureCatalogScreen: View {
-    let category: DashboardCategory
+    let category: NavigationCategory
     @Binding var selection: FeatureRoute?
 
     var body: some View {
         List(selection: $selection) {
             Section {
-                ForEach(category.items) { item in
-                    if let route = item.route {
-                        CatalogRow(item: item, isAvailable: true)
+                ForEach(category.topics) { topic in
+                    if let route = topic.route {
+                        CatalogRow(topic: topic, isAvailable: true)
                             .tag(route)
                     } else {
-                        CatalogRow(item: item, isAvailable: false)
+                        CatalogRow(topic: topic, isAvailable: false)
                     }
                 }
             } header: {
-                Text(category.catalogDescription)
+                Text(category.description)
                     .font(.subheadline)
                     .textCase(nil)
             }
@@ -26,15 +26,15 @@ struct FeatureCatalogScreen: View {
 }
 
 private struct CatalogRow: View {
-    let item: CatalogItem
+    let topic: NavigationTopic
     let isAvailable: Bool
 
     var body: some View {
         HStack(spacing: 14) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(item.title)
+                Text(topic.title)
                     .font(.headline)
-                Text(item.description)
+                Text(topic.description)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -52,11 +52,11 @@ private struct CatalogRow: View {
 
 #Preview("HTTP client catalogue") {
     @Previewable @State var selection: FeatureRoute?
-    NavigationStack { FeatureCatalogScreen(category: .httpClient, selection: $selection) }
+    NavigationStack { FeatureCatalogScreen(category: NavigationMenu.main.category(id: "httpClient")!, selection: $selection) }
 }
 
 #Preview("SwiftUI catalogue – dark") {
     @Previewable @State var selection: FeatureRoute?
-    NavigationStack { FeatureCatalogScreen(category: .swiftUI, selection: $selection) }
+    NavigationStack { FeatureCatalogScreen(category: NavigationMenu.main.category(id: "swiftUI")!, selection: $selection) }
         .preferredColorScheme(.dark)
 }

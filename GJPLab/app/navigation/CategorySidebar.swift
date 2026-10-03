@@ -1,18 +1,23 @@
 import SwiftUI
 
 struct CategorySidebar: View {
-    @Binding var selection: DashboardCategory?
+    let categories: [NavigationCategory]
+    @Binding var selection: NavigationCategory?
 
     var body: some View {
-        List(DashboardCategory.allCases, selection: $selection) { category in
-            CategoryRow(category: category)
+        List(selection: $selection) {
+            ForEach(categories) { category in
+                // Tag with the category itself: the implicit tag would be its String `id`, not matching the binding.
+                CategoryRow(category: category)
+                    .tag(category)
+            }
         }
         .navigationTitle("GJP Lab")
     }
 }
 
 private struct CategoryRow: View {
-    let category: DashboardCategory
+    let category: NavigationCategory
 
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 12) {
@@ -24,7 +29,7 @@ private struct CategoryRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(category.title)
                     .font(.headline)
-                Text(category.dashboardDescription)
+                Text(category.summary)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Text(availability)
@@ -44,6 +49,6 @@ private struct CategoryRow: View {
 }
 
 #Preview {
-    @Previewable @State var selection: DashboardCategory?
-    NavigationStack { CategorySidebar(selection: $selection) }
+    @Previewable @State var selection: NavigationCategory?
+    NavigationStack { CategorySidebar(categories: NavigationMenu.main.categories, selection: $selection) }
 }
