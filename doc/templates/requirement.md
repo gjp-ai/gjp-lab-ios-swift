@@ -47,7 +47,7 @@ Describe the user or product outcome in one or two sentences. State why the feat
 
 ## Technical implementation constraints
 
-- Name the feature folder (`GJPLab/features/<category>/<feature>/`) and the existing lifecycle or navigation integration points (`FeatureRoute`, `ContentView`, catalogue entry).
+- Name the feature folder (`GJPLab/features/<category>/<feature>/`) and the existing lifecycle or navigation integration points (`FeatureRoute`, `ContentView`, and the topic entry in `app/navigation/navigation.json`).
 - State required separation of shared, platform, data, and UI concerns.
 - Forbid unrelated refactors and new dependencies unless the requirement approves them.
 

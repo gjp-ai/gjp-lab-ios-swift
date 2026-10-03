@@ -65,4 +65,4 @@ None.
 
 - [Detailed design](catalog_detail_design.md)
 - [Sidebar requirement](sidebar_requirement.md)
-- [Slate design system](../../../architecture/design-system.md)
+- [Slate design system](../../common/theme/theme_detail_design.md)

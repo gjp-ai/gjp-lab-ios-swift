@@ -36,7 +36,7 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 | `GJPLab/features/<category>/<feature>/` | Screens, controllers, repositories, and models in one flat folder (no `data/` or `model/` subfolders) |
 | `GJPLab/common/` | Shared `config/` and `theme/` |
 | `GJPLab/` root | Assets, `GoogleService-Info.plist`, entitlements; no Swift source |
-| `doc/` | `architecture/` for project-wide docs; `specs/` mirrors `GJPLab/` (docs for `GJPLab/<path>/` live in `doc/specs/<path>/`) |
+| `doc/` | `architecture/` for project-wide docs; `specs/` mirrors `GJPLab/` (docs for `GJPLab/<path>/` live in `doc/specs/<path>/`); `templates/` for new specs; `decisions/` for decision records (read before reversing a structural choice) |
 | `resources/design/app-icons/` | Editable app-icon SVG sources |
 
 ## Architecture

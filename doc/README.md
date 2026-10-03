@@ -4,16 +4,16 @@ This directory documents the iOS lab as it exists today and the behavior it is i
 
 ## Layout
 
-`doc/` has two kinds of documents:
-
 - `architecture/` holds project-wide documents that describe the whole app.
 - `specs/` mirrors `GJPLab/` exactly: the docs for `GJPLab/<path>/` live in `doc/specs/<path>/`.
+- `templates/` holds the starting point for new requirement and detail design documents.
+- `decisions/` records project choices the code alone does not explain, and why they were made.
 
 ```
 doc/
-├── architecture/                         project-wide
-│   ├── application.md
-│   └── design-system.md
+├── architecture/application.md           project-wide
+├── decisions/                            0001-….md, one per decision
+├── templates/                            requirement.md, detail_design.md
 └── specs/                                mirrors GJPLab/
     ├── app/startup/                      ↔ GJPLab/app/startup/
     │   ├── splash_requirement.md / splash_detail_design.md
@@ -21,16 +21,17 @@ doc/
     ├── app/navigation/                   ↔ GJPLab/app/navigation/
     │   ├── sidebar_requirement.md / sidebar_detail_design.md
     │   └── catalog_requirement.md / catalog_detail_design.md
+    ├── common/theme/                     ↔ GJPLab/common/theme/
+    │   └── theme_detail_design.md        (Slate design system)
     └── features/                         ↔ GJPLab/features/
-        ├── feature_requirement_template.md
         └── <category>/<feature>/
             ├── <feature>_requirement.md
             └── <feature>_detail_design.md
 ```
 
-Shared code is documented project-wide rather than mirrored: `GJPLab/app/` root files in [application architecture](architecture/application.md), `GJPLab/common/` in the [design system](architecture/design-system.md). Firebase code, including its startup and messaging adapters, lives in `GJPLab/features/integration/firebase/` and is documented in the mirrored [Firebase detailed design](specs/features/integration/firebase/firebase_detail_design.md).
+The `GJPLab/app/` root files are documented in [application architecture](architecture/application.md). `GJPLab/common/config/` holds only constants and has no spec.
 
-`<feature>` is the code folder name (for example `urlsession`, `blockappduringcalls`). Every mirrored folder has both files; add them together when you add a screen.
+`<feature>` is the code folder name (for example `urlsession`, `blockappduringcalls`). Every screen has both a requirement and a detail design; add them together, starting from [`templates/`](templates/). Shared code with no user-facing behavior, such as `common/theme/`, has a detail design only.
 
 ## Document map
 
@@ -38,7 +39,8 @@ Shared code is documented project-wide rather than mirrored: `GJPLab/app/` root 
 | --- | --- | --- |
 | Agent contract | [`AGENTS.md`](../AGENTS.md): project rules, commands, and skill routing | — |
 | Application structure | — | [Application architecture](architecture/application.md) |
-| Visual system | — | [Slate design system](architecture/design-system.md) |
+| Visual system | — | [Slate design system](specs/common/theme/theme_detail_design.md) |
+| Decisions | [Decision records](decisions/README.md): why the project is shaped the way it is | — |
 | Splash (startup) | [Splash requirement](specs/app/startup/splash_requirement.md) | [Splash detailed design](specs/app/startup/splash_detail_design.md) |
 | Maintenance (startup) | [Maintenance requirement](specs/app/startup/maintenance_requirement.md) | [Maintenance detailed design](specs/app/startup/maintenance_detail_design.md) |
 | Category sidebar | [Sidebar requirement](specs/app/navigation/sidebar_requirement.md) | [Sidebar detailed design](specs/app/navigation/sidebar_detail_design.md) |
@@ -47,7 +49,7 @@ Shared code is documented project-wide rather than mirrored: `GJPLab/app/` root 
 | Security → Block App During Calls | [Requirement](specs/features/security/blockappduringcalls/blockappduringcalls_requirement.md) | [Detailed design](specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md) |
 | Integration → Firebase | [Firebase lab requirement](specs/features/integration/firebase/firebase_requirement.md) | [Firebase detailed design](specs/features/integration/firebase/firebase_detail_design.md) |
 | Others → OS & hardware | [Requirement](specs/features/others/deviceinfo/deviceinfo_requirement.md) | [Detailed design](specs/features/others/deviceinfo/deviceinfo_detail_design.md) |
-| New features | [Feature requirement template](specs/features/feature_requirement_template.md) | — |
+| New features | [Requirement template](templates/requirement.md) | [Detail design template](templates/detail_design.md) |
 
 ## Reading paths
 
@@ -77,6 +79,6 @@ Use repository-relative links and short symbol references rather than copied imp
 
 ## Maintenance
 
-New feature requirements must start from the [feature requirement template](specs/features/feature_requirement_template.md) and live at `specs/features/<category>/<feature>/<feature>_requirement.md`, next to `<feature>_detail_design.md`. Add a detailed design before or alongside implementation when a feature has lifecycle, persistence, integration, platform, or security behavior.
+New feature docs start from the [requirement template](templates/requirement.md) and the [detail design template](templates/detail_design.md), and live at `specs/features/<category>/<feature>/<feature>_requirement.md`, next to `<feature>_detail_design.md`. When a change reverses or adds a project-wide choice, add a [decision record](decisions/README.md). Add a detailed design before or alongside implementation when a feature has lifecycle, persistence, integration, platform, or security behavior.
 
 Update this documentation in the same change when user-visible behavior, routes, state ownership, entitlements, Info.plist permissions, Firebase contracts, build/test commands, the toolchain or deployment target, or material limitations change. Before handoff, verify local Markdown links and report checks that could not run.
