@@ -57,7 +57,7 @@ None.
 
 ## Technical implementation constraints
 
-- Source lives in `GJPLab/navigation/catalog/`, with models in `model/`.
+- Source lives in `GJPLab/navigation/catalog/`.
 - The list binds to `ContentView`'s selected topic (`FeatureRoute?`); only available rows are tagged.
 - A category may supply its topics from its feature folder (for example `SecurityCatalog`).
 

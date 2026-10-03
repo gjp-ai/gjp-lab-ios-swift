@@ -29,9 +29,9 @@ struct HttpResponseScreen: View {
 
     private var statusColor: Color {
         switch response.statusCode {
-        case 200...299: LabTheme.success
-        case 400...599: LabTheme.error
-        default: LabTheme.onSurface
+            case 200...299: LabTheme.success
+            case 400...599: LabTheme.error
+            default: LabTheme.onSurface
         }
     }
 }

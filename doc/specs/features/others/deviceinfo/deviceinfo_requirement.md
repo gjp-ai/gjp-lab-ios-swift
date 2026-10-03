@@ -52,7 +52,7 @@ Show a read-only snapshot of the iOS version and hardware the app is running on,
 
 ## Technical implementation constraints
 
-- Source lives in `GJPLab/features/others/deviceinfo/`, with platform reads in `data/` and the row type in `model/`.
+- Source lives in `GJPLab/features/others/deviceinfo/`.
 - The view does not call platform APIs directly; `DeviceInfoRepository` does.
 - No new dependencies.
 

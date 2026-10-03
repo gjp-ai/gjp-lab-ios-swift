@@ -14,12 +14,12 @@ Show the smallest complete `URLSession` round trip: build a `URLRequest` from us
 | --- | --- |
 | [`URLSessionScreen.swift`](../../../../../GJPLab/features/httpclient/urlsession/URLSessionScreen.swift) | Request form, loading and error state, send action |
 | [`HttpResponseScreen.swift`](../../../../../GJPLab/features/httpclient/urlsession/HttpResponseScreen.swift) | Status, body, and header presentation |
-| [`URLSessionRepository.swift`](../../../../../GJPLab/features/httpclient/urlsession/data/URLSessionRepository.swift) | URL validation, request construction, 15-second timeout, JSON formatting, header sorting, logging |
-| [`HttpMethod.swift`](../../../../../GJPLab/features/httpclient/urlsession/model/HttpMethod.swift) | Supported methods and which ones carry a payload |
-| [`HttpResponse.swift`](../../../../../GJPLab/features/httpclient/urlsession/model/HttpResponse.swift) | Hashable response value carried in the navigation route |
+| [`URLSessionRepository.swift`](../../../../../GJPLab/features/httpclient/urlsession/URLSessionRepository.swift) | URL validation, request construction, 15-second timeout, JSON formatting, header sorting, logging |
+| [`HttpMethod.swift`](../../../../../GJPLab/features/httpclient/urlsession/HttpMethod.swift) | Supported methods and which ones carry a payload |
+| [`HttpResponse.swift`](../../../../../GJPLab/features/httpclient/urlsession/HttpResponse.swift) | Hashable response value carried in the navigation route |
 | [`FeatureRoute.swift`](../../../../../GJPLab/navigation/FeatureRoute.swift) | `FeatureRoute.urlSession` topic and `DetailRoute.response(HttpResponse)` push |
 | [`ContentView.swift`](../../../../../GJPLab/app/ContentView.swift) | Shows `URLSessionScreen` in the detail column; appends `.response` to the feature-column path when a request completes |
-| [`DashboardCategory.swift`](../../../../../GJPLab/navigation/catalog/model/DashboardCategory.swift) | HTTP Client catalogue entry |
+| [`DashboardCategory.swift`](../../../../../GJPLab/navigation/catalog/DashboardCategory.swift) | HTTP Client catalogue entry |
 
 ## Ownership and state
 

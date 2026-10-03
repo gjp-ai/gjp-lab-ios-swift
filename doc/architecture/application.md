@@ -35,7 +35,7 @@ flowchart LR
 | `GJPLab/navigation/sidebar/` | Category sidebar (`CategorySidebar`) |
 | `GJPLab/navigation/catalog/` | Category catalogue screen and catalogue models |
 | `GJPLab/features/<category>/` | Category-level route and catalogue content, when a category needs them (e.g. `SecurityRoute`, `SecurityCatalog`) |
-| `GJPLab/features/<category>/<feature>/` | Feature views and controllers, with `data/` and `model/` subfolders as needed |
+| `GJPLab/features/<category>/<feature>/` | Feature views and controllers |
 | `GJPLab/sdk/` | SDK bootstrap and integration adapters |
 | `GJPLab/sdk/firebase/` | Firebase constants, startup, messaging, and service boundary |
 | `GJPLab/common/config/` | Stable application behavior constants |
@@ -47,7 +47,7 @@ New code should follow the closest feature pattern. Reusable app behavior belong
 ### Adding a feature
 
 1. Write `doc/specs/features/<category>/<feature>/<feature>_requirement.md` from the [feature requirement template](../specs/features/feature_requirement_template.md); add `<feature>_detail_design.md` beside it when the feature has lifecycle, persistence, integration, platform, or security behavior.
-2. Add the screen under `features/<category>/<feature>/`, with `data/` and `model/` subfolders as needed.
+2. Add the screen under `features/<category>/<feature>/`.
 3. Add a `FeatureRoute` case (or a case on the category's nested route, such as `SecurityRoute`) and its view in `ContentView.feature(for:)`; screens that push further add a `DetailRoute` case.
 4. Add or enable the catalogue entry in `DashboardCategory.items` or the category's `<Category>Catalog`.
 5. Add previews (light, dark, and iPad where layout adapts), and a UI test when the feature is reachable from the catalogue.
@@ -100,11 +100,13 @@ Firebase client configuration in `GoogleService-Info.plist` is not server author
 
 ```bash
 xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug \
-  -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+  -destination 'generic/platform=iOS Simulator' -derivedDataPath build/DerivedData \
+  CODE_SIGNING_ALLOWED=NO build
 
 DEVICE=$(.agent/skills/ios-build-release/scripts/pick-simulator.sh)
 xcodebuild -project GJPLab.xcodeproj -scheme GJPLab \
-  -destination "platform=iOS Simulator,name=$DEVICE" CODE_SIGNING_ALLOWED=NO \
+  -destination "platform=iOS Simulator,name=$DEVICE" -derivedDataPath build/DerivedData \
+  CODE_SIGNING_ALLOWED=NO \
   -only-testing:GJPLabTests test
 ```
 

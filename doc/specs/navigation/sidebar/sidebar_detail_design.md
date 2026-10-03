@@ -16,7 +16,7 @@ Use one `NavigationSplitView` for every device: three columns on regular widths,
 | [`CategorySidebar.swift`](../../../../GJPLab/navigation/sidebar/CategorySidebar.swift) | Sidebar list and category rows |
 | [`FeatureCatalogScreen.swift`](../../../../GJPLab/navigation/catalog/FeatureCatalogScreen.swift) | Content column: topic list with selection |
 | [`FeatureRoute.swift`](../../../../GJPLab/navigation/FeatureRoute.swift) | `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column) |
-| [`DashboardCategory.swift`](../../../../GJPLab/navigation/catalog/model/DashboardCategory.swift) | Category order, text, icons, topics, and `availableTopicCount` |
+| [`DashboardCategory.swift`](../../../../GJPLab/navigation/catalog/DashboardCategory.swift) | Category order, text, icons, topics, and `availableTopicCount` |
 
 ## Navigation model
 

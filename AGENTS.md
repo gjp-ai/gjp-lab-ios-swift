@@ -19,8 +19,9 @@ GJPLab is an iOS lab for practising iOS features and third-party libraries, grou
 
 ## Commands
 
-- Build: `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build`
-- Test: `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -destination 'platform=iOS Simulator,name=<device>' CODE_SIGNING_ALLOWED=NO test`. Get `<device>` from `.agent/skills/ios-build-release/scripts/pick-simulator.sh` (it times out instead of hanging); add `-only-testing:GJPLabTests` for unit tests only.
+- Build: `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build`
+- Test: `xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -destination 'platform=iOS Simulator,name=<device>' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO test`. Get `<device>` from `.agent/skills/ios-build-release/scripts/pick-simulator.sh` (it times out instead of hanging); add `-only-testing:GJPLabTests` for unit tests only.
+- Command-line builds use `build/DerivedData` (git-ignored) so they do not clash with Xcode's own DerivedData; sharing it can fail the build while Xcode is open.
 - App icons: `swift scripts/render_app_icons.swift` from the repository root.
 
 ## Directory Structure
@@ -31,7 +32,7 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 | --- | --- |
 | `GJPLab/app/` | `GJPLabApp`, `GJPLabAppDelegate`, root `ContentView`; `startup/` holds splash and maintenance |
 | `GJPLab/navigation/` | `FeatureRoute` and `DetailRoute`; `sidebar/` (`CategorySidebar`); `catalog/` (catalogue screen and models) |
-| `GJPLab/features/<category>/<feature>/` | Screens and controllers, with `data/` and `model/` as needed; `<Category>Route` / `<Category>Catalog` sit in `<category>/` |
+| `GJPLab/features/<category>/<feature>/` | Screens, controllers, repositories, and models in one flat folder (no `data/` or `model/` subfolders); `<Category>Route` / `<Category>Catalog` sit in `<category>/` |
 | `GJPLab/sdk/` | SDK bootstrap and adapters (`sdk/firebase/`); not the `features/integration/` category |
 | `GJPLab/common/` | Shared `config/` and `theme/` |
 | `GJPLab/` root | Assets, `GoogleService-Info.plist`, entitlements; no Swift source |

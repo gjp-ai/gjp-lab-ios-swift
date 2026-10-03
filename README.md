@@ -30,11 +30,13 @@ App-wide behavior: a branded splash screen, a Remote Config maintenance mode, an
 
    ```bash
    xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug \
-     -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+     -destination 'generic/platform=iOS Simulator' -derivedDataPath build/DerivedData \
+     CODE_SIGNING_ALLOWED=NO build
 
    DEVICE=$(.agent/skills/ios-build-release/scripts/pick-simulator.sh)
    xcodebuild -project GJPLab.xcodeproj -scheme GJPLab \
-     -destination "platform=iOS Simulator,name=$DEVICE" CODE_SIGNING_ALLOWED=NO \
+     -destination "platform=iOS Simulator,name=$DEVICE" -derivedDataPath build/DerivedData \
+     CODE_SIGNING_ALLOWED=NO \
      -only-testing:GJPLabTests test
    ```
 
@@ -48,7 +50,7 @@ App-wide behavior: a branded splash screen, a Remote Config maintenance mode, an
 GJPLab/
 ├── app/          entry point, app delegate, root navigation; startup/ (splash, maintenance)
 ├── navigation/   FeatureRoute, sidebar/, catalog/
-├── features/     <category>/<feature>/ with data/ and model/ as needed
+├── features/     <category>/<feature>/, one flat folder per feature
 ├── sdk/          SDK bootstrap and Firebase adapters
 └── common/       config/ and theme/ (LabTheme, LabMark)
 GJPLabTests/      Swift Testing unit tests
