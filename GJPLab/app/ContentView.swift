@@ -30,6 +30,8 @@ struct ContentView: View {
                 .navigationDestination(for: DetailRoute.self) { route in
                     switch route {
                     case .response(let response): HttpResponseScreen(response: response)
+                    case .navigationLevel(let level):
+                        NavigationLevelScreen(level: level, onPopToRoot: { detailPath = [] })
                     }
                 }
             }
@@ -42,6 +44,26 @@ struct ContentView: View {
     @ViewBuilder
     private func feature(for route: FeatureRoute) -> some View {
         switch route {
+        case .swiftBasics: SwiftBasicsScreen()
+        case .optionals: OptionalsScreen()
+        case .collections: CollectionsScreen()
+        case .closures: ClosuresScreen()
+        case .typeSemantics: TypeSemanticsScreen()
+        case .protocolsGenerics: ProtocolsGenericsScreen()
+        case .errorHandling: ErrorHandlingScreen()
+        case .concurrency: ConcurrencyScreen()
+        case .memory: MemoryScreen()
+        case .stringsRegex: StringsRegexScreen()
+        case .viewsModifiers: ViewsModifiersScreen()
+        case .layouts: LayoutsScreen()
+        case .textInput: TextInputScreen()
+        case .buttonsActions: ButtonsScreen()
+        case .selection: SelectionScreen()
+        case .listsGrids: ListsGridsScreen()
+        case .navigationPatterns: NavigationPatternsScreen()
+        case .animation: AnimationScreen()
+        case .drawing: DrawingScreen()
+        case .accessibility: AccessibilityScreen()
         case .deviceInfo: DeviceInfoScreen()
         case .urlSession:
             URLSessionScreen(onResponse: { response in

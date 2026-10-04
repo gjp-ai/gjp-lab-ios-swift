@@ -35,6 +35,8 @@ Every full-screen view (sidebar, catalogue, feature screens, splash, maintenance
 
 [`.buttonStyle(.labPrimary)`](../../../../GJPLab/common/theme/LabButtonStyle.swift) is the main action button: a `primary` capsule with `onPrimary` text (black with white text in light mode, white with black text in dark mode), dimmed while pressed, and a `primaryContainer` fill with `onSurfaceVariant` text when disabled. Do not use `.borderedProminent` with the Slate tint: in dark mode it draws white text on a white fill. Plain text buttons keep the default style and take the `primary` tint, or the container's `on…` colour when they sit on a coloured surface (for example **Dismiss** uses `onErrorContainer` on the error banner).
 
+[`LabDemoPage`](../../../../GJPLab/common/theme/LabDemoSection.swift) is a scrolling screen with a supporting-copy introduction, width-limited to 720 points and centred on iPad, on the canvas. [`LabDemoSection`](../../../../GJPLab/common/theme/LabDemoSection.swift) is an 18-point `labCard` with a headline title (a VoiceOver heading), an `onSurfaceVariant` caption, and the live sample. The SwiftUI topic screens use both so every demo looks the same; the Swift topics use them through the [runnable code sample](../codesample/codesample_detail_design.md) card.
+
 Do not restore tinted category-card fills or use color alone for error, selection, disabled, or progress state.
 
 ## App icon and launch screen

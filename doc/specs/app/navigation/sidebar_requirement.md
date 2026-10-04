@@ -25,7 +25,7 @@ Give users one starting point that lists every lab category, shows how much each
 - **iPad and wide windows:** categories, catalogue, and feature appear side by side. Before a selection, the catalogue and feature columns show a short prompt.
 - **iPhone and narrow windows:** the columns collapse into one stack: categories → catalogue → feature, with back navigation between them.
 - Changing the category clears the selected topic; changing the topic returns the feature column to its first screen.
-- Categories appear in this order: SwiftUI, HTTP Client, Security, Integration, Others.
+- Categories appear in this order: Swift, SwiftUI, HTTP Client, Security, Integration, Others.
 
 ## UI & Navigation
 
@@ -49,7 +49,7 @@ Give users one starting point that lists every lab category, shows how much each
 
 | ID | Scenario | Expected result |
 | --- | --- | --- |
-| SDB-AC-01 | Startup completes with maintenance off | The sidebar lists all five categories in order with their icon, title, and description. |
+| SDB-AC-01 | Startup completes with maintenance off | The sidebar lists all six categories in order with their icon, title, and description. |
 | SDB-AC-02 | iPhone: tap a category, then an available topic | The catalogue, then the feature, are pushed; back returns step by step. |
 | SDB-AC-03 | iPad landscape: select a category and a topic | Categories, catalogue, and feature are visible side by side. |
 | SDB-AC-04 | iPad: select a different category while a feature is shown | The catalogue changes and the feature column returns to its prompt. |

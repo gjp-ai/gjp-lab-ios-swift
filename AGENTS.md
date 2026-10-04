@@ -7,7 +7,7 @@
 
 ## Project Overview
 
-GJPLab is an iOS lab for practising iOS features and third-party libraries, grouped into dashboard categories (SwiftUI, HTTP Client, Security, Integration, Others).
+GJPLab is an iOS lab for practising iOS features and third-party libraries, grouped into dashboard categories (Swift, SwiftUI, HTTP Client, Security, Integration, Others).
 
 ## Tech Stack
 
@@ -34,7 +34,7 @@ Folder names are lowercase and do not repeat their parent (`httpclient/urlsessio
 | `GJPLab/app/navigation/` | `navigation.json` (sidebar categories and catalogue topics), `NavigationMenu` (its decoder), `FeatureRoute` and `DetailRoute`, `CategorySidebar`, and `FeatureCatalogScreen`, in one flat folder |
 | `GJPLab/features/integration/<sdk>/` | All code for one SDK: lab screen, startup integration, service boundary, constants (`features/integration/firebase/`). The app shell uses it, so it is not removable like other features |
 | `GJPLab/features/<category>/<feature>/` | Screens, controllers, repositories, and models in one flat folder (no `data/` or `model/` subfolders) |
-| `GJPLab/common/` | Shared `config/` and `theme/` |
+| `GJPLab/common/` | Shared `config/`, `theme/`, and `codesample/` (the runnable sample card used by the Swift topics) |
 | `GJPLab/` root | Assets, `GoogleService-Info.plist`, entitlements; no Swift source |
 | `doc/` | `architecture/` for project-wide docs; `specs/` mirrors `GJPLab/` (docs for `GJPLab/<path>/` live in `doc/specs/<path>/`); `templates/` for new specs; `decisions/` for decision records (read before reversing a structural choice); `guides/` for learning material (update `guides/swift_tutorial.md` and `guides/swiftui_tutorial.md` when code they quote changes) |
 | `resources/design/app-icons/` | Editable app-icon SVG sources |

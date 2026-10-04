@@ -39,10 +39,6 @@ struct NavigationCategory: Decodable, Identifiable, Hashable {
     let description: String
     let systemImage: String
     let topics: [NavigationTopic]
-
-    var availableTopicCount: Int {
-        topics.filter { $0.route != nil }.count
-    }
 }
 
 /// A catalogue row; a topic without a route is planned and cannot be opened.

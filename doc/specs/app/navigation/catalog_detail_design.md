@@ -14,7 +14,7 @@ Render a category's topics as a selectable list in the split view's content colu
 | --- | --- |
 | [`FeatureCatalogScreen.swift`](../../../../GJPLab/app/navigation/FeatureCatalogScreen.swift) | Topic list bound to the selected topic, and `CatalogRow` |
 | [`navigation.json`](../../../../GJPLab/app/navigation/navigation.json) | Every category and its topics, in display order; a topic with a `route` is available, one without is planned |
-| [`NavigationMenu.swift`](../../../../GJPLab/app/navigation/NavigationMenu.swift) | Decodes the JSON into `NavigationCategory` and `NavigationTopic` (`id` is the title); `availableTopicCount` |
+| [`NavigationMenu.swift`](../../../../GJPLab/app/navigation/NavigationMenu.swift) | Decodes the JSON into `NavigationCategory` and `NavigationTopic` (`id` is the title) |
 | [`FeatureRoute.swift`](../../../../GJPLab/app/navigation/FeatureRoute.swift) | Topic routes used as selection values; raw values are the JSON `route` strings |
 | [`ContentView.swift`](../../../../GJPLab/app/ContentView.swift) | Owns `selectedTopic` and renders the feature for it |
 
@@ -26,11 +26,27 @@ The screen receives a `NavigationCategory` and a `Binding<FeatureRoute?>`. It re
 
 | Category | Available | Planned |
 | --- | --- | --- |
-| SwiftUI | — | 10 topics (views, layouts, text, buttons, selection, lists, navigation, animation, drawing, accessibility) |
+| Swift | All 10 topics (values and types, optionals, collections, closures, structs/classes/enums, protocols and generics, errors, concurrency, memory, strings and regex); see [`doc/specs/features/swift/`](../../features/swift/) | — |
+| SwiftUI | All 10 topics (views, layouts, text, buttons, selection, lists, navigation, animation, drawing, accessibility); see [`doc/specs/features/swiftui/`](../../features/swiftui/) | — |
 | HTTP Client | URLSession | Alamofire |
 | Security | Block App During Calls | Screenshot detection, screen capture detection, sensitive content |
 | Integration | Firebase | — |
 | Others | OS & hardware | — |
+
+### Swift category
+
+The **Swift** category teaches the language itself, separately from SwiftUI. Its entry in `navigation.json`:
+
+| Field | Value |
+| --- | --- |
+| `id` | `swift` |
+| `title` | Swift |
+| `summary` | The Swift language: types, optionals, closures, concurrency. |
+| `description` | Run small Swift samples and see what each language feature does. |
+| `systemImage` | `chevron.left.forwardslash.chevron.right` (SwiftUI already uses `swift`) |
+| Position | First, before SwiftUI |
+
+Topics and routes, in catalogue order (all implemented): Values & types (`swiftBasics`), Optionals (`optionals`), Collections (`collections`), Functions & closures (`closures`), Structs, classes & enums (`typeSemantics`), Protocols & generics (`protocolsGenerics`), Error handling (`errorHandling`), Concurrency (`concurrency`), Memory management (`memory`), Strings & regex (`stringsRegex`). Every topic opens a page of runnable samples built on the shared [runnable code sample](../../common/codesample/codesample_detail_design.md).
 
 A unit test checks that routes are unique across the catalogue, because a duplicate route would make two rows share one selection.
 
@@ -48,6 +64,6 @@ The category description is a plain, untagged first row, so it scrolls with the 
 
 ## Verification
 
-- Previews: "HTTP client catalogue" (available and planned topics) and "SwiftUI catalogue" (planned only), each in light and dark, in `FeatureCatalogScreen.swift`.
+- Previews: "HTTP client catalogue" (available and planned topics) and "SwiftUI catalogue" (available only), each in light and dark, in `FeatureCatalogScreen.swift`.
 - Unit tests: the bundled JSON decodes with unique category IDs; every `FeatureRoute` appears exactly once; an unknown route string fails to decode.
 - Manual: select every category, select each available topic, and confirm planned rows cannot be selected, on iPhone and iPad.

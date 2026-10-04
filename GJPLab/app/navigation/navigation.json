@@ -1,22 +1,41 @@
 {
   "categories": [
     {
+      "id": "swift",
+      "title": "Swift",
+      "summary": "The Swift language: types, optionals, closures, concurrency.",
+      "description": "Run small Swift samples and see what each language feature does.",
+      "systemImage": "chevron.left.forwardslash.chevron.right",
+      "topics": [
+        { "title": "Values & types", "description": "let, var, type inference, numbers, and tuples.", "route": "swiftBasics" },
+        { "title": "Optionals", "description": "nil, if let, guard let, ??, and optional chaining.", "route": "optionals" },
+        { "title": "Collections", "description": "Arrays, sets, dictionaries, map, filter, and reduce.", "route": "collections" },
+        { "title": "Functions & closures", "description": "Labels, defaults, inout, closures, and captured values.", "route": "closures" },
+        { "title": "Structs, classes & enums", "description": "Value and reference types, enums, and pattern matching.", "route": "typeSemantics" },
+        { "title": "Protocols & generics", "description": "Protocols, extensions, generics, some, and any.", "route": "protocolsGenerics" },
+        { "title": "Error handling", "description": "throws, do/catch, typed throws, Result, and defer.", "route": "errorHandling" },
+        { "title": "Concurrency", "description": "async/await, task groups, cancellation, and actors.", "route": "concurrency" },
+        { "title": "Memory management", "description": "ARC, deinit, retain cycles, weak, and unowned.", "route": "memory" },
+        { "title": "Strings & regex", "description": "Unicode, string indices, raw strings, and Regex.", "route": "stringsRegex" }
+      ]
+    },
+    {
       "id": "swiftUI",
       "title": "SwiftUI",
       "summary": "Apple’s modern framework for building UI declaratively.",
       "description": "A practical index of the SwiftUI building blocks used in iOS interfaces.",
       "systemImage": "swift",
       "topics": [
-        { "title": "Views & modifiers", "description": "Composition, styling, and reusable view behavior." },
-        { "title": "Layouts", "description": "Stacks, grids, alignment, and adaptive arrangements." },
-        { "title": "Text & input", "description": "Text, text fields, focus, and user-input patterns." },
-        { "title": "Buttons & actions", "description": "Buttons, menus, context actions, and touch targets." },
-        { "title": "Selection", "description": "Pickers, toggles, and multi-selection patterns." },
-        { "title": "Lists & grids", "description": "Lazy collections and data-driven presentation." },
-        { "title": "Navigation", "description": "Stacks, split views, destinations, and deep links." },
-        { "title": "Animation", "description": "State-driven transitions and motion." },
-        { "title": "Drawing & graphics", "description": "Shapes, Canvas, images, and custom visuals." },
-        { "title": "Accessibility & testing", "description": "Semantics, Dynamic Type, and UI tests." }
+        { "title": "Views & modifiers", "description": "Composition, styling, and reusable view behavior.", "route": "viewsModifiers" },
+        { "title": "Layouts", "description": "Stacks, grids, alignment, and adaptive arrangements.", "route": "layouts" },
+        { "title": "Text & input", "description": "Text, text fields, focus, and user-input patterns.", "route": "textInput" },
+        { "title": "Buttons & actions", "description": "Buttons, menus, context actions, and touch targets.", "route": "buttonsActions" },
+        { "title": "Selection", "description": "Pickers, toggles, and multi-selection patterns.", "route": "selection" },
+        { "title": "Lists & grids", "description": "Lazy collections and data-driven presentation.", "route": "listsGrids" },
+        { "title": "Navigation", "description": "Stacks, split views, destinations, and deep links.", "route": "navigationPatterns" },
+        { "title": "Animation", "description": "State-driven transitions and motion.", "route": "animation" },
+        { "title": "Drawing & graphics", "description": "Shapes, Canvas, images, and custom visuals.", "route": "drawing" },
+        { "title": "Accessibility & testing", "description": "Semantics, Dynamic Type, and UI tests.", "route": "accessibility" }
       ]
     },
     {

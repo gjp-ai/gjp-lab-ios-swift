@@ -31,6 +31,8 @@ Learn the Swift language features that GJPLab actually uses, one lesson at a tim
 
 ---
 
+> **Try it in the app:** the **Swift** category runs the ideas in these lessons as live samples: tap **Run** to see real output. Its source is in [`features/swift/`](../../GJPLab/features/swift/).
+
 ## Lessons
 
 ### 1. Constants, variables, and type inference
@@ -146,11 +148,12 @@ enum HttpMethod: String, CaseIterable, Identifiable {
 
 [`FeatureRoute`](../../GJPLab/app/navigation/FeatureRoute.swift) uses raw values to connect Swift to JSON: the `"route": "urlSession"` string in `navigation.json` becomes `FeatureRoute.urlSession`.
 
-**Associated values** attach data to a case. [`DetailRoute`](../../GJPLab/app/navigation/FeatureRoute.swift) carries the response to show:
+**Associated values** attach data to a case. [`DetailRoute`](../../GJPLab/app/navigation/FeatureRoute.swift) carries the response to show, or the depth of a sample navigation level:
 
 ```swift
 enum DetailRoute: Hashable {
     case response(HttpResponse)
+    case navigationLevel(Int)
 }
 ```
 
@@ -199,10 +202,8 @@ var isBlocking: Bool {
     isEnabled && availability == .available && (hasActiveCall || isTestCallActive)
 }
 
-// NavigationCategory in NavigationMenu.swift
-var availableTopicCount: Int {
-    topics.filter { $0.route != nil }.count
-}
+// HttpMethod: only POST and PUT send a request body
+var supportsPayload: Bool { self == .POST || self == .PUT }
 ```
 
 A **property observer** runs code when a stored property changes. `didSet` here saves the setting every time it changes:
@@ -315,7 +316,6 @@ URLSessionScreen(onResponse: { response in   // ContentView
 | Function | Does | Project example |
 | --- | --- | --- |
 | `map` | Transform each element | Header pairs → `"Name: value"` lines in `HttpResponseScreen` |
-| `filter` | Keep matching elements | `topics.filter { $0.route != nil }` |
 | `compactMap` | Transform and drop `nil`s | `.compactMap(\.route)` in the unit tests |
 | `flatMap` | Transform and flatten nested arrays | `categories.flatMap(\.topics)` |
 | `first(where:)` | First match, or `nil` | `categories.first { $0.id == id }` |

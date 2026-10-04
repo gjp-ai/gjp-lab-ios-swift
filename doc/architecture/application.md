@@ -15,6 +15,9 @@ flowchart LR
     Splash -->|3-second minimum + config result| Sidebar[ContentView / CategorySidebar]
     Splash -->|maintenance enabled| Maintenance[MaintenanceScreen]
     Sidebar --> Catalog[FeatureCatalogScreen]
+    Catalog --> Swift[Swift topic screens]
+    Catalog --> SwiftUI[SwiftUI topic screens]
+    SwiftUI --> Level[NavigationLevelScreen]
     Catalog --> Device[DeviceInfoScreen]
     Catalog --> HTTP[URLSessionScreen]
     Catalog --> Firebase[FirebaseFeatureScreen]
@@ -33,9 +36,12 @@ flowchart LR
 | `GJPLab/app/startup/` | Splash and maintenance screens |
 | `GJPLab/app/navigation/` | `navigation.json` and its decoder `NavigationMenu`; `FeatureRoute` (topic selection) and `DetailRoute` (pushes inside the feature column); category sidebar (`CategorySidebar`) and catalogue (`FeatureCatalogScreen`) |
 | `GJPLab/features/<category>/<feature>/` | Feature views and controllers |
+| `GJPLab/features/swift/<topic>/` | One page of runnable samples per Swift topic (`basics`, `optionals`, `collections`, `closures`, `types`, `generics`, `errors`, `concurrency`, `memory`, `strings`): a `<Topic>Samples` list and a small screen |
+| `GJPLab/features/swiftui/<topic>/` | One demo screen per SwiftUI topic (`views`, `layouts`, `textinput`, `buttons`, `selection`, `lists`, `navigation`, `animation`, `drawing`, `accessibility`), built from `LabDemoPage` and `LabDemoSection` |
 | `GJPLab/features/integration/firebase/` | Firebase lab screen, constants, startup, messaging, and service boundary. Startup and the app delegate depend on it, so unlike other features it cannot be removed on its own |
 | `GJPLab/common/config/` | Stable application behavior constants |
-| `GJPLab/common/theme/` | Slate semantic colors, reusable surface treatment, and brand mark |
+| `GJPLab/common/codesample/` | `CodeSample`, `SampleLog`, and the runnable sample page and card used by the Swift topics |
+| `GJPLab/common/theme/` | Slate semantic colors, reusable surface treatment, demo page and card (`LabDemoPage`, `LabDemoSection`), and brand mark |
 | Root `GJPLab/` | Asset catalog, `GoogleService-Info.plist`, and Debug/Release entitlements only |
 
 New code should follow the closest feature pattern. Reusable app behavior belongs in `common/`; SDK-specific behavior belongs in that SDK's `features/integration/<sdk>/` folder, registered in `AppSDKBootstrapper`. Folder names are lowercase and do not repeat their parent (`httpclient/urlsession`, not `httpclient/httpurlsession`).
@@ -116,6 +122,6 @@ Drop `-only-testing` to include UI tests. Use a physical device for APNs, author
 | View-local state | Low ceremony; limited restoration and sharing guarantees | State must outlive a view or scene |
 | In-memory navigation selection | Clear small-app routing; no durable restoration | Deep links or restoration become product requirements |
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
-| Minimal automated tests (call-blocking controller only) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
+| Minimal automated tests (call-blocking controller, navigation menu, SwiftUI topic helpers, every Swift sample, and UI test suites for the SwiftUI and Swift categories) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
 
-See [Slate design system](../specs/common/theme/theme_detail_design.md), [sidebar detailed design](../specs/app/navigation/sidebar_detail_design.md), [catalogue detailed design](../specs/app/navigation/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.
+See the Swift topic requirements in [`doc/specs/features/swift/`](../specs/features/swift/), the [runnable code sample](../specs/common/codesample/codesample_detail_design.md), the SwiftUI topic requirements in [`doc/specs/features/swiftui/`](../specs/features/swiftui/), [Slate design system](../specs/common/theme/theme_detail_design.md), [sidebar detailed design](../specs/app/navigation/sidebar_detail_design.md), [catalogue detailed design](../specs/app/navigation/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.

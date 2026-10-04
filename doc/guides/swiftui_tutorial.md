@@ -265,6 +265,8 @@ NavigationSplitView {
             .navigationDestination(for: DetailRoute.self) { route in
                 switch route {
                 case .response(let response): HttpResponseScreen(response: response)
+                case .navigationLevel(let level):
+                    NavigationLevelScreen(level: level, onPopToRoot: { detailPath = [] })
                 }
             }
     }
@@ -278,6 +280,8 @@ NavigationSplitView {
 detailPath.append(.response(response))   // push the response screen
 detailPath = []                          // pop to the feature root
 ```
+
+A screen can also push without touching `detailPath` directly: `NavigationLink(value: DetailRoute.navigationLevel(1))` appends the value for you. The **SwiftUI → Navigation** topic ([`NavigationPatternsScreen`](../../GJPLab/features/swiftui/navigation/NavigationPatternsScreen.swift)) shows this, plus sheets, covers, popovers, and an inspector.
 
 - **`.navigationDestination(for:)`** maps a route value to its screen.
 - **`.navigationTitle`** and `.navigationBarTitleDisplayMode(.inline)` set the title.
@@ -419,6 +423,7 @@ Read the source in this order; each file adds a few new SwiftUI ideas.
 | 6 | [`ContentView.swift`](../../GJPLab/app/ContentView.swift) | `NavigationSplitView`, `NavigationStack(path:)`, `.onChange` |
 | 7 | [`BlockAppDuringCallsScreen.swift`](../../GJPLab/features/security/blockappduringcalls/BlockAppDuringCallsScreen.swift) | `Form`, `@ObservedObject`, accessibility |
 | 8 | [`GJPLabApp.swift`](../../GJPLab/app/GJPLabApp.swift) | `App`, `@StateObject`, `.task`, `scenePhase` |
+| 9 | The SwiftUI topics in [`features/swiftui/`](../../GJPLab/features/swiftui/) | One screen per topic in the app's **SwiftUI** category: modifiers, `Layout`, `@FocusState`, menus, pickers, swipe actions, presentations, animation, `Canvas`, accessibility |
 
 ### Common pitfalls
 
