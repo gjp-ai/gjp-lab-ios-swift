@@ -22,26 +22,23 @@ final class SwiftTopicsUITests: XCTestCase {
 
     @MainActor
     func testSwiftIsTheFirstCategory() throws {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchLab()
         let swift = element(labelStartingWith: "Swift,", in: app)
         let swiftUI = element(labelStartingWith: "SwiftUI,", in: app)
-        XCTAssertTrue(swift.waitForExistence(timeout: 20), "Sidebar did not appear after the splash screen")
+        XCTAssertTrue(swift.waitForExistence(timeout: 10), "Sidebar did not appear")
         XCTAssertLessThan(swift.frame.minY, swiftUI.frame.minY)
     }
 
     @MainActor
     func testEverySwiftTopicOpens() throws {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchLab()
         openCategory(titled: "Swift", in: app)
         openEveryTopic(topics, inCategory: "Swift", app: app)
     }
 
     @MainActor
     func testRunShowsTheSampleOutput() throws {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchLab()
         openCategory(titled: "Swift", in: app)
         tapRow(titled: "Values & types", in: app)
 

@@ -33,9 +33,7 @@ Show how SwiftUI animates state changes, and how to respect the Reduce Motion se
 
 ## Rules & Constraints
 
-- Use only public SwiftUI APIs available on the app's deployment target (iOS 26.6).
-- Sample data stays in memory; nothing is persisted, sent over the network, or logged.
-- Colours come from `LabTheme` roles; main actions use `.buttonStyle(.labPrimary)`.
+- The shared [demo page rules](../../../common/theme/theme_detail_design.md#demo-pages) apply: public SwiftUI APIs on the deployment target only, sample data kept in memory (nothing persisted, sent, or logged), and `LabTheme` colours.
 - All animations are driven by local `@State`; none run timers outside the view's lifetime.
 
 ## Platform limitations
@@ -59,5 +57,6 @@ Show how SwiftUI animates state changes, and how to respect the Reduce Motion se
 
 ## Related documents
 
-- [Slate design system](../../../common/theme/theme_detail_design.md) (`LabDemoPage` and `LabDemoSection`)
+- [Detailed design](animation_detail_design.md)
+- [Slate design system: demo pages](../../../common/theme/theme_detail_design.md#demo-pages) (`LabDemoPage` and `LabDemoSection`)
 - [Application architecture](../../../../architecture/application.md)

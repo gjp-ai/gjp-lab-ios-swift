@@ -1,12 +1,12 @@
 # Memory management detailed design
 
-Status: Implemented
+Status: Implemented, with known gaps
 
 Requirements: [Memory management](memory_requirement.md)
 
 ## Implementation goal
 
-Each sample is a static function in `MemorySamples` whose body is the code shown on screen; `MemoryScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**.
+Each sample is a static function in `MemorySamples` whose body is the code shown on screen; `MemoryScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**. Snippet text and function body are kept in sync by hand; see the shared [known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps).
 
 ## Source map
 
@@ -37,7 +37,6 @@ The strong retain-cycle and strong-capture samples leak on purpose: one small `O
 
 | Gap | Effect | Suggested fix |
 | --- | --- | --- |
-| Snippet and function body are maintained by hand | They can drift apart | See the shared [code sample known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps) |
 | Leaked objects accumulate while the app runs | A few hundred bytes per run of those two samples | Acceptable for a lab; break the cycle at the end of the sample if it ever matters |
 | ARC may free an object right after its last use | In optimised builds `deinit` can appear earlier than the end of the scope | Tests only check that `deinit` appears before the next scope's line, which holds in both builds |
 
@@ -45,4 +44,4 @@ The strong retain-cycle and strong-capture samples leak on purpose: one small `O
 
 - Build with the project build command in [application architecture](../../../../architecture/application.md#build-and-verification).
 - Automated: `SwiftTopicTests` runs every sample (non-empty, same output twice) and checks key lines in `retainCyclesKeepObjectsAliveAndWeakFreesThem`; `SwiftTopicsUITests.testEverySwiftTopicOpens` opens the screen from the catalogue.
-- Manual: MEM-AC-01 to the last acceptance criterion on an iPhone simulator in light and dark appearance, and at a large Dynamic Type size.
+- Manual: MEM-AC-01 to MEM-AC-03 on an iPhone simulator; the shared CS-AC-01 to CS-AC-07 are checked once for the category (see the [runnable code sample requirement](../../../common/codesample/codesample_requirement.md#acceptance-criteria)).

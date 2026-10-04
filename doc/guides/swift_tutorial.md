@@ -258,7 +258,12 @@ protocol SDKIntegration {
     func didFailToRegisterForRemoteNotifications(with error: Error)
 }
 
-private let integrations: [SDKIntegration] = [FirebaseStartupIntegration()]
+// AppSDKBootstrapper: an array of anything that conforms to the protocol
+private let integrations: [SDKIntegration]
+
+init() {
+    integrations = AppConfig.isUITesting ? [] : [FirebaseStartupIntegration()]
+}
 ```
 
 **Delegates** are protocols used for callbacks from Apple frameworks: `GJPLabAppDelegate` conforms to `UIApplicationDelegate`, `FirebaseMessagingHandler` to `MessagingDelegate` and `UNUserNotificationCenterDelegate`, and the call controller to `CXCallObserverDelegate`.

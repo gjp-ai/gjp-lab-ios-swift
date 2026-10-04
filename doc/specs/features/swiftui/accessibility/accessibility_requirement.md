@@ -37,9 +37,7 @@ Show how SwiftUI describes meaning to assistive technologies and UI tests, and h
 
 ## Rules & Constraints
 
-- Use only public SwiftUI APIs available on the app's deployment target (iOS 26.6).
-- Sample data stays in memory; nothing is persisted, sent over the network, or logged.
-- Colours come from `LabTheme` roles; main actions use `.buttonStyle(.labPrimary)`.
+- The shared [demo page rules](../../../common/theme/theme_detail_design.md#demo-pages) apply: public SwiftUI APIs on the deployment target only, sample data kept in memory (nothing persisted, sent, or logged), and `LabTheme` colours.
 - Identifiers are `accessibility.tapButton` and `accessibility.tapCount`; do not rename them without updating the UI test.
 
 ## Platform limitations
@@ -63,5 +61,6 @@ Show how SwiftUI describes meaning to assistive technologies and UI tests, and h
 
 ## Related documents
 
-- [Slate design system](../../../common/theme/theme_detail_design.md) (`LabDemoPage` and `LabDemoSection`)
+- [Detailed design](accessibility_detail_design.md)
+- [Slate design system: demo pages](../../../common/theme/theme_detail_design.md#demo-pages) (`LabDemoPage` and `LabDemoSection`)
 - [Application architecture](../../../../architecture/application.md)

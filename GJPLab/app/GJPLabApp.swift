@@ -3,7 +3,7 @@ import SwiftUI
 @main
 struct GJPLabApp: App {
     @UIApplicationDelegateAdaptor(GJPLabAppDelegate.self) private var appDelegate
-    @State private var showingSplash = true
+    @State private var showingSplash = !AppConfig.isUITesting
     @State private var maintenanceEnabled = false
     @StateObject private var firebaseIntegration = FirebaseIntegration()
     @StateObject private var callBlocker = BlockAppDuringCallsController()
@@ -27,6 +27,8 @@ struct GJPLabApp: App {
                 }
                 .tint(LabTheme.primary)
                 .task {
+                    // UI tests skip the splash and the Remote Config lookup; Firebase is not started for them.
+                    guard !AppConfig.isUITesting else { return }
                     async let fetchedMaintenanceMode = loadMaintenanceMode()
                     try? await Task.sleep(for: AppConfig.minimumSplashDuration)
                     maintenanceEnabled = await fetchedMaintenanceMode

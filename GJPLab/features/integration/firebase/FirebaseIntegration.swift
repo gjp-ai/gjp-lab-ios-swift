@@ -1,5 +1,6 @@
 import Combine
 import FirebaseAnalytics
+import FirebaseCore
 import FirebaseCrashlytics
 import FirebaseMessaging
 import FirebasePerformance
@@ -18,6 +19,9 @@ final class FirebaseIntegration: ObservableObject {
     @Published var tokenCopied = false
 
     let configurationProjectID: String
+
+    /// False in previews and UI tests, where Firebase is not started. Firebase calls would crash then.
+    var isConfigured: Bool { FirebaseApp.app() != nil }
 
     init() {
         let plist = Bundle.main.url(forResource: "GoogleService-Info", withExtension: "plist").flatMap { NSDictionary(contentsOf: $0) }

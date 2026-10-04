@@ -403,7 +403,7 @@ import Testing
 - `#"…"#` is a **raw string**: quotes inside it need no escaping, which suits JSON.
 - Tests must be deterministic: no live network or Firebase. The call-blocking tests pass a storefront code instead of asking the App Store.
 
-Run the unit tests with the test command in [`AGENTS.md`](../../AGENTS.md#commands) (add `-only-testing:GJPLabTests`).
+Run the unit tests with the test command in [`AGENTS.md`](../../AGENTS.md#commands) (`-testPlan Unit`).
 
 ---
 

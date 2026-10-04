@@ -1,12 +1,12 @@
 # Functions & closures detailed design
 
-Status: Implemented
+Status: Implemented, with known gaps
 
 Requirements: [Functions & closures](closures_requirement.md)
 
 ## Implementation goal
 
-Each sample is a static function in `ClosuresSamples` whose body is the code shown on screen; `ClosuresScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**.
+Each sample is a static function in `ClosuresSamples` whose body is the code shown on screen; `ClosuresScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**. Snippet text and function body are kept in sync by hand; see the shared [known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps).
 
 ## Source map
 
@@ -33,11 +33,10 @@ Each sample declares its helper functions inside the sample function, which keep
 
 | Gap | Effect | Suggested fix |
 | --- | --- | --- |
-| Snippet and function body are maintained by hand | They can drift apart | See the shared [code sample known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps) |
 | Escaping sample stores closures in a local array | It does not show the classic completion-handler-after-return case with real asynchrony | Acceptable; the Concurrency topic covers asynchronous work |
 
 ## Verification
 
 - Build with the project build command in [application architecture](../../../../architecture/application.md#build-and-verification).
 - Automated: `SwiftTopicTests` runs every sample (non-empty, same output twice) and checks key lines in `closuresKeepTheirOwnCapturedState`; `SwiftTopicsUITests.testEverySwiftTopicOpens` opens the screen from the catalogue.
-- Manual: FUN-AC-01 to the last acceptance criterion on an iPhone simulator in light and dark appearance, and at a large Dynamic Type size.
+- Manual: FUN-AC-01 to FUN-AC-02 on an iPhone simulator; the shared CS-AC-01 to CS-AC-07 are checked once for the category (see the [runnable code sample requirement](../../../common/codesample/codesample_requirement.md#acceptance-criteria)).

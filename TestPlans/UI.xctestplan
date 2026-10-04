@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "8A7B6C5D-4E3F-4A21-B0C9-D8E7F6A5B4C3",
+      "name" : "Default",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:GJPLab.xcodeproj",
+        "identifier" : "BCC0A3D13031780E00129419",
+        "name" : "GJPLabUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

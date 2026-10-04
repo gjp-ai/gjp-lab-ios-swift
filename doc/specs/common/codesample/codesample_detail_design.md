@@ -1,8 +1,10 @@
 # Runnable code sample detailed design
 
-Status: Implemented
+Status: Implemented, with known gaps
 
-Used by: every topic in the **Swift** category ([requirements](../../features/swift/)).
+Requirements: [Runnable code sample](codesample_requirement.md)
+
+Used by: every topic in the **Swift** category ([topic requirements](../../features/swift/)).
 
 ## Implementation goal
 

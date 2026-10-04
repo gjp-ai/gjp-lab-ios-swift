@@ -22,16 +22,14 @@ final class SwiftUITopicsUITests: XCTestCase {
 
     @MainActor
     func testEverySwiftUITopicOpens() throws {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchLab()
         openCategory(titled: "SwiftUI", in: app)
         openEveryTopic(topics, inCategory: "SwiftUI", app: app)
     }
 
     @MainActor
     func testAccessibilityTopicButtonCountsTaps() throws {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchLab()
         openCategory(titled: "SwiftUI", in: app)
         tapRow(titled: "Accessibility & testing", in: app)
 

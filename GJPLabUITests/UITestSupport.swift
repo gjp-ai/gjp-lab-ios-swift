@@ -1,16 +1,25 @@
 import XCTest
 
-/// Helpers for moving through the sidebar and catalogue. Sidebar and catalogue rows combine their title and
-/// description into one accessibility label, for example "Optionals, nil, if let, guard let, ??, and optional
-/// chaining., Open", so rows are found by "<title>," at the start of the label.
+/// Helpers for launching the app and moving through the sidebar and catalogue. Sidebar and catalogue rows
+/// combine their title and description into one accessibility label, for example "Optionals, nil, if let,
+/// guard let, ??, and optional chaining., Open", so rows are found by "<title>," at the start of the label.
 extension XCTestCase {
 
-    /// Waits for the sidebar (the app shows a splash screen first, which waits for at most the Remote Config
-    /// timeout) and opens a category.
+    /// Launches the app in UI-testing mode (`AppConfig.isUITesting`): no splash, no Firebase or Remote Config
+    /// calls, and no notification prompt, so every test starts at the sidebar without touching live services.
+    @MainActor
+    func launchLab() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments = ["-ui-testing"]  // Same string as AppConfig.uiTestingArgument.
+        app.launch()
+        return app
+    }
+
+    /// Waits for the sidebar and opens a category.
     @MainActor
     func openCategory(titled title: String, in app: XCUIApplication) {
         let category = element(labelStartingWith: title + ",", in: app)
-        XCTAssertTrue(category.waitForExistence(timeout: 20), "Sidebar did not appear after the splash screen")
+        XCTAssertTrue(category.waitForExistence(timeout: 10), "Sidebar did not appear")
         category.tap()
         XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 5), "\(title) catalogue did not open")
     }

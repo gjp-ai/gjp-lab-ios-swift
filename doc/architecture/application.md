@@ -1,6 +1,6 @@
 # Application architecture
 
-Status: Implemented snapshot, 2026-09-27
+Status: Implemented snapshot, 2026-10-04
 
 ## Purpose
 
@@ -48,11 +48,12 @@ New code should follow the closest feature pattern. Reusable app behavior belong
 
 ### Adding a feature
 
-1. Write `doc/specs/features/<category>/<feature>/<feature>_requirement.md` from the [requirement template](../templates/requirement.md); add `<feature>_detail_design.md` beside it from the [detail design template](../templates/detail_design.md) when the feature has lifecycle, persistence, integration, platform, or security behavior.
-2. Add the screen under `features/<category>/<feature>/`.
-3. Add a `FeatureRoute` case and its view in `ContentView.feature(for:)`; screens that push further add a `DetailRoute` case.
+1. Write `doc/specs/features/<category>/<feature>/<feature>_requirement.md` and `<feature>_detail_design.md` from the [templates](../templates/). Every feature has both.
+2. Add the screen under `features/<category>/<feature>/`. A Swift topic is a `<Topic>Samples` list plus a small screen on the shared [runnable code sample](../specs/common/codesample/codesample_requirement.md); a SwiftUI topic is a [demo page](../specs/common/theme/theme_detail_design.md#demo-pages).
+3. Add a `FeatureRoute` case and its view in `ContentView.feature(for:)` (the `switch` that returns screens, not the `DetailRoute` one); screens that push further add a `DetailRoute` case.
 4. In `app/navigation/navigation.json`, add the topic to its category, or give a planned topic a `"route"` equal to the new case's name. The unit tests fail if a route is missing from the JSON, listed twice, or misspelled.
-5. Add previews (light, dark, and iPad where layout adapts), and a UI test when the feature is reachable from the catalogue.
+5. Add light and dark previews (and iPad where layout adapts), unit tests for logic outside the view, and add the topic to its category's UI test (`openEveryTopic` in [`UITestSupport.swift`](../../GJPLabUITests/UITestSupport.swift)).
+6. Build with no warnings, run the `Unit` and `UI` test plans, and update the [documentation map](../README.md#document-map) and the [catalogue design](../specs/app/navigation/catalog_detail_design.md#current-topics).
 
 ## Dependency and event flow
 
@@ -106,13 +107,18 @@ xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug \
   CODE_SIGNING_ALLOWED=NO build
 
 DEVICE=$(.agent/skills/ios-build-release/scripts/pick-simulator.sh)
-xcodebuild -project GJPLab.xcodeproj -scheme GJPLab \
+xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -testPlan Unit \
   -destination "platform=iOS Simulator,name=$DEVICE" -derivedDataPath build/DerivedData \
-  CODE_SIGNING_ALLOWED=NO \
-  -only-testing:GJPLabTests test
+  CODE_SIGNING_ALLOWED=NO test
 ```
 
-Drop `-only-testing` to include UI tests. Use a physical device for APNs, authorization prompts, CallKit, and system lifecycle fidelity.
+Use `-testPlan UI` for the UI tests. The shared `GJPLab` scheme lists both plans in [`TestPlans/`](../../TestPlans/); `Unit` is the default (Product → Test in Xcode). Both run on one simulator without clones, because cloned simulators failed to launch the UI-test runner. [CI](../../.github/workflows/ci.yml) builds and runs the `Unit` plan on pushes to `main` and on pull requests; start it manually with *ui_tests* checked to add the `UI` plan.
+
+### UI-testing mode
+
+UI tests launch the app with the `-ui-testing` argument ([`launchLab()`](../../GJPLabUITests/UITestSupport.swift)). [`AppConfig.isUITesting`](../../GJPLab/common/config/AppConfig.swift) then makes `AppSDKBootstrapper` start no SDKs (no Firebase, Remote Config fetch, or notification prompt) and makes `GJPLabApp` skip the splash, so tests start at the sidebar within seconds and never call live services. The Firebase screen disables its actions when Firebase is not started. See [decision 0005](../decisions/0005-ui-testing-launch-mode.md).
+
+Use a physical device for APNs, authorization prompts, CallKit, and system lifecycle fidelity.
 
 ## Known architectural constraints
 
@@ -122,6 +128,6 @@ Drop `-only-testing` to include UI tests. Use a physical device for APNs, author
 | View-local state | Low ceremony; limited restoration and sharing guarantees | State must outlive a view or scene |
 | In-memory navigation selection | Clear small-app routing; no durable restoration | Deep links or restoration become product requirements |
 | Firebase callbacks/adapters | Small API surface; limited result detail and cancellation | Callers need richer structured outcomes |
-| Minimal automated tests (call-blocking controller, navigation menu, SwiftUI topic helpers, every Swift sample, and UI test suites for the SwiftUI and Swift categories) | Fast experimentation; startup, networking, and Firebase paths are unguarded | Behavior becomes important to preserve |
+| Tests cover logic and navigation only | Unit tests cover the navigation menu, call-blocking rules, SwiftUI topic helpers, and every Swift sample; UI tests open every Swift and SwiftUI topic. Startup, networking, and Firebase are unguarded, and UI-testing mode skips startup | Behavior becomes important to preserve |
 
-See the Swift topic requirements in [`doc/specs/features/swift/`](../specs/features/swift/), the [runnable code sample](../specs/common/codesample/codesample_detail_design.md), the SwiftUI topic requirements in [`doc/specs/features/swiftui/`](../specs/features/swiftui/), [Slate design system](../specs/common/theme/theme_detail_design.md), [sidebar detailed design](../specs/app/navigation/sidebar_detail_design.md), [catalogue detailed design](../specs/app/navigation/catalog_detail_design.md), [OS & hardware detailed design](../specs/features/others/deviceinfo/deviceinfo_detail_design.md), [maintenance detailed design](../specs/app/startup/maintenance_detail_design.md), [URLSession detailed design](../specs/features/httpclient/urlsession/urlsession_detail_design.md), [splash detailed design](../specs/app/startup/splash_detail_design.md), [call-blocking detailed design](../specs/features/security/blockappduringcalls/blockappduringcalls_detail_design.md), and [Firebase integration](../specs/features/integration/firebase/firebase_detail_design.md) for feature-specific detail.
+Feature-specific detail lives in the specs; the [documentation map](../README.md#document-map) lists every requirement and detailed design.

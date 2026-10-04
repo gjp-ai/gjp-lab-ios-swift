@@ -29,6 +29,7 @@ Let a developer trigger each Firebase service used by GJP Lab on demand and see 
 - **Run trace** runs the short `firebase_demo_trace` custom trace and shows its duration.
 - **Get token** loads the FCM registration token and shows it with a **Copy** button.
 - **Subscribe to demo topic** subscribes to `gjp_lab_demo` and shows the result.
+- When Firebase is not started (in previews and when UI tests launch the app), the screen says so and every action is disabled, because calling Firebase before it is configured would crash.
 
 ## UI & Navigation
 
@@ -59,6 +60,7 @@ Let a developer trigger each Firebase service used by GJP Lab on demand and see 
 | FB-AC-05 | Tap **Run trace** | The status shows the trace completed with a duration. |
 | FB-AC-06 | Tap **Get token**, then **Copy** | The token is shown, the button reads "Copied", and the pasteboard holds the token. |
 | FB-AC-07 | Tap **Subscribe to demo topic** | The Messaging status reports success or the failure. |
+| FB-AC-08 | Open the screen in a preview or in a UI test | A notice explains that Firebase is not started, and every action is disabled. |
 
 ## Technical implementation constraints
 

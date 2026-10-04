@@ -1,6 +1,6 @@
 # Splash Screen detailed design
 
-Status: Partial implementation
+Status: Partial
 
 Requirements: [Splash screen requirements](splash_requirement.md)
 
@@ -52,7 +52,7 @@ Task cancellation stops the local timeout task but cannot guarantee cancellation
 | Usable-network precheck/offline skip | Planned | Current app lets Firebase fail rather than checking `NWPathMonitor` first |
 | Explicit progress semantics | Planned | Splash currently presents only mark and name |
 | Warm-resume policy | Partial | Root state normally persists, but scene recreation behavior is not specified |
-| Deterministic startup tests | Planned | Timer/Firebase coordination is coupled to `GJPLabApp` and real time |
+| Deterministic startup tests | Planned | Timer/Firebase coordination is coupled to `GJPLabApp` and real time. UI tests avoid it: in UI-testing mode (`AppConfig.isUITesting`) the app starts without the splash and without the Remote Config lookup, so the splash itself is still untested |
 | Reduced-motion behavior | Implemented by absence | No decorative animation is present |
 
 ## Test strategy
@@ -68,9 +68,6 @@ Recommended coverage:
 
 ## Verification
 
-```bash
-xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug \
-  -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
-```
-
-The simulator/device checks are conditional on an available runtime and Firebase configuration. Tests must not depend exclusively on live Remote Config state.
+- Build with the project build command in [application architecture](../../../architecture/application.md#build-and-verification).
+- Automated: none. UI tests launch in UI-testing mode, which skips the splash and the Remote Config lookup.
+- Manual: SPL-AC-02 to SPL-AC-08 on a simulator or device with Firebase configured (set `gjp_lab_maintenance_enabled` in the console for SPL-AC-03). Tests must not depend on live Remote Config state.

@@ -4,7 +4,9 @@ Status: Implemented
 
 ## Goal
 
-Prevent users from using the app while they are on an active phone or supported VoIP/video call. Add a setting to enable or disable this behavior.
+Prevent users from using the app while they are on an active phone or supported VoIP/video call, with a setting to turn this off.
+
+This requirement is shared with the Android lab (`gjp-lab-android-kotlin`), which keeps its own copy; rules that mention Android apply there. This repository implements the iOS side.
 
 ## Scope
 
@@ -30,13 +32,10 @@ Prevent users from using the app while they are on an active phone or supported 
 
 ## UI & Navigation
 
-- Add **Block App During Calls** as an item on the existing **Security** page.
-- When tapped, navigate to a dedicated **Block App During Calls** page.
-- The page should include:
-  - An ON/OFF toggle.
-  - Current feature status.
-  - A test function to simulate and verify the blocking behavior without a real call.
-- Follow the existing app design and navigation patterns.
+- Entry point: **Security** category → **Block App During Calls** catalogue item, which opens a dedicated page.
+- The page shows an on/off toggle, the current feature and call status, a control that simulates an active call to test the block without a real call, and an explanation of which calls iOS can detect.
+- The blocking message covers the whole app, above every screen, and has no way to dismiss it.
+- The page follows the app's design system and navigation; light and dark appearance and Dynamic Type are supported.
 
 ## Rules & constraints
 

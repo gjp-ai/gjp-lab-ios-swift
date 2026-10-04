@@ -24,25 +24,18 @@ Show how Swift functions report failure and how callers handle, convert, or pass
 
 ## Behavior
 
-- Opening the topic shows every sample with its code visible and an empty output area ("Tap Run to see the output").
-- Tapping **Run** executes that sample's Swift code and shows the lines it produces below the code. Running again replaces the output.
-- Output comes from executing the code, never from hard-coded text. Output is discarded when the user leaves the topic.
+- The topic is a page of runnable samples: opening, running, and leaving it behave as the [runnable code sample requirement](../../../common/codesample/codesample_requirement.md) describes.
 - Each throwing sample runs with an input that succeeds and one that fails, so both paths appear in the output.
-- The `try!` sample never runs `try!` on a failing call; it explains the crash and runs the `try?` version.
+- The *try? and try!* sample never runs `try!` on a failing call; it explains the crash and runs the `try?` version.
 
 ## UI & Navigation
 
 - Entry point: **Swift** category → **Error handling** catalogue item (route `errorHandling`).
-- A one-line introduction, then one `LabDemoSection` card per sample containing: a one-line explanation; the code in a monospaced font, selectable, scrolling sideways instead of wrapping; a **Run** button (`.buttonStyle(.labPrimary)`); and an output area on `surfaceContainer`.
-- VoiceOver reads the explanation, code, and output as separate elements, and announces the output when a run finishes.
-- Light and dark appearance and Dynamic Type are supported; content width is limited on iPad.
+- Samples, in order: **throws, do, and catch**, **Typed throws**, **try? and try!**, **Result**, **defer**.
 
 ## Rules & Constraints
 
-- Sample code compiles in the app's Swift 5 language mode with default `MainActor` isolation and approachable concurrency.
-- The code shown is the code that runs: each sample is a plain function in the topic folder that returns its output lines, stored next to the snippet text it displays.
-- No sample crashes, hangs, blocks the main thread, calls the network, writes files, or logs user data.
-- Colours come from `LabTheme` roles; previews come in light and dark pairs.
+- The shared rules in the [runnable code sample requirement](../../../common/codesample/codesample_requirement.md#rules--constraints) apply: the code shown is the code that runs, no sample crashes or touches the network, and output is the same on every run.
 - No sample uses `try!` on a call that can throw at run time.
 
 ## Platform limitations
@@ -51,26 +44,22 @@ Show how Swift functions report failure and how callers handle, convert, or pass
 
 ## Acceptance criteria
 
+The shared criteria [CS-AC-01 to CS-AC-07](../../../common/codesample/codesample_requirement.md#acceptance-criteria) also apply.
+
 | ID | Scenario | Expected result |
 | --- | --- | --- |
-| ERR-AC-01 | Open the topic | Every sample shows its code, an enabled **Run** button, and an empty output area. |
-| ERR-AC-02 | Tap **Run** twice on a sample | Output appears after the first tap and is replaced, not appended, after the second. |
-| ERR-AC-03 | Run the `defer` sample | The cleanup line is printed for both the success and the failure run. |
-| ERR-AC-04 | Run the typed-throws sample | The catch clause receives the concrete error type and prints its case. |
-| ERR-AC-05 | Large Dynamic Type size, then dark appearance | Explanations and output wrap; code keeps its line breaks and scrolls sideways; everything stays readable on the dark canvas. |
-| ERR-AC-06 | Unit tests | Every sample has a test that runs it and checks its output. |
+| ERR-AC-01 | Run the *defer* sample | The cleanup line is printed for both the success and the failure run. |
+| ERR-AC-02 | Run the *Typed throws* sample | The catch clause receives the concrete error type and prints its case. |
 
 ## Technical implementation constraints
 
-- Source lives in `GJPLab/features/swift/errors/`.
-- Add a `FeatureRoute.errorHandling` case, map it in `ContentView.feature(for:)`, and add `"route": "errorHandling"` to the topic in `app/navigation/navigation.json`.
-- The topic belongs to the **Swift** category (id `swift`) in `navigation.json`, described in the [catalogue detailed design](../../../app/navigation/catalog_detail_design.md#swift-category).
-- The page and sample cards come from the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) in `GJPLab/common/codesample/`; the topic supplies only its `CodeSample` list.
+- Source lives in `GJPLab/features/swift/errors/`: `ErrorHandlingScreen.swift` and `ErrorHandlingSamples.swift`.
+- `FeatureRoute.errorHandling` maps to `ErrorHandlingScreen` in `ContentView.feature(for:)`; the topic in `app/navigation/navigation.json` (Swift category, id `swift`) carries `"route": "errorHandling"`.
+- The topic supplies only its `CodeSample` list; the page and cards are shared from `GJPLab/common/codesample/`.
 - No new dependencies and no view models.
 
 ## Related documents
 
 - [Detailed design](errors_detail_design.md)
-- [Runnable code sample](../../../common/codesample/codesample_detail_design.md)
-- [Swift tutorial](../../../../guides/swift_tutorial.md)
-- [Application architecture](../../../../architecture/application.md)
+- [Runnable code sample requirement](../../../common/codesample/codesample_requirement.md)
+- Swift tutorial: [Error handling](../../../../guides/swift_tutorial.md#11-error-handling)

@@ -53,9 +53,10 @@ This replaces the earlier card-grid dashboard (`MainScreen`) that pushed `.catal
 | No search across topics | Finding a topic means browsing categories | Add `.searchable` over all available topics |
 | Selection is not restored after relaunch | The app always starts at the sidebar | Store the selected category and topic (both `Hashable`; make them `Codable`) |
 | No deep links | Topics cannot be opened from a URL | Map URLs to `selectedCategory` and `selectedTopic` at one boundary |
-| No UI test | Collapsing and back navigation are unguarded | Add an XCUITest that opens each available topic on iPhone and iPad |
+| UI tests run on iPhone only | Collapsing and back navigation are covered on iPhone (opening every Swift and SwiftUI topic and going back); the three-column iPad layout is unguarded | Run the `UI` test plan on an iPad simulator too |
 
 ## Verification
 
 - Previews: `CategorySidebar` and `ContentView`, each in light and dark. Check iPad by switching the canvas device; there is no separate iPad preview.
+- Automated: `SwiftTopicsUITests.testSwiftIsTheFirstCategory` checks the category order; the topic UI tests open categories and go back on iPhone.
 - Manual: SDB-AC-01 to SDB-AC-05 on an iPhone simulator and an iPad simulator in both orientations; VoiceOver and a large Dynamic Type size.

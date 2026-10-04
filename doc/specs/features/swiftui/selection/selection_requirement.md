@@ -35,9 +35,7 @@ Show SwiftUI's selection controls by building a sample coffee order whose summar
 
 ## Rules & Constraints
 
-- Use only public SwiftUI APIs available on the app's deployment target (iOS 26.6).
-- Sample data stays in memory; nothing is persisted, sent over the network, or logged.
-- Colours come from `LabTheme` roles; main actions use `.buttonStyle(.labPrimary)`.
+- The shared [demo page rules](../../../common/theme/theme_detail_design.md#demo-pages) apply: public SwiftUI APIs on the deployment target only, sample data kept in memory (nothing persisted, sent, or logged), and `LabTheme` colours.
 - The multi-selection binding is derived from the set (`binding(for:)`), not stored per extra.
 
 ## Platform limitations
@@ -60,5 +58,6 @@ Show SwiftUI's selection controls by building a sample coffee order whose summar
 
 ## Related documents
 
-- [Slate design system](../../../common/theme/theme_detail_design.md) (`LabDemoPage` and `LabDemoSection`)
+- [Detailed design](selection_detail_design.md)
+- [Slate design system: demo pages](../../../common/theme/theme_detail_design.md#demo-pages) (`LabDemoPage` and `LabDemoSection`)
 - [Application architecture](../../../../architecture/application.md)

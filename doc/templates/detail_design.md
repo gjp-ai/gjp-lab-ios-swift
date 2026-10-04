@@ -1,6 +1,6 @@
 # <Feature name> detailed design
 
-Status: Planned | Partial | Implemented
+Status: Planned | Partial | Implemented | Implemented, with known gaps
 
 Requirements: [<Feature name>](<feature>_requirement.md)
 

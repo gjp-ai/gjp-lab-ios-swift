@@ -1,6 +1,6 @@
-# Firebase integration
+# Firebase detailed design
 
-Status: Implemented lab integration
+Status: Implemented, with known gaps
 
 Requirements: [Firebase lab](firebase_requirement.md)
 
@@ -74,11 +74,13 @@ Firebase Performance automatically collects supported app, rendering, and networ
 
 Startup configures the Messaging delegate, requests notification authorization, registers APNs after authorization, and assigns the APNs token to Firebase Messaging. The feature screen can fetch the FCM token and subscribe to `gjp_lab_demo`.
 
+In UI-testing mode (`AppConfig.isUITesting`, set by the UI tests' `-ui-testing` launch argument) `AppSDKBootstrapper` does not start `FirebaseStartupIntegration`, so Firebase is never configured, Remote Config is never fetched, and no notification prompt appears.
+
 For physical-device delivery, enable Push Notifications, upload an APNs key/certificate in Firebase Console, and grant notification authorization. Do not put sending credentials, service accounts, or APNs private keys in the app.
 
 ## Lab screen
 
-The Firebase feature exposes controlled actions for Analytics, non-fatal Crashlytics, Remote Config, a custom performance trace, FCM token retrieval/copying, and demo-topic subscription. These are learning/setup controls, not production user-facing behavior.
+The Firebase feature exposes controlled actions for Analytics, non-fatal Crashlytics, Remote Config, a custom performance trace, FCM token retrieval/copying, and demo-topic subscription. These are learning/setup controls, not production user-facing behavior. When Firebase is not started (previews and UI-testing mode), `FirebaseIntegration.isConfigured` is false: the screen shows a notice and disables every action, because Firebase calls before `FirebaseApp.configure()` crash.
 
 ## Privacy and security notes
 
@@ -89,21 +91,21 @@ The Firebase feature exposes controlled actions for Analytics, non-fatal Crashly
 
 ## Verification
 
-```bash
-xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -configuration Debug \
-  -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
-```
+- Build with the project build command in [application architecture](../../../../architecture/application.md#build-and-verification).
+- Automated: none; tests never start Firebase. UI tests run in UI-testing mode, where this screen's actions are disabled.
+- Manual: FB-AC-01 to FB-AC-08. Runtime checks should cover Analytics DebugView, enabled/disabled/failed Remote Config, non-fatal Crashlytics delivery, custom trace upload, notification grant/denial, and FCM token/topic behavior. APNs delivery needs a configured physical device. Firebase console data can be delayed.
 
-Runtime checks should cover Analytics DebugView, enabled/disabled/failed Remote Config, non-fatal Crashlytics delivery, custom trace upload, notification grant/denial, and FCM token/topic behavior. APNs delivery needs a configured physical device. Firebase console data can be delayed.
+## Known gaps
 
-## Known limitations
-
-| Limitation | Impact |
-| --- | --- |
-| Remote Config API returns only a Boolean | Callers cannot distinguish fresh, cached, default, or failed value |
-| Startup authorization request is automatic | Notification timing is not tied to a user action |
-| No Firebase emulator-backed tests | Integration confidence depends on manual/device checks |
-| No Crashlytics dSYM upload phase documented in project build config | Release crash stacks may not symbolicate until configured |
+| Gap | Effect | Suggested fix |
+| --- | --- | --- |
+| Remote Config API returns only a Boolean | Callers cannot distinguish a fresh, cached, default, or failed value | Return a small result type with the value and its source |
+| Notification permission is requested at launch | The system prompt appears before the user has a reason to allow it, against Apple's guidance | Request it from a button on the Firebase screen (a product decision) |
+| `subscribeToDemoTopic()` starts an unstructured `Task` | It keeps running after the screen closes and is not awaited like the other actions | Make it `async` and call it from the button's `Task`, like the other actions |
+| The demo trace is timed with `Date()` | Wall-clock time can jump; this is not how durations should be measured | Use `ContinuousClock` |
+| `FirebaseIntegration` packs several statements per line with `;` | Harder to read for learners | Reformat to one statement per line |
+| No Firebase emulator-backed tests | Integration confidence depends on manual and device checks | Add tests against the Firebase Local Emulator Suite if confidence becomes important |
+| No Crashlytics dSYM upload phase in the build | Release crash stacks may not symbolicate | Add the Crashlytics run script build phase |
 
 ## Official references
 

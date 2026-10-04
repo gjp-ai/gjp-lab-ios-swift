@@ -11,6 +11,13 @@ struct FirebaseFeatureScreen: View {
                 Text("Project: \(integration.configurationProjectID)")
                     .font(.caption)
                     .foregroundStyle(LabTheme.onSurfaceVariant)
+                if !integration.isConfigured {
+                    Label("Firebase is not started in previews and UI tests, so the actions are disabled.", systemImage: "info.circle")
+                        .font(.subheadline)
+                        .padding(14)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(LabTheme.surfaceContainer, in: RoundedRectangle(cornerRadius: 14))
+                }
                 FirebaseActionCard(title: "Analytics", description: "Send a feature_firebase_opened event.", status: integration.analyticsStatus, action: "Log event") { integration.logFeatureOpened() }
                 FirebaseActionCard(title: "Crashlytics", description: "Record a non-fatal demo exception without crashing the app.", status: integration.crashlyticsStatus, action: "Record exception") { integration.recordCrashlyticsDemo() }
                 FirebaseActionCard(title: "Remote Config", description: "Fetch the maintenance-mode flag from Firebase.", status: integration.remoteConfigStatus, action: "Fetch flag") { Task { await integration.fetchMaintenanceMode() } }
@@ -29,6 +36,7 @@ struct FirebaseFeatureScreen: View {
                     .buttonStyle(.labPrimary)
                     .frame(maxWidth: .infinity)
             }
+            .disabled(!integration.isConfigured)
             .frame(maxWidth: 720)
             .padding(20)
             .frame(maxWidth: .infinity)
@@ -61,7 +69,7 @@ private struct FirebaseActionCard: View {
     }
 }
 
-// Firebase is not configured in previews, so show the layout only; do not tap the actions here.
+// Firebase is not configured in previews, so the actions are disabled and a notice explains why.
 #Preview("Firebase – light") {
     NavigationStack { FirebaseFeatureScreen() }
 }

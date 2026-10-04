@@ -19,3 +19,5 @@ File name: `NNNN-short-title.md`, numbered in order. Each record has:
 | [0002](0002-flat-feature-folders.md) | One flat folder per feature and per app area | 2026-10-03 |
 | [0003](0003-sdk-code-in-integration-features.md) | SDK code lives in `features/integration/<sdk>/` | 2026-10-03 |
 | [0004](0004-navigation-menu-in-json.md) | Sidebar and catalogue content in `navigation.json`; routes stay in Swift | 2026-10-03 |
+| [0005](0005-ui-testing-launch-mode.md) | UI tests run the app in a UI-testing mode, through two test plans | 2026-10-04 |
+| [0006](0006-topic-pages-and-runnable-samples.md) | Topic pages share one layout; Swift samples are code shown and run | 2026-10-04 |

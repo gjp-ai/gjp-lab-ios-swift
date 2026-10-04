@@ -4,7 +4,8 @@ final class AppSDKBootstrapper {
     private let integrations: [SDKIntegration]
 
     init() {
-        integrations = [FirebaseStartupIntegration()]
+        // UI tests start no SDKs: no calls to live services and no permission prompts.
+        integrations = AppConfig.isUITesting ? [] : [FirebaseStartupIntegration()]
     }
 
     func configure(application: UIApplication) {

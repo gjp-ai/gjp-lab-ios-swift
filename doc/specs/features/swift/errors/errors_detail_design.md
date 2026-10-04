@@ -1,12 +1,12 @@
 # Error handling detailed design
 
-Status: Implemented
+Status: Implemented, with known gaps
 
 Requirements: [Error handling](errors_requirement.md)
 
 ## Implementation goal
 
-Each sample is a static function in `ErrorHandlingSamples` whose body is the code shown on screen; `ErrorHandlingScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**.
+Each sample is a static function in `ErrorHandlingSamples` whose body is the code shown on screen; `ErrorHandlingScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**. Snippet text and function body are kept in sync by hand; see the shared [known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps).
 
 ## Source map
 
@@ -37,11 +37,10 @@ Each sample is a static function in `ErrorHandlingSamples` whose body is the cod
 
 | Gap | Effect | Suggested fix |
 | --- | --- | --- |
-| Snippet and function body are maintained by hand | They can drift apart | See the shared [code sample known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps) |
 | `try!` is only described | Readers do not see the crash | Intentional: the requirement forbids crashing samples |
 
 ## Verification
 
 - Build with the project build command in [application architecture](../../../../architecture/application.md#build-and-verification).
 - Automated: `SwiftTopicTests` runs every sample (non-empty, same output twice) and checks key lines in `deferRunsOnSuccessAndFailure`; `SwiftTopicsUITests.testEverySwiftTopicOpens` opens the screen from the catalogue.
-- Manual: ERR-AC-01 to the last acceptance criterion on an iPhone simulator in light and dark appearance, and at a large Dynamic Type size.
+- Manual: ERR-AC-01 to ERR-AC-02 on an iPhone simulator; the shared CS-AC-01 to CS-AC-07 are checked once for the category (see the [runnable code sample requirement](../../../common/codesample/codesample_requirement.md#acceptance-criteria)).

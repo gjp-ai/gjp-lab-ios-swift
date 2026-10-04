@@ -60,10 +60,11 @@ The category description is a plain, untagged first row, so it scrolls with the 
 | --- | --- | --- |
 | Category copy is out of date | Security's catalogue description mentions only screen capture; HTTP Client's sidebar text lists Moya and Siesta, and Others mentions Biometric ID, which have no topics | Update the `summary` and `description` in `navigation.json` to match the topics |
 | `NavigationTopic.id` is the title | Two topics with the same title in one category would collide in `ForEach` | Keep titles unique (a rule) or use a stable key as the ID |
-| No UI test | Topic selection is unguarded | Add an XCUITest that opens each available topic |
+| UI tests cover two categories | Every Swift and SwiftUI topic is opened by a UI test; HTTP Client, Security, Integration, and Others are not | Add their topics to a UI test with `openEveryTopic` |
 
 ## Verification
 
 - Previews: "HTTP client catalogue" (available and planned topics) and "SwiftUI catalogue" (available only), each in light and dark, in `FeatureCatalogScreen.swift`.
 - Unit tests: the bundled JSON decodes with unique category IDs; every `FeatureRoute` appears exactly once; an unknown route string fails to decode.
+- UI tests: `SwiftTopicsUITests` and `SwiftUITopicsUITests` open every topic in their category from the catalogue.
 - Manual: select every category, select each available topic, and confirm planned rows cannot be selected, on iPhone and iPad.

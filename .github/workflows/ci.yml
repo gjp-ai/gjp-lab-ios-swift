@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      ui_tests:
+        description: Also run the UI test plan (slower)
+        type: boolean
+        default: false
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The project needs Xcode 27 (iOS 27 SDK). Update the path when the runner image names it differently:
+  # https://github.com/actions/runner-images
+  XCODE_APP: /Applications/Xcode_27.0.app
+  PROJECT_ARGS: -project GJPLab.xcodeproj -scheme GJPLab -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
+
+jobs:
+  build-and-unit-test:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -s "$XCODE_APP"
+          xcodebuild -version
+
+      - name: Build
+        # Package.resolved is committed; build with exactly those versions.
+        run: |
+          xcodebuild $PROJECT_ARGS -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -disableAutomaticPackageResolution -quiet build
+
+      - name: Unit tests
+        run: |
+          DEVICE=$(.agent/skills/ios-build-release/scripts/pick-simulator.sh 60)
+          xcodebuild $PROJECT_ARGS -testPlan Unit \
+            -destination "platform=iOS Simulator,name=$DEVICE" \
+            -disableAutomaticPackageResolution -resultBundlePath build/Unit.xcresult -quiet test
+
+      - name: UI tests
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.ui_tests }}
+        run: |
+          DEVICE=$(.agent/skills/ios-build-release/scripts/pick-simulator.sh 60)
+          xcodebuild $PROJECT_ARGS -testPlan UI \
+            -destination "platform=iOS Simulator,name=$DEVICE" \
+            -disableAutomaticPackageResolution -resultBundlePath build/UI.xcresult -quiet test
+
+      - name: Upload test results
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: build/*.xcresult
+          retention-days: 7

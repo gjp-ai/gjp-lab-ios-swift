@@ -8,7 +8,8 @@ A sidebar lists the categories; each category's catalogue marks topics as availa
 
 | Category | Available | Planned |
 | --- | --- | --- |
-| SwiftUI | — | Views, layouts, text and input, buttons, selection, lists, navigation, animation, drawing, accessibility |
+| Swift | **10 topics of runnable samples**: values and types, optionals, collections, functions and closures, structs/classes/enums, protocols and generics, error handling, concurrency, memory management, strings and regex. Tap **Run** to execute the code shown and see its real output | — |
+| SwiftUI | **10 demo screens**: views and modifiers, layouts, text and input, buttons and actions, selection, lists and grids, navigation, animation, drawing and graphics, accessibility and testing | — |
 | HTTP Client | **URLSession**: build and send a request, inspect status, JSON body, and headers | Alamofire |
 | Security | **Block App During Calls**: block the app while iOS reports an active call (disabled for the China App Store) | Screenshot detection, screen capture detection, sensitive content |
 | Integration | **Firebase**: Analytics, Crashlytics, Remote Config, Performance Monitoring, and Cloud Messaging demos | — |
@@ -34,13 +35,12 @@ App-wide behavior: a branded splash screen, a Remote Config maintenance mode, an
      CODE_SIGNING_ALLOWED=NO build
 
    DEVICE=$(.agent/skills/ios-build-release/scripts/pick-simulator.sh)
-   xcodebuild -project GJPLab.xcodeproj -scheme GJPLab \
+   xcodebuild -project GJPLab.xcodeproj -scheme GJPLab -testPlan Unit \
      -destination "platform=iOS Simulator,name=$DEVICE" -derivedDataPath build/DerivedData \
-     CODE_SIGNING_ALLOWED=NO \
-     -only-testing:GJPLabTests test
+     CODE_SIGNING_ALLOWED=NO test
    ```
 
-   `pick-simulator.sh` prints an available iPhone simulator, or exits with a recovery hint if the simulator service is stuck.
+   `pick-simulator.sh` prints an available iPhone simulator, or exits with a recovery hint if the simulator service is stuck. Use `-testPlan UI` for the UI tests; they launch the app in a UI-testing mode that skips the splash, Firebase, and permission prompts. CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) builds and runs the unit tests on every push to `main` and every pull request.
 
 `GJPLab/GoogleService-Info.plist` is Firebase client configuration for the author's project. To send data to your own Firebase project, replace it with your own file. Push delivery, CallKit, and permission prompts need a physical device.
 
@@ -50,13 +50,16 @@ App-wide behavior: a branded splash screen, a Remote Config maintenance mode, an
 GJPLab/
 ├── app/          entry point, app delegate, SDK bootstrapper, root view;
 │                 startup/ (splash, maintenance), navigation/ (navigation.json, sidebar, catalogue)
-├── features/     <category>/<feature>/, one flat folder per feature (Firebase in integration/firebase/)
-└── common/       config/ and theme/ (LabTheme, LabMark)
+├── features/     <category>/<feature>/, one flat folder per feature: swift/, swiftui/, httpclient/,
+│                 security/, integration/ (Firebase), others/
+└── common/       config/, theme/ (LabTheme, LabMark, LabDemoPage), and codesample/ (runnable sample card)
 GJPLabTests/      Swift Testing unit tests
-GJPLabUITests/    XCUITest UI tests
-doc/              architecture/ and specs/ (mirrors GJPLab/)
+GJPLabUITests/    XCUITest UI tests (UITestSupport.swift launches the app and navigates the catalogue)
+TestPlans/        Unit.xctestplan and UI.xctestplan, used by the shared GJPLab scheme
+doc/              architecture/, specs/ (mirrors GJPLab/), decisions/, guides/, templates/
 resources/        editable app-icon SVGs
 scripts/          render_app_icons.swift renders the app-icon PNG variants
+.github/          CI workflow
 ```
 
 ## Documentation

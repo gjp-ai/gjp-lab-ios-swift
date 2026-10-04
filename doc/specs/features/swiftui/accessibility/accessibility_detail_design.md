@@ -44,7 +44,6 @@ The **Tap me** button has identifier `accessibility.tapButton` and the count tex
 | Gap | Effect | Suggested fix |
 | --- | --- | --- |
 | `DynamicTypeSize.title` strings are not localized | Labels stay in English | Move them to a String Catalog when the app is localized |
-| UI test depends on the 3-second splash and the Remote Config timeout | Slow and network-sensitive start | Add a launch argument that skips the splash and Firebase fetch under UI tests |
 | `colorSchemeContrast` is read only for Increase Contrast | Other contrast states are not shown | Acceptable; only `.increased` is meaningful today |
 
 ## Verification

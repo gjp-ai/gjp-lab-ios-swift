@@ -1,12 +1,12 @@
 # Concurrency detailed design
 
-Status: Implemented
+Status: Implemented, with known gaps
 
 Requirements: [Concurrency](concurrency_requirement.md)
 
 ## Implementation goal
 
-Each sample is a static function in `ConcurrencySamples` whose body is the code shown on screen; `ConcurrencyScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**.
+Each sample is a static function in `ConcurrencySamples` whose body is the code shown on screen; `ConcurrencyScreen` passes the list to the shared [runnable code sample](../../../common/codesample/codesample_detail_design.md) page, which runs a sample when the user taps **Run**. Snippet text and function body are kept in sync by hand; see the shared [known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps).
 
 ## Source map
 
@@ -41,11 +41,10 @@ Results from parallel children are sorted; timing is described, never measured; 
 
 | Gap | Effect | Suggested fix |
 | --- | --- | --- |
-| Snippet and function body are maintained by hand | They can drift apart | See the shared [code sample known gaps](../../../common/codesample/codesample_detail_design.md#known-gaps) |
 | *async let* claims the waits overlapped without measuring it | The parallelism is asserted, not shown | Measure with `ContinuousClock` and log only `elapsed < 1 second`; keep it out of the determinism test |
 
 ## Verification
 
 - Build with the project build command in [application architecture](../../../../architecture/application.md#build-and-verification).
 - Automated: `SwiftTopicTests` runs every sample (non-empty, same output twice) and checks key lines in `concurrencyResultsDoNotDependOnTiming`; `SwiftTopicsUITests.testEverySwiftTopicOpens` opens the screen from the catalogue.
-- Manual: CON-AC-01 to the last acceptance criterion on an iPhone simulator in light and dark appearance, and at a large Dynamic Type size.
+- Manual: CON-AC-01 to CON-AC-04 on an iPhone simulator; the shared CS-AC-01 to CS-AC-07 are checked once for the category (see the [runnable code sample requirement](../../../common/codesample/codesample_requirement.md#acceptance-criteria)).

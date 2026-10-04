@@ -42,7 +42,7 @@ Retry reuses the startup race without the 3-second splash minimum, so the dashbo
 | Failure fails open | Users enter the app during maintenance when the network is poor | Accepted by the splash requirement; revisit if maintenance must be strict |
 | Flag checked only at startup and on retry | Turning maintenance on does not affect running sessions | Add real-time updates or a foreground check if required |
 | Icon has no explicit accessibility treatment | VoiceOver may announce the decorative wrench icon | Hide the icon from accessibility |
-| No automated tests | Retry and fail-open behavior are unguarded | Test through a startup coordinator with an injected loader (see the splash detailed design) |
+| No automated tests | Retry and fail-open behavior are unguarded; UI tests cannot reach this screen because UI-testing mode skips the maintenance lookup | Test through a startup coordinator with an injected loader (see the splash detailed design) |
 
 ## Verification
 

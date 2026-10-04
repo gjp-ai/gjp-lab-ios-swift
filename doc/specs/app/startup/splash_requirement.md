@@ -1,6 +1,6 @@
 # Feature: Splash Screen
 
-Status: Baseline behavior; iOS implementation is partial
+Status: Partial (the shared rules are the baseline; the iOS gaps are listed in the [detailed design](splash_detail_design.md#requirement-status))
 
 ## Goal
 
@@ -8,7 +8,7 @@ Show a recognizable startup experience while resolving whether the user enters t
 
 ## Platform considerations
 
-These observable rules apply to Android and iOS. Each platform uses native lifecycle, connectivity, accessibility, and navigation conventions while preserving equivalent timing, fallback, race, and destination decisions.
+These observable rules are shared with the Android lab (`gjp-lab-android-kotlin`), which keeps its own copy of this requirement; keep the two in step. Each platform uses native lifecycle, connectivity, accessibility, and navigation conventions while preserving equivalent timing, fallback, race, and destination decisions. This document and its detailed design track only the iOS app.
 
 **Feature splash** is the application-owned loading experience after the operating system launch screen. A usable network is a path the platform reports as capable of internet access; a remote request can still fail after that signal.
 
@@ -68,7 +68,7 @@ Out of scope: system launch artwork, authentication, onboarding, consent, update
 - Non-essential animation must honor reduced motion.
 - Startup must not collect, display, or log personal information.
 - Timing, network, remote lookup, presentation, and navigation should remain independently testable where practical.
-- Automated tests must use controllable network and Remote Config outcomes rather than production services.
+- Automated tests must use controllable network and Remote Config outcomes rather than production services. UI tests skip startup entirely (UI-testing mode), so startup needs its own tests.
 
 ## Related documents
 

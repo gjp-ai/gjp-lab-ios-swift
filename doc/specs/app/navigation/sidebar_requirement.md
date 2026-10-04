@@ -4,7 +4,7 @@ Status: Implemented
 
 ## Goal
 
-Give users one starting point that lists every lab category, shows how much each one offers, and leads to its topics with the navigation pattern that suits the device.
+Give users one starting point that lists every lab category, says what each one covers, and leads to its topics with the navigation pattern that suits the device.
 
 ## Scope
 
